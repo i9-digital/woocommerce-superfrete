@@ -1,6 +1,5 @@
-=== SuperFrete para WooCommerce – SuperFrete for WooCommerce ===
+# SuperFrete para WooCommerce #
 
-Contributors: SuperFrete
 Tags: frete, fretes, cotação, cotações, correios, envio, calculadora, delivery
 Requires at least: 4.7
 Tested up to: 6.0
@@ -11,16 +10,16 @@ Requires WooCommerce 4.0+
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Integração SuperFrete e WooCommerce
+## Integração SuperFrete e WooCommerce ##
 
-== Descrição ==
+### Descrição ###
 A SuperFrete é uma integradora logística que oferece um conjunto de soluções para calcular, rastrear e emitir frete dos Correios com até 60% de desconto.
 
 ### Ajudamos o seu e-commerce a se tornar mais competitivo no mercado e a alavancar suas vendas online. ###
 
 Com a SuperFrete, seu site pode calcular fretes simultâneos e emitir etiquetas dos Correios com até 60% de desconto via integração com WooCommerce.
 
-= Quem é a SuperFrete? =
+### Quem é a SuperFrete? ###
 A SuperFrete reúne a demanda logística de milhares de micro e pequenos negócios, e reduz o custo final do frete em até 60%.
 A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume de fretes de seus clientes, consegue negociar condições exclusivas com a maior transportadora do Brasil.
 
@@ -34,14 +33,14 @@ A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume
 - Rastreio de encomendas e o status dos pedidos em tempo real direto pelo aplicativo SuperFrete!
 - Emissão, cancelamento e impressão de etiquetas direto pelo WooCommerce.
 
-== Instalação do módulo SuperFrete ==
+### Instalação do módulo SuperFrete ###
 = Requerimentos - Requirements =
 
 - Plugin [Brazilian Market on WooCommerce](https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil)
 - Estar cadastrado na plataforma [SuperFrete]
 - WooCommerce 4.0 ou posterior
 
-= Plugin installation - Instalação do plugin: =
+### Instalação do plugin: ###
 
 1 - Acesse a aba “Plugins > Adicionar novo” no painel administrativo WooCommerce e busque pelo plugin “SuperFrete”.
 2 - Na página do plugin SuperFrete, instale e ative o plugin clicando em “Instalar e ativar”.
@@ -61,34 +60,35 @@ Para comprar uma etiqueta pelo módulo, basta seguir o passo a passo:
 3 - Caso necessário, você pode realizar a compra da etiqueta pelo aplicativo SuperFrete ou no próprio módulo utilizando saldo via Pix. Para fazer uma recarga Pix, você pode usar o aplicativo SuperFrete. Para cartão de crédito, a etiqueta só pode ser adquirida via aplicativo. 
 4 - Após a compra da etiqueta, basta clicar em “Imprimir etiqueta”, disponível no aplicativo e no módulo, para imprimir e despachar sua encomenda!
 
-== Perguntas frequentes - Frequently Asked Questions ==
+## Perguntas frequentes ##
 
-= Qual é a licença do plugin? =
+## Qual é a licença do plugin? ##
 Este plugin está licenciado como GNU General Public License v2.0.
 
-= O que eu preciso para utilizar o plugin SuperFrete? =
+### O que eu preciso para utilizar o plugin SuperFrete? ###
 * Plugin [Brazilian Market on WooCommerce](https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil).
 * Estar cadastrado na plataforma [SuperFrete]
 * WooCommerce 3.0 ou posterior.
 
-= Tenho que pagar alguma mensalidade para usar a SuperFrete? =
+### Tenho que pagar alguma mensalidade para usar a SuperFrete? ###
 Não, a SuperFrete é uma plataforma 100% gratuita.
 
-= Como faço para comprar uma etiqueta pelo módulo?
+### Como faço para comprar uma etiqueta pelo módulo? ###
 Para comprar uma etiqueta pelo módulo, basta seguir o passo a passo abaixo:
+
 1 -  Vá até a opção “SuperFrete -> Meus pedidos”.
 2 - Procure o pedido que você deseja comprar a etiqueta e clique no carrinho para adicionar. Depois, o pedido aparecerá no app SuperFrete e no módulo. 
 3 - Caso necessário, você pode realizar a compra da etiqueta pelo aplicativo SuperFrete ou no próprio módulo utilizando saldo via Pix. Para fazer uma recarga Pix, você pode usar o aplicativo SuperFrete. Para cartão de crédito, a etiqueta só pode ser adquirida via aplicativo. 
 4 - Após a compra da etiqueta, basta clicar em “Imprimir etiqueta”, disponível no aplicativo e no módulo, para imprimir e despachar sua encomenda!
 
-= Consigo fazer o rastreamento de encomendas pelo aplicativo SuperFrete?
+### Consigo fazer o rastreamento de encomendas pelo aplicativo SuperFrete? ###
 Sim! Você pode fazer o rastreio de encomendas pelo aplicativo SuperFrete, além de receber notificações automáticas sempre que houver atualização de status do seu pedido.
 
-== Screenshots ==
+### Screenshots ###
 1. Cálculo de frete.
 2. Emissão de etiquetas.
 3. Token.
 
-== Changelog ==
+### Changelog #####
 
 Adicionado Suporte ao SuperFrete
