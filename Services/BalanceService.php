@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
 class BalanceService {
 
@@ -11,7 +11,7 @@ class BalanceService {
 	 */
 	public function get() {
 		$response = ( new RequestService() )->request(
-			'/balance',
+			CONFIG_ROUTE_INTEGRATION_API_USER_BALANCE,
 			'GET',
 			array(),
 			false

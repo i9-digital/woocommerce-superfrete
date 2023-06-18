@@ -1,11 +1,11 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\DimensionsHelper;
-use MelhorEnvio\Helpers\SanitizeHelper;
-use MelhorEnvio\Models\Option;
-use MelhorEnvio\Models\ResponseStatus;
+use IntegrationAPI\Helpers\DimensionsHelper;
+use IntegrationAPI\Helpers\SanitizeHelper;
+use IntegrationAPI\Models\Option;
+use IntegrationAPI\Models\ResponseStatus;
 
 class TestService {
 
@@ -173,8 +173,8 @@ class TestService {
 	 * @return array
 	 */
 	private function getShippingMethods() {
-		$shippingMethods = ( new ShippingMelhorEnvioService() )
-			->getMethodsActivedsMelhorEnvio();
+		$shippingMethods = ( new ShippingIntegrationAPIService() )
+			->getMethodsActivedsIntegrationAPI();
 
 		$response = array();
 

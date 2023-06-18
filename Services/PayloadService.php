@@ -1,12 +1,12 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Models\Method;
-use MelhorEnvio\Models\Option;
-use MelhorEnvio\Models\Payload;
-use MelhorEnvio\Models\ShippingService;
-use MelhorEnvio\Helpers\PostalCodeHelper;
+use IntegrationAPI\Models\Method;
+use IntegrationAPI\Models\Option;
+use IntegrationAPI\Models\Payload;
+use IntegrationAPI\Models\ShippingService;
+use IntegrationAPI\Helpers\PostalCodeHelper;
 
 class PayloadService {
 
@@ -166,6 +166,7 @@ class PayloadService {
 	 */
 	public function removeInsuranceValue( $payload ) {
 		$payload->products                 = ( new ProductsService() )->removePrice( (array) $payload->products );
+		
 		$payload->options->insurance_value = 0;
 		$payload->services                 = implode(
 			',',

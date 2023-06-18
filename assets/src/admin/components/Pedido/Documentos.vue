@@ -4,12 +4,9 @@
       <div class="formBox paddingBox">
         <template
           v-if="
-            item.quotation.choose_method == services.JADLOG_PACKAGE ||
-            item.quotation.choose_method == services.JADLOG_COM ||
-            item.quotation.choose_method == services.LATAM ||
-            item.quotation.choose_method == services.LATAM_JUNTOS ||
-            item.quotation.choose_method == services.AZUL_AMANHA ||
-            item.quotation.choose_method == services.AZUL_ECOMMERCE
+            item.quotation.choose_method == services.CORREIOS_SEDEX ||
+            item.quotation.choose_method == services.CORREIOS_PAC ||
+            item.quotation.choose_method == services.CORREIOS_MINI
           "
         >
           <fieldset class="checkLine">
@@ -22,13 +19,9 @@
         </template>
         <template
           v-if="
-            ((item.quotation.choose_method == services.JADLOG_PACKAGE ||
-              item.quotation.choose_method == services.JADLOG_COM ||
-              item.quotation.choose_method == services.LATAM ||
-              item.quotation.choose_method == services.LATAM_JUNTOS) &&
-              !item.non_commercial) ||
-            item.quotation.choose_method == services.VIA_BRASIL_AEREO ||
-            item.quotation.choose_method == services.VIA_BRASIL_RODOVIARIO
+            item.quotation.choose_method == services.CORREIOS_SEDEX ||
+            item.quotation.choose_method == services.CORREIOS_PAC ||
+            item.quotation.choose_method == services.CORREIOS_MINI
           "
         >
           <fieldset>
@@ -69,6 +62,7 @@
           <span v-if="item.status === status.STATUS_POSTED"
             >Etiqueta postada</span
           >
+          <span v-if="item.status === status.STATUS_CANCELED">Cancelada</span>
           <span v-if="item.status === status.STATUS_DELIVERED">Entregue</span>
         </b>
       </p>
@@ -77,13 +71,13 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-import statusMelhorEnvio from "../../utils/status";
+import statusIntegrationAPI from "../../utils/status";
 import shippingServices from "../../utils/shipping-services";
 export default {
   data: () => {
     return {
       services: shippingServices,
-      status: statusMelhorEnvio,
+      status: statusIntegrationAPI,
     };
   },
   props: {

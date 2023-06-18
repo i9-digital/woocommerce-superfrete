@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
 class Log {
 
@@ -16,11 +16,11 @@ class Log {
 			'response' => $response,
 		);
 
-		add_post_meta( $id, 'melhor_envio_log_order', $log );
+		add_post_meta( $id, 'integration_api_log_order', $log );
 	}
 
 	public function getRegister( $id ) {
-		$logs = get_post_meta( $id, 'melhor_envio_log_order' );
+		$logs = get_post_meta( $id, 'integration_api_log_order' );
 
 		$response = array();
 

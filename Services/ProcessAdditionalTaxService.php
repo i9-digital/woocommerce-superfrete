@@ -1,8 +1,8 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\SanitizeHelper;
+use IntegrationAPI\Helpers\SanitizeHelper;
 
 /**
  * Class ProcessAdditionalTaxService
@@ -16,8 +16,8 @@ class ProcessAdditionalTaxService {
 		if ( ! empty( $shipping_classes ) ) {
 			$shipping_classes = end( $shipping_classes );
 			if ( $shipping_classes->total > 0 ) {
-				add_action( 'woocommerce_add_to_cart', array( $this, 'addCart' ) );
-				add_action( 'woocommerce_remove_cart_item', array( $this, 'removeCart' ), 10, 2 );
+				add_action( 'woocommerce_sf_add_to_cart', array( $this, 'addCart' ) );
+				add_action( 'woocommerce_sf_remove_cart_item', array( $this, 'removeCart' ), 10, 2 );
 			}
 		}
 	}

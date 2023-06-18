@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
 /**
  * Health service class
@@ -8,7 +8,7 @@ namespace MelhorEnvio\Services;
 class CheckHealthService {
 
 	public function init() {
-		$this->hasShippingMethodsMelhorEnvio();
+		$this->hasShippingMethodsIntegrationAPI();
 	}
 
 	/**
@@ -17,20 +17,20 @@ class CheckHealthService {
 	 *
 	 * @return void
 	 */
-	public function hasShippingMethodsMelhorEnvio() {
+	public function hasShippingMethodsIntegrationAPI() {
 		add_action(
-			'woocommerce_init',
+			'woocommerce_sf_init',
 			function () {
-				$methods = ( new ShippingMelhorEnvioService() )
-				->getMethodsActivedsMelhorEnvio();
+				$methods = ( new ShippingIntegrationAPIService() )
+				->getMethodsActivedsIntegrationAPI();
 
 				if ( count( $methods ) == 0 ) {
 					$message = sprintf(
 						'<div class="error">
-                    <h2>Atenção usuário do Plugin Melhor Envio</h2>
+                    <h2>Atenção usuário do Plugin SuperFrete</h2>
                         <p>%s</p>
                     </div>',
-						'Por favor, verificar os métodos de envios do Melhor Envio na tela de <a href="/wp-admin/admin.php?page=wc-settings&tab=shipping">configurações de áreas de entregas do WooCommerce</a> após a instalação da versão <b>2.8.0</b>. Devido a nova funcionalidade de classes de entrega, é necessário selecionar novamente os métodos de envios do Melhor Envio.'
+						'Por favor, verificar os métodos de envios do SuperFrete na tela de <a href="/wp-admin/admin.php?page=wc-settings&tab=shipping">configurações de áreas de entregas do WooCommerce</a> após a instalação da versão <b>2.8.0</b>. Devido a nova funcionalidade de classes de entrega, é necessário selecionar novamente os métodos de envios do SuperFrete.'
 					);
 
 					( new SessionNoticeService() )->add(
@@ -51,7 +51,7 @@ class CheckHealthService {
 	public function checkPathPlugin( $pathPlugins ) {
 		$errorsPath = array();
 		if ( ! is_dir( $pathPlugins . '/woocommerce' ) ) {
-			$errorsPath[] = 'Defina o path do diretório de plugins nas configurações do plugin do Melhor Envio';
+			$errorsPath[] = 'Defina o path do diretório de plugins nas configurações do plugin do SuperFrete';
 		}
 
 		$errors          = array();
@@ -61,11 +61,11 @@ class CheckHealthService {
 		);
 
 		if ( ! class_exists( 'WooCommerce' ) ) {
-			$errors[] = 'Você precisa do plugin WooCommerce ativado no WordPress para utilizar o plugin do Melhor Envio';
+			$errors[] = 'Você precisa do plugin WooCommerce ativado no WordPress para utilizar o plugin do SuperFrete';
 		}
 
 		if ( ! in_array( 'woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php', $pluginsActiveds ) && ! is_multisite() ) {
-			$errors[] = 'Você precisa do plugin <a target="_blank" href="https://br.wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/">WooCommerce checkout fields for Brazil</a> ativado no wordpress para utilizar o plugin do Melhor Envio';
+			$errors[] = 'Você precisa do plugin <a target="_blank" href="https://br.wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/">WooCommerce checkout fields for Brazil</a> ativado no wordpress para utilizar o plugin do SuperFrete';
 		}
 
 		$sessionNoticeService = new SessionNoticeService();

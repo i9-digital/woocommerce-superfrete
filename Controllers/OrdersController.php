@@ -1,16 +1,16 @@
 <?php
 
-namespace MelhorEnvio\Controllers;
+namespace IntegrationAPI\Controllers;
 
-use MelhorEnvio\Helpers\SanitizeHelper;
-use MelhorEnvio\Helpers\WpNonceValidatorHelper;
-use MelhorEnvio\Services\OrdersProductsService;
-use MelhorEnvio\Services\BuyerService;
-use MelhorEnvio\Services\CartService;
-use MelhorEnvio\Services\OrderService;
-use MelhorEnvio\Services\OrderQuotationService;
-use MelhorEnvio\Services\ListOrderService;
-use MelhorEnvio\Services\OrderInvoicesService;
+use IntegrationAPI\Helpers\SanitizeHelper;
+use IntegrationAPI\Helpers\WpNonceValidatorHelper;
+use IntegrationAPI\Services\OrdersProductsService;
+use IntegrationAPI\Services\BuyerService;
+use IntegrationAPI\Services\CartService;
+use IntegrationAPI\Services\OrderService;
+use IntegrationAPI\Services\OrderQuotationService;
+use IntegrationAPI\Services\ListOrderService;
+use IntegrationAPI\Services\OrderInvoicesService;
 
 class OrdersController {
 
@@ -88,7 +88,7 @@ class OrdersController {
 	}
 
 	/**
-	 * Function to add order in cart Melhor Envio.
+	 * Function to add order in cart SuperFrete.
 	 *
 	 * @param int $post_id
 	 * @param int $service_id
@@ -166,7 +166,7 @@ class OrdersController {
 				return wp_send_json(
 					array(
 						'success' => false,
-						'errors'  => (array) 'Ocorreu um erro ao envio o pedido para o carrinho de compras do Melhor Envio.',
+						'errors'  => (array) 'Ocorreu um erro ao envio o pedido para o carrinho de compras do SuperFrete.',
 					),
 					400
 				);
@@ -195,7 +195,7 @@ class OrdersController {
 			return wp_send_json(
 				array(
 					'success' => false,
-					'message' => (array) 'Ocorreu um erro ao pagar o pedido no Melhor Envio.',
+					'message' => (array) 'Ocorreu um erro ao pagar o pedido no SuperFrete.',
 					'result'  => $paymentResult,
 				),
 				400
@@ -215,7 +215,7 @@ class OrdersController {
 	}
 
 	/**
-	 * Function to remove order on cart Melhor Envio.
+	 * Function to remove order on cart SuperFrete.
 	 *
 	 * @param int $order_id
 	 * @return json $response
@@ -254,7 +254,7 @@ class OrdersController {
 	}
 
 	/**
-	 * Function to cancel orderm on api Melhor Envio.
+	 * Function to cancel orderm on api SuperFrete.
 	 *
 	 * @param int $post_id
 	 * @return array $response
@@ -302,7 +302,7 @@ class OrdersController {
 	}
 
 	/**
-	 * Function to pay a order Melhor Envio.
+	 * Function to pay a order SuperFrete.
 	 *
 	 * @param int $order_id
 	 * @return array $response
@@ -326,14 +326,14 @@ class OrdersController {
 			array(
 				'success' => true,
 				'message' => 'Pedido pago',
-				'data'    => $result,
+				'data'    => json_encode($result),
 			),
 			200
 		);
 	}
 
 	/**
-	 * Function to create a label on Melhor Envio.
+	 * Function to create a label on SuperFrete.
 	 *
 	 * @param int $post_id
 	 * @return array $response
@@ -362,7 +362,7 @@ class OrdersController {
 	}
 
 	/**
-	 * Function to print a label on Melhor Envio.
+	 * Function to print a label on SuperFrete.
 	 *
 	 * @param int $post_id
 	 * @return array $response
@@ -370,6 +370,11 @@ class OrdersController {
 	public function printTicket() {
 
 		WpNonceValidatorHelper::check( $_GET[ self::WP_NONCE ], 'orders' );
+
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - - printTicket - ID - - - ');
+			write_log(print_r(SanitizeHelper::apply( $_GET['id'] ), true));
+		}
 
 		$result = ( new OrderService() )->printLabel( SanitizeHelper::apply( $_GET['id'] ) );
 

@@ -42,7 +42,7 @@
                     url: url,
                     type: "POST",
                     data: {
-                        'action': 'cotation_product_page',
+                        'action': 'cotation_sf_product_page',
                         'data': {
                             'cep_origem': cep,
                             'id_produto': id_produto,
@@ -59,7 +59,7 @@
                         return false;
                     },
                     success: function (response) {
-                        $('#destiny-shipping-mehor-envio').text('Frete para ' + response.data.destination);
+                        $('#destiny-shipping-integ-api').text('Frete para ' + response.data.destination);
                         var row = '';
                         let  data  = response.data.quotations;
                         data.map(item => {
@@ -108,7 +108,7 @@
 
         function resetarTabela() {
             $('#woocommerce-correios-calculo-de-frete-na-pagina-do-produto .resultado-frete table tbody').html('');
-            $('#destiny-shipping-mehor-envio').text('');
+            $('#destiny-shipping-integ-api').text('');
         }
 
         $(".single_variation_wrap").on("show_variation", function (event, variation) {

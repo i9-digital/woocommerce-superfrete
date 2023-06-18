@@ -15,7 +15,7 @@ const log = {
     actions: {
         retrieveLogs: ({commit}, id) => {
             let content = {
-                action: 'get_logs_order',
+                action: 'get_sf_logs_order',
                 order_id: id,
             }
             Axios.get(`${ajaxurl}`, {

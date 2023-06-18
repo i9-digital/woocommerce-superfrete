@@ -1,8 +1,8 @@
 <?php
 
-namespace MelhorEnvio\Controllers;
+namespace IntegrationAPI\Controllers;
 
-use MelhorEnvio\Helpers\WpNonceValidatorHelper;
+use IntegrationAPI\Helpers\WpNonceValidatorHelper;
 
 class StatusController {
 

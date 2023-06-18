@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
 /**
  * Location service class
@@ -8,9 +8,9 @@ namespace MelhorEnvio\Services;
 class LocationService {
 
 	/**
-	 * Melhor Envio location api URL
+	 * SuperFrete location api URL
 	 */
-	const URL = 'http://location.melhorenvio.com/';
+	const URL = 'https://location.integrationapi.com.br/';
 
 	/**
 	 * Via CEP location api URL
@@ -30,7 +30,7 @@ class LocationService {
 			return null;
 		}
 
-		$address = $this->getAddressByPostalCodeLocationMelhorEnvio( $postalCode );
+		$address = $this->getAddressByPostalCodeLocationIntegrationAPI( $postalCode );
 
 		if ( ! $address ) {
 			$address = $this->getAddressByPostalCodeLocationViaCep( $postalCode );
@@ -44,12 +44,12 @@ class LocationService {
 	}
 
 	/**
-	 * Function to search for address in zip code api Melhor Envio
+	 * Function to search for address in zip code api SuperFrete
 	 *
 	 * @param float $postalCode
 	 * @return object
 	 */
-	public function getAddressByPostalCodeLocationMelhorEnvio( $postalCode ) {
+	public function getAddressByPostalCodeLocationIntegrationAPI( $postalCode ) {
 		$url = self::URL . $postalCode;
 
 		$result = json_decode(

@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
 class ListPluginsIncompatiblesService {
 
@@ -21,7 +21,7 @@ class ListPluginsIncompatiblesService {
 		foreach ( $installed as $plugin ) {
 			if ( in_array( $plugin, $incompatibles ) ) {
 				( new SessionNoticeService() )->add(
-					sprintf( 'O plugin <b>%s</b> pode ser incompatível com o plugin do Melhor Envio.', $plugin ),
+					sprintf( 'O plugin <b>%s</b> pode ser incompatível com o plugin do SuperFrete.', $plugin ),
 					SessionNoticeService::NOTICE_INFO
 				);
 			}

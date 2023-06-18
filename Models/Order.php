@@ -1,12 +1,12 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
-use MelhorEnvio\Services\OrderQuotationService;
+use IntegrationAPI\Services\OrderQuotationService;
 
 class Order {
 
-	// Não confundir esses status com os status utlizados no Melhor Envio.
+	// Não confundir esses status com os status utlizados no SuperFrete.
 
 	const STATUS_GENERATED = 'generated';
 

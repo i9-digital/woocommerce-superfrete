@@ -1,9 +1,9 @@
 function verifyToken() {
-  return `${ajaxurl}?action=verify_token&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_tokens}`;
+  return `${ajaxurl}?action=verify_sf_token&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_tokens}`;
 }
 
 function getToken() {
-  return `${ajaxurl}?action=get_token&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_tokens}`;
+  return `${ajaxurl}?action=get_sf_token&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_tokens}`;
 }
 
 function isDateTokenExpired(token) {

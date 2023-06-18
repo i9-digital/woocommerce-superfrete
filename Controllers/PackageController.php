@@ -1,8 +1,8 @@
 <?php
 
-namespace MelhorEnvio\Controllers;
+namespace IntegrationAPI\Controllers;
 
-use MelhorEnvio\Helpers\DimensionsHelper;
+use IntegrationAPI\Helpers\DimensionsHelper;
 
 class PackageController {
 
@@ -71,7 +71,7 @@ class PackageController {
 	}
 
 	/**
-	 * Function to convert the measurements of a package to the Melhor Envio standard
+	 * Function to convert the measurements of a package to the SuperFrete standard
 	 *
 	 * @param array $package
 	 * @return array

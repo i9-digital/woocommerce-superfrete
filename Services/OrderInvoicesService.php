@@ -1,10 +1,10 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
 class OrderInvoicesService {
 
-	const POST_META_INVOICE = 'melhorenvio_invoice_v2';
+	const POST_META_INVOICE = 'integrationapi_invoice_v2';
 
 	/**
 	 * Function to save invoice by order.
@@ -31,8 +31,8 @@ class OrderInvoicesService {
 
 		if ( ! $result ) {
 			return array(
-				'key'    => null,
-				'number' => null,
+				'key'    => '',
+				'number' => '',
 			);
 		}
 
@@ -50,8 +50,8 @@ class OrderInvoicesService {
 
 		if ( ! $invoice ) {
 			return array(
-				'key'    => null,
-				'number' => null,
+				'key'    => '',
+				'number' => '',
 			);
 		}
 

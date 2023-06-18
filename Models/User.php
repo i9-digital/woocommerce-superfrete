@@ -1,15 +1,15 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
-use MelhorEnvio\Services\RequestService;
-use MelhorEnvio\Models\Session;
+use IntegrationAPI\Services\RequestService;
+use IntegrationAPI\Models\Session;
 
 class User {
 
-	const OPTION_USER_INFO = 'melhorenvio_user_info';
+	const OPTION_USER_INFO = 'integrationapi_user_info';
 
-	const SESSION_USER_INFO = 'melhorenvio_user_info';
+	const SESSION_USER_INFO = 'integrationapi_user_info';
 
 	/**
 	 * Return an array contain info about user
@@ -20,7 +20,8 @@ class User {
 		// Get info on session
 		$codeStore = hash( 'sha512', get_option( 'home' ) );
 
-		$response = ( new RequestService() )->request( '', 'GET', array(), false );
+		///$response = ( new RequestService() )->request( '', 'GET', array(), false );
+		$response = ( new RequestService() )->request( CONFIG_ROUTE_INTEGRATION_API_USER_INFO, 'GET', array(), false );
 
 		if ( is_null( $response ) ) {
 			return array(

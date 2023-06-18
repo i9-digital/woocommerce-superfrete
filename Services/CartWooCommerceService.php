@@ -1,8 +1,8 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\DimensionsHelper;
+use IntegrationAPI\Helpers\DimensionsHelper;
 
 class CartWooCommerceService {
 

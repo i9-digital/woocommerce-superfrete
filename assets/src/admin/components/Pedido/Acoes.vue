@@ -10,6 +10,8 @@
           id: item.id,
           service_id: item.quotation.choose_method,
           non_commercial: item.non_commercial,
+          invoice_number: item.invoice.number,
+          invoice_key: item.invoice.key
         })
       "
     >
@@ -105,7 +107,6 @@
       v-if="
         item.status &&
         (item.status == 'released' ||
-          item.status == 'posted' ||
           item.status == 'paid' ||
           item.status == 'generated' ||
           item.status == 'printed')
@@ -279,7 +280,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import statusMelhorEnvio from "../../utils/status";
+import statusIntegrationAPI from "../../utils/status";
 export default {
   props: {
     item: {
@@ -299,23 +300,44 @@ export default {
       "cancelTicket",
       "createTicket",
       "printTicket",
+      "updateMyBalance",
+      "updateMyLimits",
     ]),
     sendCartSimple: function (data) {
-      this.initLoader();
-      this.addCartSimple(data)
-        .then((response) => {
-          const msg = [];
-          msg.push(
-            `Pedido #${data.id} enviado para o carrinho de compras do Melho Envio com o protocolo ${response.protocol}`
-          );
-          this.setMessageModal(msg);
-        })
-        .catch((error) => {
-          this.setMessageModal(error.response.data.errors);
-        })
-        .finally(() => {
-          this.stopLoader();
-        });
+
+      ///console.log('sendCartSimple');
+      ///console.log(data);
+      
+      if(!data.non_commercial && 
+        (data.invoice_number === null || data.invoice_number === 'null' || (data.invoice_number).trim() == '')) {
+
+        this.initLoader();        
+        const msg = [];
+        msg.push(
+          `Por favor, necessário marcar declaração de conteúdo e/ou preencher número da nota fiscal, antes de adicionar ao carrinho.`
+        );  
+        this.setMessageModal(msg);
+        this.stopLoader();
+      
+      } else {
+
+        this.initLoader();
+        this.addCartSimple(data)
+          .then((response) => {
+            const msg = [];
+            msg.push(
+              `Pedido #${data.id} enviado para o carrinho de compras do SuperFrete com o protocolo ${response.protocol}`
+            );
+            this.setMessageModal(msg);
+          })
+          .catch((error) => {
+            this.setMessageModal(error.response.data.errors);
+          })
+          .finally(() => {
+            this.stopLoader();
+          });
+
+      }
     },
     cancelOrderSimple: function (data) {
       this.initLoader();
@@ -337,9 +359,12 @@ export default {
         })
         .finally(() => {
           this.stopLoader();
+          this.updateMyBalance();
+          this.updateMyLimits();
         });
     },
     buttonCart(item) {
+      console.log(item);
       if (this.needShowValidationDocument(item)) {
         return false;
       }
@@ -348,9 +373,11 @@ export default {
         return false;
       }
       if (
-        item.status == statusMelhorEnvio.STATUS_PENDING ||
-        item.status == statusMelhorEnvio.STATUS_RELEASED ||
-        item.status == statusMelhorEnvio.STATUS_DELIVERED
+        item.status == statusIntegrationAPI.STATUS_PENDING ||
+        item.status == statusIntegrationAPI.STATUS_RELEASED ||
+        item.status == statusIntegrationAPI.STATUS_POSTED ||
+        item.status == statusIntegrationAPI.STATUS_CANCELED ||
+        item.status == statusIntegrationAPI.STATUS_DELIVERED
       ) {
         return false;
       }
@@ -367,10 +394,10 @@ export default {
 
       if (
         !(
-          item.status == statusMelhorEnvio.STATUS_POSTED ||
-          item.status == statusMelhorEnvio.STATUS_RELEASED ||
-          item.status == statusMelhorEnvio.STATUS_CANCELED ||
-          item.status == statusMelhorEnvio.STATUS_DELIVERED
+          item.status == statusIntegrationAPI.STATUS_POSTED ||
+          item.status == statusIntegrationAPI.STATUS_RELEASED ||
+          item.status == statusIntegrationAPI.STATUS_CANCELED ||
+          item.status == statusIntegrationAPI.STATUS_DELIVERED
         )
       ) {
         return true;
@@ -380,9 +407,9 @@ export default {
     },
     buttonCancel(item) {
       if (
-        item.status == statusMelhorEnvio.STATUS_POSTED ||
-        item.status == statusMelhorEnvio.STATUS_GENERATED ||
-        item.status == statusMelhorEnvio.STATUS_RELEASED
+        item.status == statusIntegrationAPI.STATUS_POSTED ||
+        item.status == statusIntegrationAPI.STATUS_GENERATED ||
+        item.status == statusIntegrationAPI.STATUS_RELEASED
       ) {
         return true;
       }

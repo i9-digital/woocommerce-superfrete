@@ -21,7 +21,6 @@ wp-content/plugins/hello.php
 assets/css/admin.css.map
 assets/js/admin.js  
 
-vendor/
 node_modules/
 package-lock.json
 yarn.lock

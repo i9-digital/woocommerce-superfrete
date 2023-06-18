@@ -1,8 +1,8 @@
 <?php
 
-namespace MelhorEnvio\Helpers;
+namespace IntegrationAPI\Helpers;
 
-use MelhorEnvio\Services\OptionsMethodShippingService;
+use IntegrationAPI\Services\OptionsMethodShippingService;
 
 class TimeHelper {
 
@@ -14,7 +14,7 @@ class TimeHelper {
 	 *
 	 * @return string
 	 */
-	public static function label( $data, $extra ) {
+	public static function label( $data, $extra ) {		
 		$min = intval( $data->min ) + intval( $extra );
 		$max = intval( $data->max ) + intval( $extra );
 

@@ -15,6 +15,7 @@
     },
     "dependencies": {
         "axios": "^0.21.2",
+        "cross-env": "^5.2.1",
         "jeet": "^7.2.0",
         "lodash": "^4.17.21",
         "rupture": "^0.7.1",
@@ -23,7 +24,6 @@
         "vue-router": "^3.1.6",
         "vue-safe-html": "^2.0.0",
         "vue-the-mask": "^0.11.1",
-        "cross-env": "^5.2.1",
         "vuex": "^3.3.0"
     },
     "devDependencies": {

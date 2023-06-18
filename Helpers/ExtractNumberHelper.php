@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Helpers;
+namespace IntegrationAPI\Helpers;
 
 class ExtractNumberHelper {
 

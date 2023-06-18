@@ -1,10 +1,10 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\MoneyHelper;
-use MelhorEnvio\Helpers\PostalCodeHelper;
-use MelhorEnvio\Services\WooCommerceBundleProductsService;
+use IntegrationAPI\Helpers\MoneyHelper;
+use IntegrationAPI\Helpers\PostalCodeHelper;
+use IntegrationAPI\Services\WooCommerceBundleProductsService;
 
 class QuotationProductPageService {
 
@@ -116,7 +116,10 @@ class QuotationProductPageService {
 		}
 
 		if ( ! is_int( $this->quantity ) || $this->quantity == 0 ) {
-			$this->quantity = 1;
+			return array(
+				'success' => false,
+				'error'   => 'É necessário informar uma quantidade válida',
+			);
 		}
 
 		if ( ! empty( $this->destination ) ) {

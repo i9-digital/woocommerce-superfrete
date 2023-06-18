@@ -1,12 +1,12 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Models\Address;
-use MelhorEnvio\Models\Agency;
-use MelhorEnvio\Models\Option;
-use MelhorEnvio\Models\CalculatorShow;
-use MelhorEnvio\Models\ShippingCompany;
+use IntegrationAPI\Models\Address;
+use IntegrationAPI\Models\Agency;
+use IntegrationAPI\Models\Option;
+use IntegrationAPI\Models\CalculatorShow;
+use IntegrationAPI\Models\ShippingCompany;
 
 class ConfigurationsService {
 
@@ -130,7 +130,7 @@ class ConfigurationsService {
 		return array(
 			'origin'              => $origin,
 			'label'               => $this->getLabel( $origin ),
-			'agencies'            => $this->filterAgenciesByCompany(
+			/*'agencies'            => $this->filterAgenciesByCompany(
 				$agencies,
 				ShippingCompany::JADLOG
 			),
@@ -153,11 +153,11 @@ class ConfigurationsService {
 			'agencyLatamSelected' => $this->filterAgencySelectedByCompany(
 				$agenciesSelecteds,
 				ShippingCompany::LATAM_CARGO
-			),
+			),*/
 			'calculator'          => ( new CalculatorShow() )->get(),
-			'where_calculator'    => ( ! get_option( 'melhor_envio_option_where_show_calculator' ) )
+			'where_calculator'    => ( ! get_option( 'integration_api_option_where_show_calculator' ) )
 				? 'woocommerce_before_add_to_cart_button'
-				: get_option( 'melhor_envio_option_where_show_calculator' ),
+				: get_option( 'integration_api_option_where_show_calculator' ),
 			'path_plugins'        => $this->getPathPluginsArray(),
 			'options_calculator'  => $this->getOptionsCalculator(),
 			'token_environment'   => $token['token_environment'],
@@ -211,8 +211,8 @@ class ConfigurationsService {
 	 * @return void
 	 */
 	public function setWhereCalculator( $option ) {
-		delete_option( 'melhor_envio_option_where_show_calculator' );
-		add_option( 'melhor_envio_option_where_show_calculator', $option );
+		delete_option( 'integration_api_option_where_show_calculator' );
+		add_option( 'integration_api_option_where_show_calculator', $option );
 
 		return array(
 			'success' => true,
@@ -225,8 +225,8 @@ class ConfigurationsService {
 	 * @return array
 	 */
 	public function setLabel( $label ) {
-		delete_option( 'melhor_envio_option_label' );
-		add_option( 'melhor_envio_option_label', $label );
+		delete_option( 'integration_api_option_label' );
+		add_option( 'integration_api_option_label', $label );
 
 		return array(
 			'success' => true,
@@ -239,8 +239,8 @@ class ConfigurationsService {
 	 * @return array
 	 */
 	public function setDimensionDefault( $dimension ) {
-		delete_option( 'melhor_envio_option_dimension_default' );
-		add_option( 'melhor_envio_option_dimension_default', $dimension );
+		delete_option( 'integration_api_option_dimension_default' );
+		add_option( 'integration_api_option_dimension_default', $dimension );
 
 		return array(
 			'success' => true,
@@ -276,10 +276,10 @@ class ConfigurationsService {
 	 * @return string
 	 */
 	public function savePathPlugins( $path ) {
-		delete_option( 'melhor_envio_path_plugins' );
-		add_option( 'melhor_envio_path_plugins', $path );
+		delete_option( 'integration_api_path_plugins' );
+		add_option( 'integration_api_path_plugins', $path );
 
-		return get_option( 'melhor_envio_path_plugins' );
+		return get_option( 'integration_api_path_plugins' );
 	}
 
 	/**
@@ -301,7 +301,7 @@ class ConfigurationsService {
 	 * @return string
 	 */
 	public function getPathPluginsArray() {
-		$path = get_option( 'melhor_envio_path_plugins' );
+		$path = get_option( 'integration_api_path_plugins' );
 
 		if ( ! $path ) {
 			$path = WP_PLUGIN_DIR;
@@ -321,7 +321,7 @@ class ConfigurationsService {
 
 		$stores = ( new StoreService() )->getStores();
 
-		$sellerData = ( new SellerService() )->getDataApiMelhorEnvio();
+		$sellerData = ( new SellerService() )->getDataApiIntegrationAPI();
 
 		$response = array();
 
@@ -356,11 +356,15 @@ class ConfigurationsService {
 			'id'                     => $address['id'],
 			'name'                   => sprintf( '%s %s', $sellerData->firstname, $sellerData->lastname ),
 			'email'                  => $sellerData->email,
-			'phone'                  => $sellerData->phone->phone,
+			'phone'                  => $sellerData->phone,
+			'document'               => ( ! empty( $sellerData->cpf ) )
+				? $sellerData->cpf
+				: '',
+			/*
 			'document'               => ( ! empty( $sellerData->document ) )
 				? $sellerData->document
-				: '',
-			'company_document'       => ( ! empty( $sellerData->company_document ) )
+				: '',*/
+				'company_document'       => ( ! empty( $sellerData->company_document ) )
 				? $sellerData->company_document
 				: '',
 			'state_register'         => ( ! empty( $sellerData->state_register ) )
@@ -425,7 +429,7 @@ class ConfigurationsService {
 	 * @return array
 	 */
 	public function getDimensionDefault() {
-		$dimension = get_option( 'melhor_envio_option_dimension_default' );
+		$dimension = get_option( 'integration_api_option_dimension_default' );
 		if ( empty( $dimension ) ) {
 			return array(
 				'width'  => self::WIDTH_DEFAULT,
@@ -442,7 +446,7 @@ class ConfigurationsService {
 	 * @return array
 	 */
 	public function getLabel( $origin = null ) {
-		$labelOption = get_option( 'melhor_envio_option_label' );
+		$labelOption = get_option( 'integration_api_option_label' );
 
 		if ( ! empty( $labelOption ) ) {
 			return $this->normalizeDataSeller( $labelOption );

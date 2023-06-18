@@ -1,9 +1,9 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Models\Method;
-use MelhorEnvio\Models\Session;
+use IntegrationAPI\Models\Method;
+use IntegrationAPI\Models\Session;
 
 /**
  * Class responsible for managing the shipping method options service
@@ -14,12 +14,12 @@ class OptionsMethodShippingService {
 	/**
 	 * Registry key of the send method options saved in the database
 	 */
-	const KEY_OPTIONS_METHOD_DATABASE = 'melhor_envio_option_method_shipment_';
+	const KEY_OPTIONS_METHOD_DATABASE = 'integration_api_option_method_shipment_';
 
 	/**
 	 * Function to return the options
 	 * (own hands, acknowledgment of receipt, collection, extra fees, extra time)
-	 * of the Melhor Envio shipping methods
+	 * of the SuperFrete shipping methods
 	 *
 	 * @return array
 	 */
@@ -28,12 +28,12 @@ class OptionsMethodShippingService {
 
 		$options = $this->getOptionsShipments();
 
-		$enableds = ( new Method() )->getArrayShippingMethodsEnabledByZoneMelhorEnvio();
+		$enableds = ( new Method() )->getArrayShippingMethodsEnabledByZoneIntegrationAPI();
 
 		$shippingMethods = \WC()->shipping->get_shipping_methods();
 
 		foreach ( $shippingMethods as $method ) {
-			if ( ! $this->isMethodMelhorEnvio( $method ) ) {
+			if ( ! $this->isMethodIntegrationAPI( $method ) ) {
 				continue;
 			}
 
@@ -58,7 +58,7 @@ class OptionsMethodShippingService {
 	/**
 	 * Function to return the options
 	 * (own hands, acknowledgment of receipt, collection, extra fees, extra time)
-	 * on database of the Melhor Envio shipping methods
+	 * on database of the SuperFrete shipping methods
 	 *
 	 * @return array
 	 */
@@ -92,18 +92,18 @@ class OptionsMethodShippingService {
 
 		$codeStore = hash( 'sha512', get_option( 'home' ) );
 
-		$_SESSION[ Session::ME_KEY ][ $codeStore ]['melhorenvio_options'] = $options;
+		$_SESSION[ Session::ME_KEY ][ $codeStore ]['integrationapi_options'] = $options;
 
 		return $options;
 	}
 
 	/**
-	 * Function to check if the method is Melhor Envio.
+	 * Function to check if the method is SuperFrete.
 	 *
 	 * @param object $method
 	 * @return boolean
 	 */
-	public function isMethodMelhorEnvio( $method ) {
-		return ( is_numeric( strpos( $method->id, 'melhorenvio_' ) ) );
+	public function isMethodIntegrationAPI( $method ) {
+		return ( is_numeric( strpos( $method->id, 'integrationapi_' ) ) );
 	}
 }

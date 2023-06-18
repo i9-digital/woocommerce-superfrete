@@ -1,14 +1,14 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
 class Token {
 
-	const OPTION_TOKEN = 'wpmelhorenvio_token';
+	const OPTION_TOKEN = 'wpintegrationapi_token';
 
-	const OPTION_TOKEN_SANDBOX = 'wpmelhorenvio_token_sandbox';
+	const OPTION_TOKEN_SANDBOX = 'wpintegrationapi_token_sandbox';
 
-	const OPTION_TOKEN_ENVIRONMENT = 'wpmelhorenvio_token_environment';
+	const OPTION_TOKEN_ENVIRONMENT = 'wpintegrationapi_token_environment';
 
 	const PRODUCTION = 'production';
 
@@ -20,6 +20,7 @@ class Token {
 	 * @return array
 	 */
 	public function get() {
+
 		$environment = get_option( self::OPTION_TOKEN_ENVIRONMENT, self::PRODUCTION );
 
 		$environment = ( in_array( $environment, array( self::PRODUCTION, self::SANDBOX ) ) )

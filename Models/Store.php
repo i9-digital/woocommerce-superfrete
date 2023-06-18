@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
 class Store {
 

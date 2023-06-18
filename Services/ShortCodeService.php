@@ -1,8 +1,8 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\EscapeAllowedTags;
+use IntegrationAPI\Helpers\EscapeAllowedTags;
 
 /**
  * Class responsible for the shortcode service
@@ -31,21 +31,21 @@ class ShortCodeService {
 	 * Adiciona o HTML do cálculo de frete na página do produto
 	 */
 	public function addCalculoDeFrete() {
-		wp_enqueue_script( 'produto-shortcode', MELHORENVIO_ASSETS . '/js/shipping-product-page-shortcode.js', 'jquery' );
-		wp_enqueue_style( 'calculator-style', MELHORENVIO_ASSETS . '/css/calculator.css' );
-		wp_enqueue_script( 'calculator-script', MELHORENVIO_ASSETS . '/js/calculator.js' );
+		wp_enqueue_script( 'produto-shortcode', BASEPLUGIN_ASSETS . '/js/shipping-product-page-shortcode.js', 'jquery' );
+		wp_enqueue_style( 'calculator-style', BASEPLUGIN_ASSETS . '/css/calculator.css' );
+		wp_enqueue_script( 'calculator-script', BASEPLUGIN_ASSETS . '/js/calculator.js' );
 
 		echo wp_kses(
 			sprintf(
 				"
             <style>
-                #melhor-envio-shortcode .border-none,
+                #integration-api-shortcode .border-none,
                 tr,
                 td {
                     border: 0px;
                 }
             </style>
-            <div id='melhor-envio-shortcode' class='containerCalculator'>
+            <div id='integration-api-shortcode' class='containerCalculator'>
                 <form>
                     <input type='hidden' id='calculo_frete_produto_id' value='%d' />
                     <input type='hidden' id='calculo_frete_url' value='%s' />
@@ -79,7 +79,7 @@ class ShortCodeService {
 				$this->product->get_id(),
 				admin_url( 'admin-ajax.php' ),
 				'return usePostalCodeMask()',
-				MELHORENVIO_ASSETS
+				BASEPLUGIN_ASSETS
 			),
 			EscapeAllowedTags::allow_tags(
 				array( 'form', 'div', 'p', 'input', 'table', 'thead', 'tbody', 'tr', 'td', 'small', 'img', 'style' )

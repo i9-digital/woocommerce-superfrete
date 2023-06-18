@@ -1,20 +1,20 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Services\ManageRequestService;
-use MelhorEnvio\Services\ClearDataStored;
-use MelhorEnvio\Models\Version;
-use MelhorEnvio\Models\ResponseStatus;
-use MelhorEnvio\Services\SessionNoticeService;
+use IntegrationAPI\Services\ManageRequestService;
+use IntegrationAPI\Services\ClearDataStored;
+use IntegrationAPI\Models\Version;
+use IntegrationAPI\Models\ResponseStatus;
+use IntegrationAPI\Services\SessionNoticeService;
 
 class RequestService {
 
-	const URL = 'https://api.melhorenvio.com/v2/me';
+	const URL = CONFIG_URL;
 
-	const SANDBOX_URL = 'https://sandbox.melhorenvio.com.br/api/v2/me';
+	const SANDBOX_URL = CONFIG_SANDBOX_URL;
 
-	const TIMEOUT = 10;
+	const TIMEOUT = CONFIG_TIMEOUT;
 
 	const WP_ERROR = 'WP_Error';
 
@@ -30,7 +30,7 @@ class RequestService {
 		if ( ! $tokenData ) {
 			return wp_send_json(
 				array(
-					'message' => 'Usuário não autorizado, verificar token do Melhor Envio',
+					'message' => 'Usuário não autorizado, verificar token do SuperFrete',
 				),
 				ResponseStatus::HTTP_UNAUTHORIZED
 			);
@@ -47,13 +47,13 @@ class RequestService {
 		$this->headers = array(
 			'Content-Type'      => 'application/json',
 			'Accept'            => 'application/json',
-			'version-plugin-me' => Version::VERSION,
 			'Authorization'     => 'Bearer ' . $this->token,
+			'platform'					=> CONFIG_PLATFORM,
 		);
 	}
 
 	/**
-	 * Function to make a request to API Melhor Envio.
+	 * Function to make a request to API SuperFrete.
 	 *
 	 * @param string $route
 	 * @param string $typeRequest
@@ -72,40 +72,164 @@ class RequestService {
 			'timeout ' => self::TIMEOUT,
 		);
 
+		if ( ! ini_get( 'safe_mode' ) ){
+			set_time_limit( self::TIMEOUT );
+		}
+
+		//@INJECT LOG
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - -  ROUTE - - - ' . $route);
+		}
+
 		$responseRemote = wp_remote_post( $this->url . $route, $params );
 
+		//@INJECT LOG
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - -  REQUEST - - - ');
+			write_log('REQUEST_URL: ' . $this->url . $route);
+			write_log('REQUEST_METHOD: ' . $typeRequest);
+			write_log('REQUEST_BODY: ' . print_r($body, true));
+		}
+		
 		if ( ! is_array( $responseRemote ) ) {
+			
 			if ( get_class( $responseRemote ) === self::WP_ERROR ) {
+				
+				$msgWP_ERROR = $responseRemote->get_error_message();
+				//@INJECT LOG
+				if (function_exists( 'write_log' ) ) {
+					write_log('- - - WP_ERROR - - - ');
+					write_log($msgWP_ERROR);
+					write_log('- - - END REQUEST - - - ');
+				}
+				
+				if(strstr($msgWP_ERROR, 'cURL error 28') || strstr($msgWP_ERROR, 'timed out after')) { //IF TIMEOUT ERROR
+
+					$paramsArr = json_decode($params['body'], true);
+
+					if(strstr($route, '/cart')) {
+						return (object) array(
+							'success' => false,
+							'errors'  => array( 'Estamos enfrentando algumas instabilidades devido a alta demanda, tente novamente...' ),
+						);
+					}
+				
+					if(strstr($route, '/checkout')) {
+
+						$myParams = array(
+							'headers'  => $this->headers,
+							'method'   => 'GET',
+							'body'     => '',
+							'timeout ' => self::TIMEOUT,
+						);
+						$routeOrderGetInfo = CONFIG_ROUTE_INTEGRATION_API_SEARCH . $paramsArr['orders'][0]; 
+						$responseRemote = wp_remote_post( $this->url . $routeOrderGetInfo, $myParams );
+						$response = json_decode(wp_remote_retrieve_body( $responseRemote ));
+
+						/* validateResponse */
+						$responseCode = ( ! empty( $responseRemote['response']['code'] ) )
+							? $responseRemote['response']['code']
+							: null;
+
+						if ( $responseCode == ResponseStatus::HTTP_UNAUTHORIZED ) {
+							( new SessionNoticeService() )->add(
+								SessionNoticeService::NOTICE_INVALID_TOKEN,
+								SessionNoticeService::NOTICE_INFO
+							);
+							( new ClearDataStored() )->clear();
+						}
+
+						if ( $responseCode != ResponseStatus::HTTP_OK ) {
+							( new ClearDataStored() )->clear();
+						}
+
+						if ( empty( $response ) ) {
+							( new ClearDataStored() )->clear();
+							return (object) array(
+								'success' => false,
+								'errors'  => array( 'Ocorreu um erro ao se conectar com a API do SuperFrete' ),
+							);
+						}
+
+						if ( ! empty( $response->message ) && $response->message == 'Unauthenticated.' ) {
+							return (object) array(
+								'success' => false,
+								'errors'  => array( 'Usuário não autenticado' ),
+							);
+						}
+
+						$errors = $this->treatmentErrors( $response );
+
+						if ( ! empty( $errors ) ) {
+							return (object) array(
+								'success' => false,
+								'errors'  => $errors,
+							);
+						}
+						/* */
+
+						$myReturn = (object) array(
+							'success' => true,
+							'purchase' => (object) array(
+								'id'	=> $response->id,
+								'status'	=> $response->status,	
+								'orders' => array(
+										(object) array( 
+											'id'						=> $response->id,
+											'protocol'			=> $response->protocol,
+											'service_id'		=> $response->service_id,
+											'price'					=> $response->price,
+											'discount'			=> $response->discount,
+											'self_tracking' => $response->tracking,
+											'tracking'    	=> $response->tracking,
+											'print'					=> $response->print->url
+									)
+								)
+							)
+						);
+
+						return $myReturn;
+			
+					}
+				}
+
 				return (object) array();
 			}
+		}
+
+		//@INJECT LOG
+		if (function_exists( 'write_log' ) ) {
+			write_log('RESPONSE_BODY: ' . wp_remote_retrieve_body( $responseRemote ));
+			write_log('- - - END REQUEST - - - ');
 		}
 
 		$response = json_decode(
 			wp_remote_retrieve_body( $responseRemote )
 		);
 
-		$responseCode = ( ! empty( $responseRemote['response']['code'] ) )
-			? $responseRemote['response']['code']
-			: null;
+						/* validateResponse */
+						$responseCode = ( ! empty( $responseRemote['response']['code'] ) )
+							? $responseRemote['response']['code']
+							: null;
 
-		if ( $responseCode == ResponseStatus::HTTP_UNAUTHORIZED ) {
-			( new SessionNoticeService() )->add(
-				SessionNoticeService::NOTICE_INVALID_TOKEN,
-				SessionNoticeService::NOTICE_INFO
-			);
-			( new ClearDataStored() )->clear();
-		}
+						if ( $responseCode == ResponseStatus::HTTP_UNAUTHORIZED ) {
+							( new SessionNoticeService() )->add(
+								SessionNoticeService::NOTICE_INVALID_TOKEN,
+								SessionNoticeService::NOTICE_INFO
+							);
+							( new ClearDataStored() )->clear();
+						}
 
-		if ( $responseCode != ResponseStatus::HTTP_OK ) {
-			( new ClearDataStored() )->clear();
-		}
+						if ( $responseCode != ResponseStatus::HTTP_OK ) {
+							( new ClearDataStored() )->clear();
+						}
 
-		if ( empty( $response ) ) {
-			( new ClearDataStored() )->clear();
-			return (object) array(
-				'success' => false,
-				'errors'  => array( 'Ocorreu um erro ao se conectar com a API do Melhor Envio' ),
-			);
+						if ( empty( $response ) ) {
+							( new ClearDataStored() )->clear();
+							return (object) array(
+								'success' => false,
+								'errors'  => array( 'Ocorreu um erro ao se conectar com a API do SuperFrete' ),
+							);
 		}
 
 		if ( ! empty( $response->message ) && $response->message == 'Unauthenticated.' ) {
@@ -123,10 +247,13 @@ class RequestService {
 				'errors'  => $errors,
 			);
 		}
+		/* */
 
 		return $response;
+
 	}
 
+	
 	/**
 	 * treatment errors to user
 	 *

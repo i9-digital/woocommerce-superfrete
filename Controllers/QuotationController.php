@@ -1,12 +1,12 @@
 <?php
 
-namespace MelhorEnvio\Controllers;
+namespace IntegrationAPI\Controllers;
 
-use MelhorEnvio\Helpers\SanitizeHelper;
-use MelhorEnvio\Services\PayloadService;
-use MelhorEnvio\Services\QuotationService;
-use MelhorEnvio\Services\QuotationProductPageService;
-use MelhorEnvio\Models\Session;
+use IntegrationAPI\Helpers\SanitizeHelper;
+use IntegrationAPI\Services\PayloadService;
+use IntegrationAPI\Services\QuotationService;
+use IntegrationAPI\Services\QuotationProductPageService;
+use IntegrationAPI\Models\Session;
 
 /**
  * Class responsible for the quotation controller
@@ -35,7 +35,24 @@ class QuotationController {
 	public function makeCotationOrder( $postId ) {
 		$result = ( new QuotationService() )->calculateQuotationByPostId( $postId );
 
-		if ( $result ) {
+		if ( !empty($result->errors) ) {
+			$myErrors = '';
+			foreach($result->errors as $myError) {
+				$myErrors .= '<li style="margin:6px"><strong>' . $myError . '</strong></li>';	
+			}
+
+			$myErrorMainMessage = (isset($result->message)) ? '<li style="margin-bottom:6px"><strong>' . $result->message . '</strong></li>' : false;
+
+			return wp_send_json(
+				array(
+					'result' => 'failure',
+					'messages' => '<ul class="woocommerce-error" role="alert">'. $myErrorMainMessage . $myErrors . '</ul>',
+					'refresh' => false,
+					'reload' => false					
+				),
+				200
+			);	
+		} else {
 			( new PayloadService() )->save( $postId );
 		}
 

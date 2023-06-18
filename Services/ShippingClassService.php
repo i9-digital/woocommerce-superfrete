@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
 class ShippingClassService {
 

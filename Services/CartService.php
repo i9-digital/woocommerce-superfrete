@@ -1,25 +1,25 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Models\Order;
-use MelhorEnvio\Models\Option;
-use MelhorEnvio\Models\Payload;
-use MelhorEnvio\Models\Session;
-use MelhorEnvio\Models\ShippingCompany;
-use MelhorEnvio\Helpers\SessionHelper;
-use MelhorEnvio\Helpers\PostalCodeHelper;
-use MelhorEnvio\Helpers\CpfHelper;
-use MelhorEnvio\Helpers\ProductVirtualHelper;
+use IntegrationAPI\Models\Order;
+use IntegrationAPI\Models\Option;
+use IntegrationAPI\Models\Payload;
+use IntegrationAPI\Models\Session;
+use IntegrationAPI\Models\ShippingCompany;
+use IntegrationAPI\Helpers\SessionHelper;
+use IntegrationAPI\Helpers\PostalCodeHelper;
+use IntegrationAPI\Helpers\CpfHelper;
+use IntegrationAPI\Helpers\ProductVirtualHelper;
 
 class CartService {
 
-	const PLATAFORM = 'WooCommerce V2';
+	const PLATFORM = CONFIG_PLATFORM;
 
-	const ROUTE_MELHOR_ENVIO_ADD_CART = '/cart';
+	const ROUTE_INTEGRATION_API_ADD_CART = CONFIG_ROUTE_INTEGRATION_API_CART;
 
 	/**
-	 * Function to add item on Cart Melhor Envio
+	 * Function to add item on Cart SuperFrete
 	 *
 	 * @param int   $orderId
 	 * @param array $products
@@ -31,9 +31,23 @@ class CartService {
 
 		$body = $this->createPayloadToCart( $orderId, $products, $dataBuyer, $shippingMethodId );
 
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - -  REQUEST DATA CartService - ORDER_ID - - - ');
+			write_log(print_r($orderId, true));
+		}
+
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - -  REQUEST DATA CartService - add() - - - ');
+			write_log(print_r($body, true));
+		}
+
 		$errors = $this->validatePayloadBeforeAddCart( $body, $orderId );
 
 		if ( ! empty( $errors ) ) {
+			if (function_exists( 'write_log' ) ) {
+				write_log('- - -  REQUEST DATA CartService - hasErrors - - - ');
+				write_log(print_r($errors, true));
+			}	
 			return array(
 				'success' => false,
 				'errors'  => $errors,
@@ -41,13 +55,22 @@ class CartService {
 		}
 
 		$result = ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_ADD_CART,
+			self::ROUTE_INTEGRATION_API_ADD_CART,
 			'POST',
 			$body,
 			true
 		);
 
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - -  REQUEST DATA CartService - result - - - ');
+			write_log(print_r($result, true));
+		}
+
 		if ( ! empty( $result->errors ) ) {
+			if (function_exists( 'write_log' ) ) {
+				write_log('- - -  REQUEST DATA CartService - has errors after result->errors - - - ');
+				write_log(print_r($result->errors, true));
+			}	
 			return array(
 				'success' => false,
 				'errors'  => end( $result->errors ),
@@ -55,6 +78,10 @@ class CartService {
 		}
 
 		if ( empty( $result->id ) ) {
+			if (function_exists( 'write_log' ) ) {
+				write_log('- - -  REQUEST DATA CartService - has errors after result->id - - - ');
+				write_log(print_r($result->id, true));
+			}	
 			return array(
 				'success' => false,
 				'errors'  => 'Não foi possível enviar o pedido para o carrinho de compras',
@@ -73,7 +100,7 @@ class CartService {
 	}
 
 	/**
-	 * Function to create payload to insert item on Cart Melhor Envio
+	 * Function to create payload to insert item on Cart SuperFrete
 	 *
 	 * @param int   $orderId
 	 * @param array $products
@@ -117,7 +144,7 @@ class CartService {
 				'reverse'         => false,
 				'non_commercial'  => $orderInvoiceService->isNonCommercial( $orderId ),
 				'invoice'         => $orderInvoiceService->getInvoiceOrder( $orderId ),
-				'platform'        => self::PLATAFORM,
+				'platform'        => self::PLATFORM,
 				'reminder'        => null,
 			),
 		);
@@ -142,7 +169,7 @@ class CartService {
 	}
 
 	/**
-	 * Function to remove order in cart by Melhor Envio.
+	 * Function to remove order in cart by SuperFrete.
 	 *
 	 * @param int    $postId
 	 * @param string $orderId
@@ -152,7 +179,7 @@ class CartService {
 		( new OrderQuotationService() )->removeDataQuotation( $postId );
 
 		( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_ADD_CART . '/' . $orderId,
+			self::ROUTE_INTEGRATION_API_ADD_CART . '/' . $orderId,
 			'DELETE',
 			array()
 		);
@@ -411,8 +438,8 @@ class CartService {
 							'price' => $item->get_price(),
 						);
 
-						if ( ! empty( $_SESSION[ Session::ME_KEY ]['melhorenvio_additional'] ) ) {
-							foreach ( $_SESSION[ Session::ME_KEY ]['melhorenvio_additional'] as $dataSession ) {
+						if ( ! empty( $_SESSION[ Session::ME_KEY ]['integrationapi_additional'] ) ) {
+							foreach ( $_SESSION[ Session::ME_KEY ]['integrationapi_additional'] as $dataSession ) {
 								foreach ( $dataSession as $keyProduct => $product ) {
 									$data['products'][ $productId ]['taxas_extras'] = $product;
 								}
@@ -423,8 +450,8 @@ class CartService {
 			}
 		}
 
-		if ( ! empty( $_SESSION[ Session::ME_KEY ]['melhorenvio_additional'] ) ) {
-			$data['adicionais_extras'] = $_SESSION[ Session::ME_KEY ]['melhorenvio_additional'];
+		if ( ! empty( $_SESSION[ Session::ME_KEY ]['integrationapi_additional'] ) ) {
+			$data['adicionais_extras'] = $_SESSION[ Session::ME_KEY ]['integrationapi_additional'];
 		}
 
 		return $data;

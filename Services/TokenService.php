@@ -1,13 +1,13 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Models\Token;
+use IntegrationAPI\Models\Token;
 
 class TokenService {
 
 	/**
-	 * Get token Melhor Envio.
+	 * Get token SuperFrete.
 	 *
 	 * @return string $token
 	 */
@@ -22,7 +22,7 @@ class TokenService {
 	}
 
 	/**
-	 * Service to save token Melhor Envio.
+	 * Service to save token SuperFrete.
 	 *
 	 * @param string $token
 	 * @param string $tokenSandbox

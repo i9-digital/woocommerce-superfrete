@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
 class AgencyAzul {
 
@@ -8,7 +8,7 @@ class AgencyAzul {
 	 * Constant to store in WordPress options the agency ID "Azul Cargo Express"
 	 * selected by the user.
 	 */
-	const AGENCY_ID_AZUL_CARGO_SELECTED_USER = 'melhorenvio_agency_azul_v2';
+	const AGENCY_ID_AZUL_CARGO_SELECTED_USER = 'integrationapi_agency_azul_v2';
 
 	/**
 	 * function to get the id of agency azul selected.

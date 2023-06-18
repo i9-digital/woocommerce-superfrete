@@ -1,3 +1,3 @@
 export default function deleteSession() {
-  return `${ajaxurl}?action=delete_melhor_envio_session&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_configs}`;
+  return `${ajaxurl}?action=delete_integration_api_session&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_configs}`;
 }

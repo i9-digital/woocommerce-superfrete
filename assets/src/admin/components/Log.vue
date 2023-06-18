@@ -2,7 +2,7 @@
 .boxBanner {
   float: left;
   width: 100%;
-  margin-bottom: 1%;
+  margin-bottom: 15px;
 }
 
 .boxBanner img {

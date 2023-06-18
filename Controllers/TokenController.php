@@ -1,10 +1,10 @@
 <?php
 
-namespace MelhorEnvio\Controllers;
+namespace IntegrationAPI\Controllers;
 
-use MelhorEnvio\Helpers\SanitizeHelper;
-use MelhorEnvio\Helpers\WpNonceValidatorHelper;
-use MelhorEnvio\Services\TokenService;
+use IntegrationAPI\Helpers\SanitizeHelper;
+use IntegrationAPI\Helpers\WpNonceValidatorHelper;
+use IntegrationAPI\Services\TokenService;
 
 class TokenController {
 
@@ -89,7 +89,7 @@ class TokenController {
 
 		WpNonceValidatorHelper::check( $_GET[ self::WP_NONCE ], 'tokens' );
 
-		if ( ! get_option( 'wpmelhorenvio_token' ) ) {
+		if ( ! get_option( 'wpintegrationapi_token' ) ) {
 			return wp_send_json(
 				array(
 					'exists_token' => false,

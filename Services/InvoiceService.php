@@ -1,10 +1,10 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
 class InvoiceService {
 
-	const POST_META_INVOICE = 'melhorenvio_invoice_v2';
+	const POST_META_INVOICE = 'integrationapi_invoice_v2';
 
 	/**
 	 * Function to search invoice for an order
@@ -20,8 +20,8 @@ class InvoiceService {
 		}
 
 		return array(
-			'number' => null,
-			'key'    => null,
+			'number' => '',
+			'key'    => '',
 		);
 	}
 }

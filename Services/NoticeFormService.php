@@ -1,18 +1,18 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\EscapeAllowedTags;
+use IntegrationAPI\Helpers\EscapeAllowedTags;
 
 class NoticeFormService {
 
 
 
-	const SHOW = 'show_form_melhor_envio';
+	const SHOW = 'show_form_integration_api';
 
-	const HIDE = 'hide_form_melhor_envio';
+	const HIDE = 'hide_form_integration_api';
 
-	const OPTION_SHOW_FORM = 'hide_form_melhor_envio';
+	const OPTION_SHOW_FORM = 'hide_form_integration_api';
 
 	/**
 	 * Function to check whether to display and insert the search form alert on the administrative page
@@ -22,14 +22,14 @@ class NoticeFormService {
 		$show     = self::SHOW;
 		if ( $showForm == $show ) {
 			add_action(
-				'admin_notices',
+				'admin_sf_notices',
 				function () {
 					echo wp_kses(
 						'<div class="notice info is-dismissible"> 
                     <p><strong>Como podemos melhorar?</strong></p>
-                    <p>Gostaríamos de saber mais sobre a sua experiência com o plugin do Melhor Envio 
+                    <p>Gostaríamos de saber mais sobre a sua experiência com o plugin do SuperFrete 
                     para que possamos aprimorá-lo. 
-                    <a href="/wp-admin/admin-ajax.php?action=open_form_melhor_envio">Clique aqui</a> 
+                    <a href="/wp-admin/admin-ajax.php?action=open_form_integration_api">Clique aqui</a> 
                     e nos ajude respondendo a pesquisa.
                     </p>
                 </div>',

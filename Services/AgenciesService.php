@@ -1,10 +1,10 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
 class AgenciesService {
 
-	const ROUTE_GET_AGENCIES = '/shipment/agencies';
+	const ROUTE_GET_AGENCIES = CONFIG_ROUTE_GET_AGENCIES;
 
 	protected $state = null;
 
@@ -23,7 +23,7 @@ class AgenciesService {
 	}
 
 	/**
-	 * function to get  agencies on Melhor Envio API.
+	 * function to get  agencies on SuperFrete API.
 	 *
 	 * @param array $data
 	 * @return array

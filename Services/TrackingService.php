@@ -1,14 +1,14 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\EscapeAllowedTags;
+use IntegrationAPI\Helpers\EscapeAllowedTags;
 
 class TrackingService {
 
 
 
-	const TRACKING_MELHOR_ENVIO = 'melhorenvio_tracking';
+	const TRACKING_INTEGRATION_API = 'integrationapi_tracking';
 
 	/**
 	 * Save tracking order
@@ -18,7 +18,7 @@ class TrackingService {
 	 * @return void
 	 */
 	public function addTrackingOrder( $orderId, $tracking ) {
-		add_post_meta( $orderId, self::TRACKING_MELHOR_ENVIO, $tracking, true );
+		add_post_meta( $orderId, self::TRACKING_INTEGRATION_API, $tracking, true );
 	}
 
 	/**
@@ -28,7 +28,7 @@ class TrackingService {
 	 * @return string $tracking
 	 */
 	public function getTrackingOrder( $orderId ) {
-		$data = get_post_meta( $orderId, self::TRACKING_MELHOR_ENVIO, true );
+		$data = get_post_meta( $orderId, self::TRACKING_INTEGRATION_API, true );
 
 		if ( ! empty( $data ) ) {
 			return $data;
@@ -94,7 +94,7 @@ class TrackingService {
 	 */
 	private function addTrackingToOrderClients() {
 		add_action(
-			'woocommerce_my_account_my_orders_column_tracking',
+			'woocommerce_sf_my_account_my_orders_column_tracking',
 			function ( $order ) {
 
 				$text = 'Não disponível';
@@ -105,7 +105,7 @@ class TrackingService {
 
 				echo wp_kses(
 					( ! empty( $data ) )
-						? sprintf( "<a target='_blank' href='https://melhorrastreio.com.br/rastreio/%s'>%s</a>", $data, $data )
+						? sprintf( "<a target='_blank' href='https://rastreio.superfrete.com/#/tracking/%s'>%s</a>", $data, $data )
 						: $text,
 					EscapeAllowedTags::allow_tags( array( 'div', 'a' ) )
 				);

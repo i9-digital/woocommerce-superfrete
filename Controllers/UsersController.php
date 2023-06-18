@@ -1,19 +1,19 @@
 <?php
 
-namespace MelhorEnvio\Controllers;
+namespace IntegrationAPI\Controllers;
 
-use MelhorEnvio\Helpers\WpNonceValidatorHelper;
-use MelhorEnvio\Models\Address;
-use MelhorEnvio\Models\Store;
-use MelhorEnvio\Models\User;
-use MelhorEnvio\Services\BalanceService;
-use MelhorEnvio\Services\OrderQuotationService;
-use MelhorEnvio\Services\StoreService;
+use IntegrationAPI\Helpers\WpNonceValidatorHelper;
+use IntegrationAPI\Models\Address;
+use IntegrationAPI\Models\Store;
+use IntegrationAPI\Models\User;
+use IntegrationAPI\Services\BalanceService;
+use IntegrationAPI\Services\OrderQuotationService;
+use IntegrationAPI\Services\StoreService;
 
 class UsersController {
 
 
-	const URL = 'https://api.melhorenvio.com';
+	const URL = 'https://api.superfrete.com';
 
 	/**
 	 * Function to get info by user.
@@ -150,7 +150,10 @@ class UsersController {
 		$data['data']['environment'] = ( ( new OrderQuotationService() )->getEnvironmentToSave() == '_sandbox' )
 			? 'Sandbox'
 			: 'Produção';
+		
+		$returnSendJson = wp_send_json( $data['data'], 200 );
 
-		return wp_send_json( $data['data'], 200 );
+		return $returnSendJson;
+		
 	}
 }

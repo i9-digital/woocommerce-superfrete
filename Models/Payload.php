@@ -1,13 +1,13 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
 class Payload {
 
 	/**
 	 * Identification key for the payload option in WordPress.
 	 */
-	const POST_META_PAYLOAD = 'wp_melhor_envio_payload';
+	const POST_META_PAYLOAD = 'wp_integration_api_payload';
 
 	/**
 	 * function to get payload by post_id

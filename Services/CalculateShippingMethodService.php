@@ -1,12 +1,12 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\MoneyHelper;
-use MelhorEnvio\Helpers\TimeHelper;
-use MelhorEnvio\Models\ShippingService;
-use MelhorEnvio\Helpers\PostalCodeHelper;
-use MelhorEnvio\Services\WooCommerceBundleProductsService;
+use IntegrationAPI\Helpers\MoneyHelper;
+use IntegrationAPI\Helpers\TimeHelper;
+use IntegrationAPI\Models\ShippingService;
+use IntegrationAPI\Helpers\PostalCodeHelper;
+use IntegrationAPI\Services\WooCommerceBundleProductsService;
 
 class CalculateShippingMethodService {
 
@@ -27,7 +27,7 @@ class CalculateShippingMethodService {
 	const QUANTITY_DEFINE_VOLUME = 2;
 
 	/**
-	 * Function to carry out the freight quote in the Melhor Envio api.
+	 * Function to carry out the freight quote in the SuperFrete api.
 	 *
 	 * @param array  $package
 	 * @param int    $code

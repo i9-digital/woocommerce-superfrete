@@ -1,8 +1,8 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
-use MelhorEnvio\Services\OptionsMethodShippingService;
+use IntegrationAPI\Services\OptionsMethodShippingService;
 
 class Method {
 
@@ -33,13 +33,13 @@ class Method {
 
 		$result = end( $result );
 
-		return $this->getCodeMelhorEnvioShippingMethod( $result->method );
+		return $this->getCodeIntegrationAPIShippingMethod( $result->method );
 	}
 
 	/**
 	 * @return void
 	 */
-	public function getCodeMelhorEnvioShippingMethod( $method_id ) {
+	public function getCodeIntegrationAPIShippingMethod( $method_id ) {
 		$shipping_methods = \WC()->shipping->get_shipping_methods();
 
 		foreach ( $shipping_methods as $method ) {
@@ -56,7 +56,7 @@ class Method {
 		return null;
 	}
 
-	public function getArrayShippingMethodsEnabledByZoneMelhorEnvio() {
+	public function getArrayShippingMethodsEnabledByZoneIntegrationAPI() {
 		global $wpdb;
 		$enableds = array();
 		$sql      = sprintf( 'select * from %swoocommerce_shipping_zone_methods where is_enabled = 1', $wpdb->prefix );

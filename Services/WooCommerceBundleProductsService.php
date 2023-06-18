@@ -1,9 +1,9 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\DimensionsHelper;
-use MelhorEnvio\Services\ProductsService;
+use IntegrationAPI\Helpers\DimensionsHelper;
+use IntegrationAPI\Services\ProductsService;
 
 class WooCommerceBundleProductsService {
 

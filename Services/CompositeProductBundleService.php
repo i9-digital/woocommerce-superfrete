@@ -1,8 +1,8 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\DimensionsHelper;
+use IntegrationAPI\Helpers\DimensionsHelper;
 
  /**
   * Aqui é verificado se o produto é da classe do plugin Composite Product,
@@ -22,8 +22,6 @@ use MelhorEnvio\Helpers\DimensionsHelper;
 class CompositeProductBundleService {
 
 	const PRODUCT_COMPOSITE = 'WC_Product_Composite';
-
-	const PRODUCT_COMBO_OFFICER = 'WC_Product_Wooco';
 
 	const PRODUCT_COMPOSITE_SHIPPING_FEE = 'wooco_shipping_fee';
 
@@ -95,8 +93,7 @@ class CompositeProductBundleService {
 	 * @return array
 	 */
 	public function selectProductsToReturnByTypeComposite( $productsComposite, $products ) {
-
-		if ($this->checkProductBundleHasShippingFee($productsComposite)) {
+		if ( is_null( array_values( $productsComposite )[0]['shipping_fee'] ) || is_null( array_values( $productsComposite )[0]['pricing'] ) ) {
 			return $products;
 		}
 
@@ -123,7 +120,7 @@ class CompositeProductBundleService {
 
 		if ( self::isCompositeWholeAndExclude( $productsComposite, $shipping_fee, $pricing ) ) {
 			foreach ( $productsComposite as $key => $product ) {
-				if (!empty( $_product)) {
+				if ( ! empty( $_product ) ) {
 					$productsComposite[ $key ]['unitary_value']   = $_product->get_price();
 					$productsComposite[ $key ]['insurance_value'] = $_product->get_price();
 				}
@@ -132,12 +129,6 @@ class CompositeProductBundleService {
 		}
 
 		return $products;
-	}
-
-	private function checkProductBundleHasShippingFee($productsComposite)
-	{
-		return is_null(@array_values($productsComposite)[0]['shipping_fee']) ||
-			is_null(array_values($productsComposite)[0]['pricing']);
 	}
 
 	/**
@@ -149,9 +140,11 @@ class CompositeProductBundleService {
 	 * @return bool
 	 */
 	public static function isCompositeWholeAndOnly( $productsComposite, $shipping_fee, $pricing ) {
-		return !empty($productsComposite) &&
+		return (
+			! empty( $productsComposite ) &&
 			$shipping_fee == self::PRODUCT_COMPOSITE_SHIPPING_FEE_WHOLE &&
-			$pricing == self::PRODUCT_COMPOSITE_PRICING_ONLY;
+			$pricing == self::PRODUCT_COMPOSITE_PRICING_ONLY
+		);
 	}
 
 	/**
@@ -163,9 +156,11 @@ class CompositeProductBundleService {
 	 * @return bool
 	 */
 	public static function isCompositeWholeAndInclude( $productsComposite, $shipping_fee, $pricing ) {
-		return !empty($productsComposite) &&
+		return (
+			! empty( $productsComposite ) &&
 			$shipping_fee == self::PRODUCT_COMPOSITE_SHIPPING_FEE_WHOLE &&
-			$pricing == self::PRODUCT_COMPOSITE_PRICING_INCLUDE;
+			$pricing == self::PRODUCT_COMPOSITE_PRICING_INCLUDE
+		);
 	}
 
 	/**
@@ -177,9 +172,11 @@ class CompositeProductBundleService {
 	 * @return bool
 	 */
 	public static function isCompositeWholeAndExclude( $productsComposite, $shipping_fee, $pricing ) {
-		return !empty($productsComposite) &&
+		return (
+			! empty( $productsComposite ) &&
 			$shipping_fee == self::PRODUCT_COMPOSITE_SHIPPING_FEE_WHOLE &&
-			$pricing == self::PRODUCT_COMPOSITE_PRICING_EXCLUDE;
+			$pricing == self::PRODUCT_COMPOSITE_PRICING_EXCLUDE
+		);
 	}
 
 	/**

@@ -1,11 +1,11 @@
 <?php
 
-namespace MelhorEnvio\Controllers;
+namespace IntegrationAPI\Controllers;
 
-use MelhorEnvio\Services\ClearDataStored;
-use MelhorEnvio\Helpers\SessionHelper;
-use MelhorEnvio\Helpers\WpNonceValidatorHelper;
-use MelhorEnvio\Models\Session;
+use IntegrationAPI\Services\ClearDataStored;
+use IntegrationAPI\Helpers\SessionHelper;
+use IntegrationAPI\Helpers\WpNonceValidatorHelper;
+use IntegrationAPI\Models\Session;
 
 class SessionsController {
 
@@ -26,7 +26,7 @@ class SessionsController {
 	 * @return json
 	 */
 	public function deleteSession() {
-		WpNonceValidatorHelper::check( $_GET['_wpnonce'], 'save_configurations' );
+		WpNonceValidatorHelper::check( $_GET['_wpnonce'], 'save_sf_configurations' );
 		( new ClearDataStored() )->clear();
 	}
 }

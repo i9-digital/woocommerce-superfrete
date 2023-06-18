@@ -1,23 +1,23 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\SessionHelper;
-use MelhorEnvio\Models\Session;
+use IntegrationAPI\Helpers\SessionHelper;
+use IntegrationAPI\Models\Session;
 
 class StoreService {
 
-	const URL = 'https://api.melhorenvio.com';
+	const URL = CONFIG_URL;
 
-	const OPTION_STORES = 'melhorenvio_stores';
+	const OPTION_STORES = 'integrationapi_stores';
 
-	const OPTION_STORE_SELECTED = 'melhorenvio_store_v2';
+	const OPTION_STORE_SELECTED = 'integrationapi_store_v2';
 
-	const SESSION_STORES = 'melhorenvio_stores';
+	const SESSION_STORES = 'integrationapi_stores';
 
-	const SESSION_STORE_SELECTED = 'melhorenvio_store_v2';
+	const SESSION_STORE_SELECTED = 'integrationapi_store_v2';
 
-	const ROUTE_MELHOR_ENVIO_COMPANIES = '/companies';
+	const ROUTE_INTEGRATION_API_COMPANIES = CONFIG_ROUTE_INTEGRATION_API_COMPANIES;
 
 	public $store = null;
 
@@ -67,7 +67,7 @@ class StoreService {
 		}
 
 		$response = ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_COMPANIES,
+			self::ROUTE_INTEGRATION_API_COMPANIES,
 			'GET',
 			array(),
 			false
@@ -111,7 +111,7 @@ class StoreService {
 	 */
 	public function getAddressStore( $store ) {
 		$addresses = ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_COMPANIES . '/' . $store->id . '/addresses',
+			self::ROUTE_INTEGRATION_API_COMPANIES . '/' . $store->id . '',
 			'GET',
 			array(),
 			false

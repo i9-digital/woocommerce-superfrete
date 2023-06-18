@@ -1,10 +1,10 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
 class Agency {
 
-	const AGENCY_SELECTED = 'melhorenvio_option_agency';
+	const AGENCY_SELECTED = 'integrationapi_option_agency';
 
 	/**
 	 * function to get the id of agency Jadlog selected.

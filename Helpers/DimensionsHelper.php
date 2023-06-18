@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Helpers;
+namespace IntegrationAPI\Helpers;
 
 class DimensionsHelper {
 
@@ -21,7 +21,7 @@ class DimensionsHelper {
 	/**
 	 * Function that receives the value of the product measurement (width, height or length),
 	 * and verifies the measurement used in the woocommerce configuration and if the unit is different from cm,
-	 * converts it to cm, a standard used in API Melhor Envio.
+	 * converts it to cm, a standard used in API SuperFrete.
 	 *
 	 * @param srting $value
 	 * @return float

@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
 /**
  * Class UserWooCommerceDataService
@@ -28,7 +28,7 @@ class UserWooCommerceDataService {
 
 	/**
 	 *
-	 * Function to define the user's address obtained in the "Melhor Envio" to woocommerce
+	 * Function to define the user's address obtained in the "SuperFrete" to woocommerce
 	 *
 	 * @param array $destination
 	 * @param bool  $needReturn

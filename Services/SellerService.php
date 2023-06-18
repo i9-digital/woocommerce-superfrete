@@ -1,9 +1,9 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Models\Address;
-use MelhorEnvio\Models\Seller;
+use IntegrationAPI\Models\Address;
+use IntegrationAPI\Models\Seller;
 
 /**
  * Class responsible for the service of managing the store salesperson
@@ -11,7 +11,7 @@ use MelhorEnvio\Models\Seller;
 class SellerService {
 
 	/**
-	 * Get data user on API Melhor Envio
+	 * Get data user on API SuperFrete
 	 *
 	 * @return object $dataSeller
 	 */
@@ -39,7 +39,7 @@ class SellerService {
 			return $data;
 		}
 
-		$data = $this->getDataApiMelhorEnvio();
+		$data = $this->getDataApiIntegrationAPI();
 
 		$address = ( new Address() )->getAddressFrom();
 
@@ -99,17 +99,18 @@ class SellerService {
 	}
 
 	/**
-	 * Get data user on API Melhor Envio
+	 * Get data user on API SuperFrete
 	 *
 	 * @return object $data
 	 */
-	public function getDataApiMelhorEnvio() {
-		$data = ( new RequestService() )->request( '', 'GET', array(), false );
+	public function getDataApiIntegrationAPI() {
+		///$data = ( new RequestService() )->request( '', 'GET', array(), false );
+		$data = ( new RequestService() )->request( CONFIG_ROUTE_INTEGRATION_API_USER_INFO, 'GET', array(), false );
 
 		if ( ! isset( $data->id ) ) {
 			return array(
 				'success' => false,
-				'message' => 'Usuário não encontrado no Melhor Envio',
+				'message' => 'Usuário não encontrado no SuperFrete',
 			);
 		}
 

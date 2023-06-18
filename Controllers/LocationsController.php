@@ -1,8 +1,8 @@
 <?php
 
-namespace MelhorEnvio\Controllers;
+namespace IntegrationAPI\Controllers;
 
-use MelhorEnvio\Services\LocationService;
+use IntegrationAPI\Services\LocationService;
 
 class LocationsController {
 

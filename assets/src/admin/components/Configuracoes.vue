@@ -1,8 +1,34 @@
 <style lang="css">
+.lb-titulo-sf {
+  font-size: 32px !important;
+  font-weight: 600 !important;
+  line-height: 24px !important;
+  margin-bottom: 16px !important;
+  margin-top: 0 !important;
+}
+
+.bt-sf {
+  border: 1px solid #0FAE79;
+  border-radius: 12px;
+  -moz-border-radius: 12px;
+  background:#0FAE79;
+  color:#fff;
+  margin-bottom:60px;
+  clear: both;
+  float: left;
+  padding: 16px 48px;
+  text-decoration: none;
+  font-size: 18px;
+}
+.bt-sf:hover {
+  background:#008558;
+  cursor:pointer;
+}
+
 .boxBanner {
   float: left;
   width: 100%;
-  margin-bottom: 1%;
+  margin-bottom: 15px;
 }
 
 .boxBanner img {
@@ -68,6 +94,30 @@
   color: #fff;
   font-weight: 600;
 }
+
+.input-sf-origem::before {
+  background-color:#0FAE79 !important;
+}
+input[type=checkbox]:checked::before {
+  content: url(@images/seta.svg) !important;
+}
+input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, input[type=datetime-local]:focus, input[type=datetime]:focus, input[type=email]:focus, input[type=month]:focus, input[type=number]:focus, input[type=password]:focus, input[type=radio]:focus, input[type=search]:focus, input[type=tel]:focus, input[type=text]:focus, input[type=time]:focus, input[type=url]:focus, input[type=week]:focus, select:focus, textarea:focus {
+    border-color: #0FAE79 !important;
+    box-shadow: 0 0 0 1px #0FAE79 !important;
+    outline: 2px solid transparent;
+}
+.wp-core-ui select:hover {
+  color:#0FAE79;
+}
+.btn-border.-full-blue {
+    background: #0FAE79 !important;
+    border-color: #0FAE79 !important;
+    color: #fff !important;
+}
+.btn-border.-full-blue:hover {
+    background-color: transparent !important;
+    color: #0FAE79 !important;
+}
 </style>
 
 <template>
@@ -82,7 +132,7 @@
       <div>
         <div class="grid">
           <div class="col-12-12">
-            <h1>Configurações gerais</h1>
+            <h1 class="lb-titulo-sf">Configurações gerais</h1>
           </div>
           <hr />
           <div class="col-12-12" v-show="error_message">
@@ -95,7 +145,7 @@
 
     <template v-if="originData.length > 0">
       <div class="wpme_config">
-        <h2>Seleciona a origem dos envios</h2>
+        <h2>Selecione a origem dos envios</h2>
         <div class="wpme_flex">
           <ul class="wpme_address">
             <li
@@ -109,6 +159,7 @@
                     :id="option.id"
                     name="input_address"
                     :value="option.address.id"
+                    class="input-sf-origem"
                     v-model="origin"
                     data-cy="address-input"
                     @click="
@@ -167,12 +218,11 @@
       <hr />
     </template>
 
-    <template>
-      <div class="wpme_config" style="width: 50%">
-        <h2>Informações da etiqueta</h2>
+    <template style="display:none">
+      <div class="wpme_config" style="width: 50%;display:none;">
+        <h2>Informações da etiqueta 123</h2>
         <p>
-          As informações abaixo serão exibidas na etiqueta impressa do Melhor
-          Envio
+          As informações abaixo serão exibidas na etiqueta impressa do SuperFrete
         </p>
         <div class="wpme_flex">
           <ul class="wpme_address">
@@ -263,112 +313,8 @@
           </ul>
         </div>
       </div>
-      <hr />
+      <hr style="display:none;" />
     </template>
-
-    <div class="wpme_config" v-show="agencies.length > 0">
-      <h2>Jadlog</h2>
-      <p>
-        Escolha a agência Jadlog de sua preferência para realizar o envio dos
-        seus produtos.
-      </p>
-      <div class="wpme_flex">
-        <ul class="wpme_address">
-          <li>
-            <template>
-              <select
-                name="agencies"
-                id="agencies"
-                v-model="agency"
-                data-cy="input-agency-jadlog"
-              >
-                <option value>Selecione...</option>
-                <option
-                  v-for="option in agencies"
-                  :value="option.id"
-                  :key="option.id"
-                  :selected="option.selected"
-                >
-                  <strong>{{ option.name }}</strong>
-                </option>
-              </select>
-            </template>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <hr />
-
-    <div
-      v-show="token_environment == 'production' && agenciesAzul.length > 0"
-      class="wpme_config"
-    >
-      <h2>Azul Cargo Express</h2>
-      <p>
-        Escolha a agência Azul Cargo Express de sua preferência para realizar o
-        envio dos seus produtos.
-      </p>
-      <div class="wpme_flex">
-        <ul class="wpme_address">
-          <li>
-            <template>
-              <select
-                name="agenciesAzul"
-                id="agenciesAzul"
-                v-model="agency_azul"
-                data-cy="input-agency-azul"
-              >
-                <option value>Selecione...</option>
-                <option
-                  v-for="option in agenciesAzul"
-                  :value="option.id"
-                  :key="option.id"
-                  :selected="option.selected"
-                >
-                  <strong>{{ option.name }}</strong>
-                </option>
-              </select>
-            </template>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <hr />
-
-    <div
-      v-show="token_environment == 'production' && agenciesLatam.length > 0"
-      class="wpme_config"
-    >
-      <h2>LATAM Cargo</h2>
-      <p>
-        Escolha a unidade Latam Cargo de sua preferência para realizar o envio
-        dos seus produtos.
-      </p>
-      <div class="wpme_flex">
-        <ul class="wpme_address">
-          <li>
-            <template>
-              <select
-                name="agenciesLatam"
-                id="agenciesLatam"
-                v-model="agency_latam"
-              >
-                <option value>Selecione...</option>
-                <option
-                  v-for="option in agenciesLatam"
-                  :value="option.id"
-                  :key="option.id"
-                  :selected="option.selected"
-                >
-                  <strong>{{ option.name }}</strong>
-                </option>
-              </select>
-            </template>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <hr />
 
     <div class="wpme_config">
       <h2>Opções para cotação</h2>
@@ -384,6 +330,7 @@
               type="checkbox"
               value="Personalizar"
               data-cy="receipt"
+              class="input-sf-opcoes-cotacao"
               v-model="options_calculator && options_calculator.receipt"
             />
             Aviso de recebimento
@@ -393,6 +340,7 @@
               type="checkbox"
               value="Personalizar"
               data-cy="own_hand"
+              class="input-sf-opcoes-cotacao"
               v-model="options_calculator && options_calculator.own_hand"
             />
             Mão própria
@@ -402,6 +350,7 @@
               type="checkbox"
               value="Personalizar"
               data-cy="insurance_value"
+              class="input-sf-opcoes-cotacao"
               v-model="options_calculator && options_calculator.insurance_value"
             />
             Assegurar sempre
@@ -448,7 +397,7 @@
       <h2>Calculadora</h2>
       <p>
         Ao habilitar essa opção, será exibida a calculadora de fretes com
-        cotações do Melhor Envio na tela do produto.
+        cotações do SuperFrete na tela do produto.
       </p>
       <div class="wpme_flex">
         <ul class="wpme_address">
@@ -479,7 +428,7 @@
       <h2></h2>
       <h3>Shortcode para exibir a calculadora</h3>
       <p>
-        <b>[calculadora_melhor_envio product_id="product_id"]</b>
+        <b>[calculadora_integration_api product_id="product_id"]</b>
       </p>
       <p>
         É necessário informar o ID do produto para o shortcode funcionar de
@@ -523,7 +472,7 @@
     </div>
     <hr />
 
-    <button class="btn-border -blue" @click="updateConfig">salvar</button>
+    <button class="bt-sf" @click="updateConfig">Salvar</button>
 
     <transition name="fade">
       <div class="me-modal" v-show="show_modal">
@@ -758,7 +707,7 @@ export default {
     },
     createAjaxUrl(agencyId, data) {
       const { city, state } = data;
-      return `${ajaxurl}?action=get_agencies&company=${agencyId}&city=${city}&state=${state}&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_configs}`;
+      return `${ajaxurl}?action=get_sf_agencies&company=${agencyId}&city=${city}&state=${state}&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_configs}`;
     },
     showJadlogAgencies(data) {
       this.setLoader(true);
@@ -867,7 +816,7 @@ export default {
         if (response.data.token) {
           if (isDateTokenExpired(response.data.token)) {
             this.error_message =
-              "Seu Token Melhor Envio expirou, cadastre um novo token para o plugin voltar a funcionar perfeitamente";
+              "Seu Token SuperFrete expirou, cadastre um novo token para o plugin voltar a funcionar perfeitamente";
           } else {
             this.error_message = "";
           }

@@ -1,10 +1,10 @@
 <?php
 
-namespace MelhorEnvio\Controllers;
+namespace IntegrationAPI\Controllers;
 
-use MelhorEnvio\Helpers\SanitizeHelper;
-use MelhorEnvio\Helpers\WpNonceValidatorHelper;
-use MelhorEnvio\Services\AgenciesService;
+use IntegrationAPI\Helpers\SanitizeHelper;
+use IntegrationAPI\Helpers\WpNonceValidatorHelper;
+use IntegrationAPI\Services\AgenciesService;
 
 class AgenciesController {
 
@@ -16,7 +16,7 @@ class AgenciesController {
 	public function get() {
 		try {
 
-			WpNonceValidatorHelper::check( $_GET['_wpnonce'], 'save_configurations' );
+			WpNonceValidatorHelper::check( $_GET['_wpnonce'], 'save_sf_configurations' );
 
 			if ( empty( $_GET['state'] ) ) {
 				return wp_send_json(

@@ -1,10 +1,10 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\DimensionsHelper;
-use MelhorEnvio\Services\WooCommerceBundleProductsService;
-use MelhorEnvio\Services\ProductsService;
+use IntegrationAPI\Helpers\DimensionsHelper;
+use IntegrationAPI\Services\WooCommerceBundleProductsService;
+use IntegrationAPI\Services\ProductsService;
 
 class OrdersProductsService {
 
@@ -32,7 +32,6 @@ class OrdersProductsService {
 		$wooCommerceBundleProductService = new WooCommerceBundleProductsService();
 
 		foreach ( $order->get_items() as $key => $itemProduct ) {
-
 			$metas = $wooCommerceBundleProductService->getMetas( $itemProduct );
 
 			if ( $wooCommerceBundleProductService->isBundledItem( $metas ) ) {
@@ -62,9 +61,10 @@ class OrdersProductsService {
 			}
 
 			$product = $itemProduct->get_product();
-			if ($this->isComboProduct($product)) {
+			if ( is_bool( $product ) || get_class( $product ) === CompositeProductBundleService::PRODUCT_COMPOSITE ) {
 				$compositeBundleService = new CompositeProductBundleService( $itemProduct );
-				$productComposite = $compositeBundleService->getProductNormalize();
+				$productComposite       = $compositeBundleService->getProductNormalize();
+
 				if ( empty( $productComposite ) ) {
 					continue;
 				}
@@ -80,18 +80,6 @@ class OrdersProductsService {
 					$itemProduct->get_quantity()
 				);
 
-				$quantityInsiderItem = 1;
-				if (isset($itemProduct->get_data()['quantity'])) {
-					$quantityInsiderItem = $itemProduct->get_data()['quantity'];
-				}
-				
-				$price = (float) $itemProduct->get_data()['total'] / $quantityInsiderItem;
-				if ($price == 0) {
-					continue;
-				}
-
-				$products[$productId]->insurance_value = $price;
-				$products[$productId]->unitary_value = $price;
 				$quantities = $this->incrementQuantity(
 					$productId,
 					$quantities,
@@ -112,15 +100,7 @@ class OrdersProductsService {
 				$products[ $key ]->quantity = $quantities[ $product->id ];
 			}
 		}
-
 		return $products;
-	}
-
-	public function isComboProduct($product)
-	{
-		return is_bool($product) ||
-			get_class($product) === CompositeProductBundleService::PRODUCT_COMPOSITE ||
-			get_class($product) === CompositeProductBundleService::PRODUCT_COMBO_OFFICER;
 	}
 
 	/**

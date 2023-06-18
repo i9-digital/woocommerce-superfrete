@@ -1,8 +1,16 @@
 <style>
+.lb-titulo-sf {
+  font-size: 32px !important;
+  font-weight: 600 !important;
+  line-height: 24px !important;
+  margin-bottom: 16px !important;
+  margin-top: 0 !important;
+}
+
 .boxBanner {
   float: left;
   width: 100%;
-  margin-bottom: 1%;
+  margin-bottom: 15px;
 }
 
 .boxBanner img {
@@ -44,10 +52,14 @@
   overflow: auto;
   height: 50px;
 }
+
+.sf-style a {
+    color: #0fae79 !important;
+}
 </style>
 
 <template>
-  <div class="app-pedidos">
+  <div class="app-pedidos sf-style">
     <div class="boxBanner">
       <img src="@images/banner-admin.jpeg" />
     </div>
@@ -55,66 +67,78 @@
       <div>
         <div class="grid">
           <div class="col-12-12">
-            <h1>Meus pedidos</h1>
+            <h1 class="lb-titulo-sf">Meus pedidos</h1>
           </div>
           <hr />
           <div class="col-12-12" v-show="true">
             <p class="error-message">{{ error_message }}</p>
           </div>
-          <br />
         </div>
       </div>
     </template>
 
-    <table border="0" class="table-box">
-      <tr>
-        <td>
-          <h4>
-            <b>Usuário:</b>
-            {{ name }}
-          </h4>
-          <h4>
-            <b>Ambiente:</b>
-            {{ environment }}
-          </h4>
-          <h4>
-            <b>Envios:</b>
-            {{ limitEnabled }}/{{ limit }}
-          </h4>
-          <h4>
-            <b>Saldo:</b>
-            {{ getBalance }}
-          </h4>
-        </td>
-      </tr>
-      <tr>
-        <td width="50%">
-          <h3>Etiquetas</h3>
-          <select v-model="status">
-            <option value="all">Todas</option>
-            <option value="pending">Pendente</option>
-            <option value="released">Liberada</option>
-            <option value="posted">Postado</option>
-            <option value="delivered">Entregue</option>
-            <option value="canceled">Cancelado</option>
-            <option value="undelivered">Não Entregue</option>
-          </select>
-        </td>
-        <td width="50%">
-          <h3>Pedidos</h3>
-          <select v-model="wpstatus">
-            <option value="all">Todos</option>
-            <option
-              v-for="(statusName, statusKey) in statusWooCommerce"
-              :key="statusKey"
-              v-bind:value="statusKey"
-            >
-              {{ statusName }}
-            </option>
-          </select>
-        </td>
-      </tr>
-    </table>
+    <div style="display: flex" class="container-table-box">
+      <table border="0" class="table-box" style="width:40% !important;">
+        <tr>
+          <td>
+            <h4>
+              <b>Usuário:</b>
+              {{ name }}
+            </h4>
+            <h4>
+              <b>Ambiente:</b>
+              {{ environment }}
+            </h4>
+            <h4>
+              <b>Envios:</b>
+              {{ getLimitEnabled }}/{{ getLimit }}
+            </h4>
+            <h4>
+              <b>Saldo:</b>
+              {{ getBalance }}
+            </h4>
+          </td>
+        </tr>
+      </table>
+      <table
+        style="margin-left: 15px; width: 100%"
+        border="0"
+        class="table-box"
+      >
+        <tbody>
+          <tr>
+            <td>
+              <p>
+                <ul>
+                  <li style="margin-bottom: 15px">
+                    <b>1.</b> Caso não tenha saldo, será necessário realizar a
+                    recarga via PIX, pela guia "Perfil" do aplicativo ou endereço
+                    <a href="https://web.superfrete.com" target="_blank"
+                      >https://web.superfrete.com</a
+                    >;
+                  </li>
+                  <li style="margin-bottom: 15px">
+                    <b>2.</b> O pagamento da etiqueta também pode ser efetuado
+                    diretamente pelo aplicativo, via cartão de crédito, através da
+                    guia "Etiquetas", selecione a etiqueta desejada, com o status
+                    "Aguardando pagamento", e após isso, clique em "Emitir Frete",
+                    para efetuar o pagamento;
+                  </li>
+                  <li style="margin-bottom: 15px">
+                    <b>3.</b> Após confirmado o pagamento, será possível realizar
+                    a impressão da etiqueta, através do ícone de impressora;
+                  </li>
+                  <li style="margin-bottom: 15px">
+                    <b>4.</b> Pronto! Seu pedido não tem mais nenhuma pendência,
+                    basta levar até a agência dos correios mais próxima.
+                  </li>
+                </ul>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div
       class="table-box"
@@ -123,6 +147,7 @@
     >
       <div class="table -woocommerce">
         <ul class="head">
+          <li><img src="@images/reload-icon.png" style="width:24px;height:24px;cursor:pointer;margin-top:3px;" @click="reloadPage" /></li>
           <li>
             <span>ID</span>
           </li>
@@ -135,9 +160,11 @@
           <li>
             <span>Documentos</span>
           </li>
+          <!--
           <li>
             <span>Etiqueta</span>
           </li>
+          -->
           <li>
             <span>Ações</span>
           </li>
@@ -219,7 +246,7 @@
       <!-- show_modal -->
       <div class="me-modal me-modal-2" v-show="show_modal || show_modal2">
         <div>
-          <p class="title">Atenção</p>
+          <p class="title">SuperFrete</p>
           <div class="content">
             <p v-for="msg in msg_modal" class="txt">{{ msg }}</p>
             <p v-for="msg in msg_modal2" class="txt">{{ msg }}</p>
@@ -309,7 +336,11 @@ import Documentos from "./Pedido/Documentos.vue";
 import Acoes from "./Pedido/Acoes.vue";
 import ProductLink from "./ProductLink.vue";
 import Informacoes from "./Pedido/Informacoes.vue";
-import {verifyToken, getToken, isDateTokenExpired} from 'admin/utils/token-utils';
+import {
+  verifyToken,
+  getToken,
+  isDateTokenExpired,
+} from "admin/utils/token-utils";
 
 export default {
   name: "Pedidos",
@@ -351,12 +382,12 @@ export default {
       show_more: "showMore",
       statusWooCommerce: "statusWooCommerce",
     }),
-    ...mapGetters("balance", ["getBalance"]),
+    ...mapGetters("balance", ["getLimitEnabled", "getLimit", "getBalance"]),
   },
   methods: {
     ...mapActions("orders", [
       "retrieveMany",
-      "loadMore",      
+      "loadMore",
       "closeModal",
       "getStatusWooCommerce",
       "printMultiples",
@@ -364,7 +395,7 @@ export default {
       "addCart",
       "showErrorAlert",
     ]),
-    ...mapActions("balance", ["setBalance"]),
+    ...mapActions("balance", ["setBalance", "setLimits"]),
     close() {
       this.closeModal();
     },
@@ -372,17 +403,13 @@ export default {
       this.toggleInfo = this.toggleInfo != id ? id : null;
     },
     getToken() {
-      this.$http
-        .get(
-          verifyToken()
-        )
-        .then((response) => {
-          if (!response.data.exists_token) {
-            this.$router.push("Token");
-          }
+      this.$http.get(verifyToken()).then((response) => {
+        if (!response.data.exists_token) {
+          this.$router.push("Token");
+        }
 
-          this.validateToken();
-        });
+        this.validateToken();
+      });
     },
     selectAll: function () {
       if (!this.$refs.selectAllBox.checked) {
@@ -514,13 +541,15 @@ export default {
     },
     getMe() {
       this.$http
-        .get(`${ajaxurl}?action=me&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_users}`)
+        .get(
+          `${ajaxurl}?action=sf_me&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_users}`
+        )
         .then((response) => {
           if (response.data.id) {
             this.name = response.data.firstname + " " + response.data.lastname;
             this.environment = response.data.environment;
-            this.limit = response.data.limits.shipments;
-            this.limitEnabled = response.data.limits.shipments_available;
+            ///this.limit = response.data.limits.shipments;
+            ///this.limitEnabled = response.data.limits.shipments_available;
           }
         });
     },
@@ -530,22 +559,21 @@ export default {
       this.closeModal();
     },
     validateToken() {
-      this.$http
-        .get(
-          getToken()
-        )
-        .then((response) => {
-          if (response.data.token) {
-            if (isDateTokenExpired(response.data.token)) {
-              this.error_message =
-                "Seu Token Melhor Envio expirou, cadastre um novo token para o plugin voltar a funcionar perfeitamente";
-            } else {
-              this.error_message = "";
-            }
+      this.$http.get(getToken()).then((response) => {
+        if (response.data.token) {
+          if (isDateTokenExpired(response.data.token)) {
+            this.error_message =
+              "Seu Token SuperFrete expirou, cadastre um novo token para o plugin voltar a funcionar perfeitamente";
           } else {
-            this.$router.push("Token");
+            this.error_message = "";
           }
-        });
+        } else {
+          this.$router.push("Token");
+        }
+      });
+    },
+    reloadPage() {
+      window.location.reload();
     },
   },
   watch: {
@@ -559,6 +587,7 @@ export default {
   mounted() {
     this.getToken();
     this.getMe();
+    this.setLimits();
     if (Object.keys(this.orders).length === 0) {
       this.retrieveMany({ status: this.status, wpstatus: this.wpstatus });
     }
@@ -568,5 +597,4 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>

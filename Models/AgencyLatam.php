@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
 class AgencyLatam {
 
@@ -8,7 +8,7 @@ class AgencyLatam {
 	 * Constant to store in WordPress options the agency ID "Latam"
 	 * selected by the user.
 	 */
-	const AGENCY_ID_LATAM_SELECTED_USER = 'melhorenvio_agency_latam_v2';
+	const AGENCY_ID_LATAM_SELECTED_USER = 'integrationapi_agency_latam_v2';
 
 	/**
 	 * function to get the id of agency latam selected.

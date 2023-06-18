@@ -1,8 +1,8 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\FormaterHelper;
+use IntegrationAPI\Helpers\FormaterHelper;
 
 class BuyerService {
 
@@ -51,7 +51,7 @@ class BuyerService {
 			? sprintf( '%s %s', $order->get_shipping_first_name(), $order->get_shipping_last_name() )
 			: sprintf( '%s %s', $order->get_billing_first_name(), $order->get_billing_last_name() );
 
-		$district = $dataShipping->district;
+		$district = ( ! empty( $dataShipping->district ) ) ? $dataShipping->district : $dataBilling->district;
 
 		$body = (object) array(
 			'name'           => ( $typePerson == self::COMPANY )
@@ -61,14 +61,26 @@ class BuyerService {
 			'phoneMasked'    => $phone,
 			'email'          => $order->get_billing_email(),
 			'state_register' => null,
-			'address'        => $dataShipping->address,
-			'complement'     => $dataShipping->complement,
-			'number'         => $dataShipping->number,
+			'address'        => ( ! empty( $dataShipping->address ) )
+				? $dataShipping->address
+				: $dataBilling->address,
+			'complement'     => ( ! empty( $dataShipping->complement ) )
+				? $dataShipping->complement
+				: $dataBilling->complement,
+			'number'         => ( ! empty( $dataShipping->number ) )
+				? $dataShipping->number
+				: $dataBilling->number,
 			'district'       => ( ! empty( $district ) ) ? $district : 'N/I',
-			'city'           => $dataShipping->city,
-			'state_abbr'     => $dataShipping->state_abbr,
+			'city'           => ( ! empty( $dataShipping->city ) )
+				? $dataShipping->city
+				: $dataBilling->city,
+			'state_abbr'     => ( ! empty( $dataShipping->state_abbr ) )
+				? $dataShipping->state_abbr
+				: $dataBilling->state_abbr,
 			'country_id'     => 'BR',
-			'postal_code'    => $dataShipping->postal_code
+			'postal_code'    => ( ! empty( $dataShipping->postal_code ) )
+				? $dataShipping->postal_code
+				: $dataBilling->postal_code,
 		);
 
 		if ( $typePerson == self::PERSONAL ) {
@@ -78,11 +90,6 @@ class BuyerService {
 		if ( ! empty( $cnpj ) && $typePerson == self::COMPANY ) {
 			$body->company_document = $cnpj;
 			unset( $body->document );
-		}
-
-		if (empty($body->document) && !empty($cnpj)) {
-			$body->company_document = $cnpj;
-			unset($body->company);
 		}
 
 		return $body;

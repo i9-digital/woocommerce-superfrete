@@ -1,35 +1,28 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Models\Order;
-use MelhorEnvio\Models\Method;
-use MelhorEnvio\Models\ShippingService;
+use IntegrationAPI\Models\Order;
+use IntegrationAPI\Models\Method;
+use IntegrationAPI\Models\ShippingService;
 
 class OrderService {
 
-	const REASON_CANCELED_USER = 2;
+	const REASON_CANCELED_USER = CONFIG_REASON_CANCELED_USER;
 
-	const ROUTE_MELHOR_ENVIO_CANCEL = '/shipment/cancel';
+	const ROUTE_INTEGRATION_API_CANCEL = CONFIG_ROUTE_INTEGRATION_API_CANCEL;
+	const ROUTE_INTEGRATION_API_CANCELLABLE = CONFIG_ROUTE_INTEGRATION_API_CANCELLABLE;
+	const ROUTE_INTEGRATION_API_TRACKING = CONFIG_ROUTE_INTEGRATION_API_TRACKING;
+	const ROUTE_INTEGRATION_API_CART = CONFIG_ROUTE_INTEGRATION_API_CART;
+	const ROUTE_INTEGRATION_API_CHECKOUT = CONFIG_ROUTE_INTEGRATION_API_CHECKOUT;
+	const ROUTE_INTEGRATION_API_CREATE_LABEL = CONFIG_ROUTE_INTEGRATION_API_CREATE_LABEL;
+	const ROUTE_INTEGRATION_API_PRINT_LABEL = CONFIG_ROUTE_INTEGRATION_API_PRINT_LABEL;
+	const ROUTE_INTEGRATION_API_SEARCH = CONFIG_ROUTE_INTEGRATION_API_SEARCH;
 
-	const ROUTE_MELHOR_ENVIO_CANCELLABLE = '/shipment/cancellable';
-
-	const ROUTE_MELHOR_ENVIO_TRACKING = '/shipment/tracking';
-
-	const ROUTE_MELHOR_ENVIO_CART = '/cart';
-
-	const ROUTE_MELHOR_ENVIO_CHECKOUT = '/shipment/checkout';
-
-	const ROUTE_MELHOR_ENVIO_CREATE_LABEL = '/shipment/generate';
-
-	const ROUTE_MELHOR_ENVIO_PRINT_LABEL = '/shipment/print';
-
-	const ROUTE_MELHOR_ENVIO_SEARCH = '/orders/';
-
-	const DEFAULT_METHOD_ID = 'melhorenvio_correios_sedex';
+	const DEFAULT_METHOD_ID = CONFIG_DEFAULT_METHOD_ID;
 
 	/**
-	 * Function to cancel order on api Melhor Envio.
+	 * Function to cancel order on api SuperFrete.
 	 *
 	 * @param int $postId
 	 * @return array $response
@@ -53,7 +46,7 @@ class OrderService {
 		( new OrderQuotationService() )->removeDataQuotation( $postId );
 
 		return ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_CANCEL,
+			self::ROUTE_INTEGRATION_API_CANCEL,
 			'POST',
 			json_encode( $body ),
 			false
@@ -61,7 +54,7 @@ class OrderService {
 	}
 
 	/**
-	 * Function to get info about order in api Melhor Envio.
+	 * Function to get info about order in api SuperFrete.
 	 *
 	 * @param int $orderId
 	 * @return array $response
@@ -72,12 +65,12 @@ class OrderService {
 		if ( ! $data ) {
 			return array(
 				'success' => false,
-				'message' => 'Ordem não encontrada no Melhor Envio',
+				'message' => 'Ordem não encontrada no SuperFrete',
 			);
 		}
 
 		return ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_CART . '/' . $data['order_id'],
+			self::ROUTE_INTEGRATION_API_CART . '/' . $data['order_id'],
 			'GET',
 			array(),
 			false
@@ -86,7 +79,7 @@ class OrderService {
 
 
 	/**
-	 * Function to get details about order in api Melhor Envio.
+	 * Function to get details about order in api SuperFrete.
 	 *
 	 * @param int $postId
 	 * @return array $response
@@ -97,7 +90,7 @@ class OrderService {
 		if ( empty( $data['order_id'] ) ) {
 			return array(
 				'success' => false,
-				'message' => 'Pedido não possui etiqueta do Melhor Envio',
+				'message' => 'Pedido não possui etiqueta do SuperFrete',
 			);
 		}
 
@@ -108,12 +101,12 @@ class OrderService {
 		if ( ! $data ) {
 			return array(
 				'success' => false,
-				'message' => 'Ordem não encontrada no Melhor Envio',
+				'message' => 'Ordem não encontrada no SuperFrete',
 			);
 		}
 
 		return ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_TRACKING,
+			self::ROUTE_INTEGRATION_API_TRACKING,
 			'POST',
 			$body,
 			true
@@ -121,7 +114,7 @@ class OrderService {
 	}
 
 	/**
-	 * Function to create a label on Melhor Envio.
+	 * Function to create a label on SuperFrete.
 	 *
 	 * @param array $postsId
 	 * @return array $response
@@ -138,7 +131,19 @@ class OrderService {
 			}
 
 			$orders[] = $orderId;
+
+			if (function_exists( 'write_log' ) ) {
+				write_log('- - -  REQUEST DATA ORDER_ID - - - ');
+				write_log(print_r($orderID, true));
+			}	
+
 			$ticket   = $this->infoOrderCart( $orderId );
+			
+			if (function_exists( 'write_log' ) ) {
+				write_log('- - -  REQUEST DATA infoOrderCart - - - ');
+				write_log(print_r($ticket, true));
+			}				
+			
 			$wallet   = $wallet + $ticket->price;
 		}
 
@@ -155,7 +160,7 @@ class OrderService {
 		);
 
 		$result = ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_CHECKOUT,
+			self::ROUTE_INTEGRATION_API_CHECKOUT,
 			'POST',
 			$body,
 			true
@@ -163,7 +168,7 @@ class OrderService {
 
 		if ( array_key_exists( 'errors', $result ) ) {
 			return $result;
-		}
+		} 
 
 		return ( new OrderQuotationService() )->updateDataQuotation(
 			end( $postsId ),
@@ -177,7 +182,7 @@ class OrderService {
 	}
 
 	/**
-	 * Function to create a label on Melhor Envio.
+	 * Function to create a label on SuperFrete.
 	 *
 	 * @param array   $postId
 	 * @param $orderId
@@ -204,11 +209,11 @@ class OrderService {
 		);
 
 		$result = ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_CHECKOUT,
+			self::ROUTE_INTEGRATION_API_CHECKOUT,
 			'POST',
 			$body,
 			true
-		);
+		);	
 
 		if ( ! empty( $result->errors ) ) {
 			return array(
@@ -229,10 +234,16 @@ class OrderService {
 
 		$response['result'] = $result;
 
+		//@INJECT LOG
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - -  RESULT RESPONSE AFTER CLICK PAY - - - ');
+			write_log(print_r($response, true));
+		}		
+
 		return $response;
 	}
 	/**
-	 * Function to create a label printble on melhor envio.
+	 * Function to create a label printble on integration api.
 	 *
 	 * @param int $postId
 	 * @return void
@@ -252,7 +263,7 @@ class OrderService {
 		}
 
 		$result = ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_CREATE_LABEL,
+			self::ROUTE_INTEGRATION_API_CREATE_LABEL,
 			'POST',
 			$body,
 			true
@@ -287,12 +298,22 @@ class OrderService {
 			'orders' => (array) $orderId,
 		);
 
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - - printLabel - BODY - - - ');
+			write_log(print_r($body, true));
+		}
+
 		$result = ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_PRINT_LABEL,
+			self::ROUTE_INTEGRATION_API_PRINT_LABEL,
 			'POST',
 			$body,
 			true
 		);
+
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - - printLabel - result - - - ');
+			write_log(print_r($result, true));
+		}		
 
 		if ( ! isset( $result->url ) ) {
 			return array(
@@ -317,14 +338,14 @@ class OrderService {
 	}
 
 	/**
-	 * Function to get info about order in api Melhor Envio.
+	 * Function to get info about order in api SuperFrete.
 	 *
 	 * @param int $order_id
 	 * @return array $response
 	 */
 	public function infoOrderCart( $orderId ) {
 		return ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_CART . '/' . $orderId,
+			self::ROUTE_INTEGRATION_API_SEARCH . '/' . $orderId,
 			'GET',
 			array(),
 			false
@@ -332,14 +353,14 @@ class OrderService {
 	}
 
 	/**
-	 * Function to get information in Melhor Envio.
+	 * Function to get information in SuperFrete.
 	 *
 	 * @param string $order_id
 	 * @return array $response
 	 */
 	public function getInfoOrder( $orderId ) {
 		return ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_SEARCH . $orderId,
+			self::ROUTE_INTEGRATION_API_SEARCH . $orderId,
 			'GET',
 			array(),
 			false
@@ -363,7 +384,7 @@ class OrderService {
 	}
 
 	/**
-	 * Function to merge status with stauts melhor envio.
+	 * Function to merge status with stauts integration api.
 	 *
 	 * @param array $posts
 	 * @return array $response
@@ -373,6 +394,12 @@ class OrderService {
 
 		foreach ( $posts as $post ) {
 			$data = ( new OrderQuotationService() )->getData( $post->ID );
+
+
+			if (function_exists( 'write_log' ) ) {
+				write_log('- - - mergeStatus - ID - - - ' . $post->ID);
+				write_log(print_r($data, true));
+			}
 
 			if ( empty( $data ) ) {
 				$response[ $post->ID ] = array(
@@ -454,6 +481,7 @@ class OrderService {
 			}
 
 			if ( $data['status'] == Order::STATUS_PAID ) {
+
 				$data = $this->createLabel( $postId );
 
 				if ( isset( $data['message'] ) ) {
@@ -482,7 +510,7 @@ class OrderService {
 			);
 
 			$result = ( new RequestService() )->request(
-				self::ROUTE_MELHOR_ENVIO_PRINT_LABEL,
+				self::ROUTE_INTEGRATION_API_PRINT_LABEL,
 				'POST',
 				$body,
 				true

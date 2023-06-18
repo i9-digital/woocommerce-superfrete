@@ -1,10 +1,11 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Models\ShippingService;
-use MelhorEnvio\Helpers\TranslateStatusHelper;
-use MelhorEnvio\Helpers\ProductVirtualHelper;
+use IntegrationAPI\Models\ShippingService;
+use IntegrationAPI\Helpers\TranslateStatusHelper;
+use IntegrationAPI\Helpers\ProductVirtualHelper;
+use IntegrationAPI\Models\User;
 
 class ListOrderService {
 
@@ -38,7 +39,7 @@ class ListOrderService {
 	}
 
 	/**
-	 * Function to return the list of orders with the data of the Melhor Envio
+	 * Function to return the list of orders with the data of the SuperFrete
 	 *
 	 * @param array $posts
 	 * @return array
@@ -46,7 +47,7 @@ class ListOrderService {
 	private function getData( $posts ) {
 		$orders = array();
 
-		$statusMelhorEnvio = ( new OrderService() )->mergeStatus( $posts );
+		$statusIntegrationAPI = ( new OrderService() )->mergeStatus( $posts );
 
 		$quotationService = new QuotationService();
 
@@ -56,6 +57,16 @@ class ListOrderService {
 
 		$productService = new OrdersProductsService();
 
+		$userData = ( new User() )->get();
+		//@INJECT LOG
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - -  REQUEST DATA getMe - - - ');
+			write_log(print_r($userData, true));
+			write_log('---');
+			write_log(print_r($userData['data']['id'], true));
+		}
+		$userDataUID = $userData['data']['id'];
+				
 		foreach ( $posts as $post ) {
 			$postId = $post->ID;
 
@@ -65,23 +76,28 @@ class ListOrderService {
 
 			$products = ProductVirtualHelper::removeVirtuals( $products );
 
+			/* ESCONDE METODOS DIFERENTES DO SUPORTADO PELO SF */
+			//$testMethodId = ( new OrderService() )->getMethodIdSelected( $postId );
+			//if(is_null($testMethodId)) continue;
+			/**/
+
 			$orders[] = array(
 				'id'             => $postId,
-				'tracking'       => $statusMelhorEnvio[ $postId ]['tracking'],
-				'link_tracking'  => ( ! is_null( $statusMelhorEnvio[ $postId ]['tracking'] ) )
-					? sprintf( 'https://www.melhorrastreio.com.br/rastreio/%s', $statusMelhorEnvio[ $postId ]['tracking'] )
+				'tracking'       => $statusIntegrationAPI[ $postId ]['tracking'],
+				'link_tracking'  => ( ! is_null( $statusIntegrationAPI[ $postId ]['tracking'] ) )
+					? sprintf( 'https://rastreio.superfrete.com/#/tracking/%s', md5($userDataUID . $statusIntegrationAPI[ $postId ]['tracking']) )
 					: null,
 				'to'             => $buyerService->getDataBuyerByOrderId( $postId ),
-				'status'         => $statusMelhorEnvio[ $postId ]['status'],
+				'status'         => $statusIntegrationAPI[ $postId ]['status'],
 				'status_texto'   => $translateHelper->translateNameStatus(
-					$statusMelhorEnvio[ $postId ]['status']
+					$statusIntegrationAPI[ $postId ]['status']
 				),
-				'order_id'       => $statusMelhorEnvio[ $postId ]['order_id'],
-				'service_id'     => ( ! empty( $statusMelhorEnvio[ $postId ]['service_id'] ) )
-					? $statusMelhorEnvio[ $postId ]['service_id']
+				'order_id'       => $statusIntegrationAPI[ $postId ]['order_id'],
+				'service_id'     => ( ! empty( $statusIntegrationAPI[ $postId ]['service_id'] ) )
+					? $statusIntegrationAPI[ $postId ]['service_id']
 					: ShippingService::CORREIOS_SEDEX,
-				'protocol'       => $statusMelhorEnvio[ $postId ]['protocol'],
-				'non_commercial' => is_null( $invoice['number'] ) || is_null( $invoice['key'] ),
+				'protocol'       => $statusIntegrationAPI[ $postId ]['protocol'],
+				'non_commercial' => !$invoice['number'] || !$invoice['key'],
 				'invoice'        => $invoice,
 				'products'       => $products,
 				'quotation'      => $quotationService->calculateQuotationByPostId( $postId ),
@@ -119,7 +135,7 @@ class ListOrderService {
 		if ( isset( $status ) && $status != 'all' ) {
 			$args['meta_query'] = array(
 				array(
-					'key'     => 'melhorenvio_status_v2',
+					'key'     => 'integrationapi_status_v2',
 					'value'   => sprintf( ':"%s";', $status ),
 					'compare' => 'LIKE',
 				),

@@ -2,12 +2,15 @@
 .letter-small {
   font-size: 10px;
 }
+.input-quotation-sf {
+  font-size:12px !important;
+}
 </style>
 <template>
   <div>
-    <template v-if="item.quotation.melhorenvio == false">
+    <template v-if="item.quotation.integrationapi == false">
       <br />
-      <small>Cliente não utilizou Melhor Envio</small>
+      <small>Cliente não utilizou SuperFrete</small>
     </template>
 
     <template v-if="item.status == null && item.quotation.length == 0">
@@ -58,6 +61,7 @@
                   data-cy="input-quotation"
                   v-if="!(item.status == 'paid' || item.status == 'printed' || item.status == 'generated')"
                   v-model="item.quotation.choose_method"
+                  class="input-quotation-sf"
                 >
                   <option
                     v-if="option.id && option.price"
@@ -74,7 +78,7 @@
     </template>
 
     <template v-if="item.quotation && item.quotation[item.quotation.choose_method]">
-      <p v-if="item.quotation.diff == true">*cliente não selecionou um método de envio do Melhor Envio.</p>
+      <p v-if="item.quotation.diff == true">*cliente não selecionou um método de envio do SuperFrete.</p>
     </template>
 
     <template v-if="item.quotation.free_shipping">

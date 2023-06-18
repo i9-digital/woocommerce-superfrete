@@ -1,25 +1,25 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
-use MelhorEnvio\Models\Agency;
-use MelhorEnvio\Models\Session;
-use MelhorEnvio\Controllers\TokenController;
-use MelhorEnvio\Services\RequestService;
+use IntegrationAPI\Models\Agency;
+use IntegrationAPI\Models\Session;
+use IntegrationAPI\Controllers\TokenController;
+use IntegrationAPI\Services\RequestService;
 
 class Address {
 
-	const URL = 'https://api.melhorenvio.com';
+	const URL = CONFIG_URL;
 
-	const OPTION_ADDRESS = 'melhorenvio_address';
+	const OPTION_ADDRESS = 'integrationapi_address';
 
-	const OPTION_ADDRESSES = 'melhorenvio_addresses';
+	const OPTION_ADDRESSES = 'integrationapi_addresses';
 
-	const OPTION_ADDRESS_SELECTED = 'melhorenvio_address_selected_v2';
+	const OPTION_ADDRESS_SELECTED = 'integrationapi_address_selected_v2';
 
-	const SESSION_ADDRESS_SELECTED = 'melhorenvio_address_selected_v2';
+	const SESSION_ADDRESS_SELECTED = 'integrationapi_address_selected_v2';
 
-	const ROUTE_MELHOR_ENVIO_ADDRESS = '/addresses';
+	const ROUTE_INTEGRATION_API_ADDRESS = CONFIG_ROUTE_INTEGRATION_API_ADDRESS;
 
 	/**
 	 *
@@ -27,7 +27,7 @@ class Address {
 	 */
 	public function getAddressesShopping() {
 		$response = ( new RequestService() )->request(
-			self::ROUTE_MELHOR_ENVIO_ADDRESS,
+			self::ROUTE_INTEGRATION_API_ADDRESS,
 			'GET',
 			array(),
 			false
@@ -36,7 +36,7 @@ class Address {
 		if ( empty( $response->data ) ) {
 			return array(
 				'success' => false,
-				'message' => 'Não foi possível obter endereços da API do Melhor Envio',
+				'message' => 'Não foi possível obter endereços da API do SuperFrete',
 			);
 		}
 
@@ -53,9 +53,12 @@ class Address {
 				'postal_code' => str_pad( $address->postal_code, 8, 0, STR_PAD_LEFT ),
 				'number'      => $address->number,
 				'district'    => $address->district,
-				'city'        => $address->city->city,
-				'state'       => $address->city->state->state_abbr,
-				'country'     => $address->city->state->country->id,
+				'city'        => $address->city,
+				'state'       => $address->state,
+				'country'     => 'BR',
+				///'city'        => $address->city->city,
+				///'state'       => $address->city->state->state_abbr,
+				///'country'     => $address->city->state->country->id,
 				'selected'    => ( $selectedAddress == $address->id ),
 			);
 		}

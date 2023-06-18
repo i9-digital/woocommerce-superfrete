@@ -1,10 +1,10 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\SessionHelper;
-use MelhorEnvio\Helpers\EscapeAllowedTags;
-use MelhorEnvio\Models\Session;
+use IntegrationAPI\Helpers\SessionHelper;
+use IntegrationAPI\Helpers\EscapeAllowedTags;
+use IntegrationAPI\Models\Session;
 
 /**
  * Service responsible for managing the data stored in the session
@@ -13,7 +13,7 @@ class SessionNoticeService {
 
 
 
-	const ID_NOTICES_OPTIONS = 'wp_option_notices_melhor_envio';
+	const ID_NOTICES_OPTIONS = 'wp_option_notices_integration_api';
 
 	const TYPE_NOTICE_DEFAULT = 'notice-error';
 
@@ -26,7 +26,7 @@ class SessionNoticeService {
 		'notice-info',
 	);
 
-	const NOTICE_INVALID_TOKEN = 'Verificar seu token Melhor Envio, por favor gerar um novo token';
+	const NOTICE_INVALID_TOKEN = 'Verificar seu token SuperFrete, por favor gerar um novo token';
 
 	/**
 	 * notice-error – error message displayed with a red border
@@ -63,13 +63,13 @@ class SessionNoticeService {
 	private function formatHtml( $text, $type ) {
 		return sprintf(
 			'<div class="notice %s is-dismissible"> 
-                <p><strong>Atenção usuário do Melhor Envio</strong></p>
+                <p><strong>Atenção usuário do SuperFrete</strong></p>
                 <p>%s</p>
                 <p><a href="%s">Fechar</a></p>
             </div>',
 			$type,
 			$text,
-			get_admin_url() . 'admin-ajax.php?action=remove_notices&id=' . hash( 'sha512', $text )
+			get_admin_url() . 'admin-ajax.php?action=remove_sf_notices&id=' . hash( 'sha512', $text )
 		);
 	}
 
@@ -80,7 +80,7 @@ class SessionNoticeService {
 		 $notices = $this->get();
 		foreach ( $notices as $hash => $notice ) {
 			add_action(
-				'admin_notices',
+				'admin_sf_notices',
 				function () use ( $notice ) {
 					echo wp_kses( $notice, EscapeAllowedTags::allow_tags( array( 'div', 'p', 'a' ) ) );
 				}

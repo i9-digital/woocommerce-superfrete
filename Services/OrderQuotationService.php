@@ -1,18 +1,18 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Models\Method;
-use MelhorEnvio\Models\ShippingService;
-use MelhorEnvio\Services\QuotationService;
+use IntegrationAPI\Models\Method;
+use IntegrationAPI\Models\ShippingService;
+use IntegrationAPI\Services\QuotationService;
 
 class OrderQuotationService {
 
-	const POST_META_ORDER_QUOTATION = 'melhorenvio_quotation_v2';
+	const POST_META_ORDER_QUOTATION = 'integrationapi_quotation_v2';
 
-	const POST_META_ORDER_DATA = 'melhorenvio_status_v2';
+	const POST_META_ORDER_DATA = 'integrationapi_status_v2';
 
-	const OPTION_TOKEN_ENVIRONMENT = 'wpmelhorenvio_token_environment';
+	const OPTION_TOKEN_ENVIRONMENT = 'wpintegrationapi_token_environment';
 
 	const DEFAULT_STRUCTURE_DATE = 'Y-m-d H:i:d';
 
@@ -143,7 +143,7 @@ class OrderQuotationService {
 	 * Function to update data quotation by order.
 	 *
 	 * @param int    $orderId
-	 * @param string $orderMelhorEnvioId
+	 * @param string $orderIntegrationAPIId
 	 * @param string $protocol
 	 * @param string $status
 	 * @param int    $chooseMethod
@@ -151,7 +151,7 @@ class OrderQuotationService {
 	 */
 	public function addDataQuotation(
 		$orderId,
-		$orderMelhorEnvioId,
+		$orderIntegrationAPIId,
 		$protocol,
 		$status,
 		$chooseMethod,
@@ -160,12 +160,18 @@ class OrderQuotationService {
 	) {
 		$data = array(
 			'choose_method' => $chooseMethod,
-			'order_id'      => $orderMelhorEnvioId,
+			'order_id'      => $orderIntegrationAPIId,
 			'protocol'      => $protocol,
 			'purchase_id'   => $purcahseId,
 			'status'        => $status,
 			'created'       => date( self::DEFAULT_STRUCTURE_DATE ),
 		);
+
+
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - - addDataQuotation - ORDER_ID - - - ' . $orderId);
+			write_log(print_r($data, true));
+		}
 
 		add_post_meta( $orderId, self::POST_META_ORDER_DATA . $this->env, $data );
 
@@ -175,7 +181,7 @@ class OrderQuotationService {
 	 * Function to update data quotation by order.
 	 *
 	 * @param int    $orderId
-	 * @param string $order_melhor_envio_id
+	 * @param string $order_integration_api_id
 	 * @param string $protocol
 	 * @param string $status
 	 * @param int    $choose_method
@@ -183,7 +189,7 @@ class OrderQuotationService {
 	 */
 	public function updateDataQuotation(
 		$orderId,
-		$orderMelhorEnvioId,
+		$orderIntegrationAPIId,
 		$protocol,
 		$status,
 		$chooseMethod,
@@ -192,13 +198,20 @@ class OrderQuotationService {
 	) {
 		$data = array(
 			'choose_method' => $chooseMethod,
-			'order_id'      => $orderMelhorEnvioId,
+			'order_id'      => $orderIntegrationAPIId,
 			'protocol'      => $protocol,
 			'purchase_id'   => $purcahseId,
 			'status'        => $status,
 			'tracking'      => $tracking,
 			'created'       => date( self::DEFAULT_STRUCTURE_DATE ),
 		);
+
+		//@INJECT LOG
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - -  updateDataQuotation - - - orderAPIID -> ' . $orderIntegrationAPIId);
+			write_log(print_r($data, true));
+			write_log('- - - END - - -');
+		}
 
 		delete_post_meta( $orderId, self::POST_META_ORDER_DATA . $this->env );
 		add_post_meta( $orderId, self::POST_META_ORDER_DATA . $this->env, $data, true );
@@ -212,6 +225,13 @@ class OrderQuotationService {
 	 * @param int $orderId
 	 */
 	public function removeDataQuotation( $orderId ) {
+		//@INJECT LOG
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - -  removeDataQuotation - - - orderID -> ' . $orderId);
+			write_log(print_r($data, true));
+			write_log('- - - END - - -');
+		}		
+
 		delete_post_meta( $orderId, self::POST_META_ORDER_DATA . $this->env );
 	}
 

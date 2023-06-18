@@ -1,6 +1,6 @@
 'use strict'
 import Axios from 'axios'
-import StatusMelhorEnvio from '../utils/status'
+import StatusIntegrationAPI from '../utils/status'
 
 const orders = {
     namespaced: true,
@@ -53,7 +53,7 @@ const orders = {
                     }
                 }
             })
-            order.content.status = StatusMelhorEnvio.STATUS_CANCELED
+            order.content.status = StatusIntegrationAPI.STATUS_CANCELED
             state.orders.splice(order.position, 1, order.content)
         },
         addCartSimple: (state, data) => {
@@ -66,7 +66,7 @@ const orders = {
                     }
                 }
             })
-            order.content.status = StatusMelhorEnvio.STATUS_PENDING
+            order.content.status = StatusIntegrationAPI.STATUS_PENDING
             order.content.order_id = data.order_id
             order.content.protocol = data.protocol
             order.content.service_id = data.service_id
@@ -82,7 +82,7 @@ const orders = {
                     }
                 }
             })
-            order.content.status = StatusMelhorEnvio.STATUS_RELEASED
+            order.content.status = StatusIntegrationAPI.STATUS_RELEASED
             order.content.order_id = data.order_id
             order.content.protocol = data.protocol
             order.content.service_id = data.service_id
@@ -130,7 +130,7 @@ const orders = {
                     }
                 }
             })
-            order.content.status = StatusMelhorEnvio.STATUS_RELEASED
+            order.content.status = StatusIntegrationAPI.STATUS_RELEASED
             state.orders.splice(order.position, 1, order.content)
         },
         createTicket: (state, data) => {
@@ -143,7 +143,7 @@ const orders = {
                     }
                 }
             })
-            order.content.status = StatusMelhorEnvio.STATUS_GENERATED
+            order.content.status = StatusIntegrationAPI.STATUS_GENERATED
             state.orders.splice(order.position, 1, order.content)
         },
         printTicket: (state, data) => {
@@ -156,7 +156,7 @@ const orders = {
                     }
                 }
             })
-            order.content.status = StatusMelhorEnvio.STATUS_RELEASED
+            order.content.status = StatusIntegrationAPI.STATUS_RELEASED
             state.orders.splice(order.position, 1, order.content)
         },
         setStatusWc: (state, data) => {
@@ -207,12 +207,12 @@ const orders = {
         retrieveMany: ({ commit }, data) => {
             commit('toggleLoader', true)
             let content = {
-                action: 'get_orders',
+                action: 'get_sf_orders',
                 limit: 5,
                 skip: 0,
                 status: (data.status) ? data.status : null,
                 wpstatus: (data.wpstatus) ? data.wpstatus : null,
-                _wpnonce: wpApiSettingsMelhorEnvio.nonce_orders
+                _wpnonce: wpApiSettingsIntegrationAPI.nonce_orders
             }
 
             Axios.get(`${ajaxurl}`, {
@@ -235,7 +235,7 @@ const orders = {
 
             commit('toggleLoader', true);
             let data = {
-                action: 'buy_click',
+                action: 'buy_sf_click',
                 ids: dataPrint.orderSelecteds
             }
             Axios.get(`${ajaxurl}`, {
@@ -256,8 +256,8 @@ const orders = {
 
             commit('toggleLoader', true)
             let data = {
-                action: 'get_orders',
-                _wpnonce: wpApiSettingsMelhorEnvio.nonce_orders
+                action: 'get_sf_orders',
+                _wpnonce: wpApiSettingsIntegrationAPI.nonce_orders
             }
             state.filters.status = status.status
             state.filters.wpstatus = status.wpstatus
@@ -288,7 +288,7 @@ const orders = {
         },
         insertInvoice: ({ commit }, data) => {
             commit('toggleLoader', true)
-            Axios.post(`${ajaxurl}?action=insert_invoice_order&id=${data.id}&number=${data.invoice.number}&key=${data.invoice.key}&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_orders}`).then(response => {
+            Axios.post(`${ajaxurl}?action=insert_sf_invoice_order&id=${data.id}&number=${data.invoice.number}&key=${data.invoice.key}&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_orders}`).then(response => {
                 commit('updateInvoice', data);
                 commit('setMsgModal', response.data.message)
                 commit('toggleLoader', false)
@@ -318,7 +318,7 @@ const orders = {
                     reject();
                 }
                 if (data.id && data.service_id) {
-                    Axios.post(`${ajaxurl}?action=add_cart&post_id=${data.id}&service=${data.service_id}&non_commercial=${data.non_commercial}&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_orders}`, data)
+                    Axios.post(`${ajaxurl}?action=add_sf_cart&post_id=${data.id}&service=${data.service_id}&non_commercial=${data.non_commercial}&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_orders}`, data)
                         .then(response => {
                             commit('toggleLoader', false)
                             commit('addCartSimple', {
@@ -343,7 +343,7 @@ const orders = {
 
                 if (data.id && data.service_id) {
 
-                    Axios.post(`${ajaxurl}?action=add_order&post_id=${data.id}&service_id=${data.service_id}&non_commercial=${data.non_commercial}&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_orders}`, data)
+                    Axios.post(`${ajaxurl}?action=add_sf_order&post_id=${data.id}&service_id=${data.service_id}&non_commercial=${data.non_commercial}&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_orders}`, data)
                         .then(response => {
                             commit('toggleLoader', false)
                             if (!response.data.success) {
@@ -363,7 +363,7 @@ const orders = {
         },
         refreshCotation: (context, data) => {
             context.commit('toggleLoader', true)
-            Axios.post(`${ajaxurl}?action=update_order&id=${data.id}&order_id=${data.order_id}`).then(response => {
+            Axios.post(`${ajaxurl}?action=update_sf_order&id=${data.id}&order_id=${data.order_id}`).then(response => {
                 context.commit('toggleLoader', false)
                 context.commit('setMsgModal', 'Item #' + data.id + ' atualizado')
                 context.commit('toggleModal', true)
@@ -376,9 +376,15 @@ const orders = {
             })
 
         },
+        updateMyLimits: (context, data) => {
+            context.dispatch('balance/setLimits', null, { root: true })
+        },
+        updateMyBalance: (context, data) => {
+            context.dispatch('balance/setBalance', null, { root: true })
+        },
         removeCart: (context, data) => {
             context.commit('toggleLoader', true)
-            Axios.post(`${ajaxurl}?action=remove_order&id=${data.id}&order_id=${data.order_id}&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_orders}`, data).then(response => {
+            Axios.post(`${ajaxurl}?action=remove_sf_order&id=${data.id}&order_id=${data.order_id}&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_orders}`, data).then(response => {
                 if (!response.data.success) {
                     context.commit('setMsgModal', response.data.message)
                     context.commit('toggleLoader', false)
@@ -402,7 +408,7 @@ const orders = {
         },
         cancelOrder: (context, data) => {
             context.commit('toggleLoader', true)
-            Axios.post(`${ajaxurl}?action=cancel_order&post_id=${data.post_id}&order_id=${data.order_id}&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_orders}`, data).then(response => {
+            Axios.post(`${ajaxurl}?action=cancel_sf_order&post_id=${data.post_id}&order_id=${data.order_id}&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_orders}`, data).then(response => {
                 context.commit('setMsgModal', response.data.message)
                 context.commit('toggleModal', true)
                 context.commit('cancelCart', data.post_id)
@@ -416,7 +422,7 @@ const orders = {
         },
         payTicket: (context, data) => {
             context.commit('toggleLoader', true)
-            Axios.post(`${ajaxurl}?action=pay_ticket&id=${data.id}&order_id=${data.order_id}`, data).then(response => {
+            Axios.post(`${ajaxurl}?action=pay_sf_ticket&id=${data.id}&order_id=${data.order_id}`, data).then(response => {
 
                 if (!response.data.success) {
                     context.commit('setMsgModal', response.data.data)
@@ -438,7 +444,7 @@ const orders = {
         },
         createTicket: ({ commit }, data) => {
             commit('toggleLoader', true)
-            Axios.post(`${ajaxurl}?action=print_ticket&id=${data.id}&order_id=${data.order_id}&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_orders}`, data).then(response => {
+            Axios.post(`${ajaxurl}?action=print_sf_ticket&id=${data.id}&order_id=${data.order_id}&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_orders}`, data).then(response => {
                 if (!response.data.success) {
                     commit('setMsgModal', 'Etiquetas geradas!')
                     commit('toggleLoader', false)
@@ -456,7 +462,7 @@ const orders = {
             });
         },
         getStatusWooCommerce: ({ commit }) => {
-            Axios.get(`${ajaxurl}?action=get_status_woocommerce&_wpnonce=${wpApiSettingsMelhorEnvio.nonce_orders}`).then(response => {
+            Axios.get(`${ajaxurl}?action=get_sf_status_woocommerce&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_orders}`).then(response => {
                 commit('setStatusWc', response.data.statusWc)
             });
         },

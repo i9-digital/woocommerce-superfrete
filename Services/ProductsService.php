@@ -1,10 +1,10 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Helpers\DimensionsHelper;
-use MelhorEnvio\Services\WooCommerceBundleProductsService;
-use MelhorEnvio\Services\SessionNoticeService;
+use IntegrationAPI\Helpers\DimensionsHelper;
+use IntegrationAPI\Services\WooCommerceBundleProductsService;
+use IntegrationAPI\Services\SessionNoticeService;
 
 class ProductsService {
 
@@ -71,7 +71,7 @@ class ProductsService {
 	}
 
 	/**
-	 * Function to filter products to api Melhor Envio.
+	 * Function to filter products to api SuperFrete.
 	 *
 	 * @param array $products
 	 * @return array

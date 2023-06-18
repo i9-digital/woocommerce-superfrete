@@ -1,6 +1,6 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
 class RolesService {
 
@@ -14,8 +14,8 @@ class RolesService {
 			'init',
 			function () {
 				add_role(
-					'melhor-envio-equipe-suporte',
-					'Suporte Melhor Envio (limitado)',
+					'integration-api-equipe-suporte',
+					'Suporte SuperFrete (limitado)',
 					array(
 						'read'                    => true,
 						'manage_woocommerce'      => true,

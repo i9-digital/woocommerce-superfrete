@@ -1,11 +1,11 @@
 <?php
 
-namespace MelhorEnvio\Services;
+namespace IntegrationAPI\Services;
 
-use MelhorEnvio\Models\Seller;
-use MelhorEnvio\Models\Session;
-use MelhorEnvio\Models\ShippingService;
-use MelhorEnvio\Helpers\SessionHelper;
+use IntegrationAPI\Models\Seller;
+use IntegrationAPI\Models\Session;
+use IntegrationAPI\Models\ShippingService;
+use IntegrationAPI\Helpers\SessionHelper;
 
 class ClearDataStored {
 
@@ -27,7 +27,7 @@ class ClearDataStored {
 
         foreach ( $_SESSION[ Session::ME_KEY ] as $hash => $item) {
 
-            if ( $hash != 'notices_melhor_envio' ) {
+            if ( $hash != 'notices_integration_api' ) {
                 
                 if (!$this->hasDataOnSession($hash)) {
                     continue;

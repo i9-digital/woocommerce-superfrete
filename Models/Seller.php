@@ -1,13 +1,13 @@
 <?php
 
-namespace MelhorEnvio\Models;
+namespace IntegrationAPI\Models;
 
 class Seller {
 
 	/**
 	 * Identification key for the seller option in WordPress.
 	 */
-	const OPTION_META_SELLER = 'wp_melhor_envio_seller';
+	const OPTION_META_SELLER = 'wp_integration_api_seller';
 
 	/**
 	 * Function to select the seller data in WordPress options.
