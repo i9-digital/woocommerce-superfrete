@@ -1,4 +1,5 @@
 # SuperFrete para WooCommerce #
+**Tags: frete, fretes, cotação, cotações, correios, envio, calculadora, delivery**
 
 ## Integração SuperFrete e WooCommerce ##
 
@@ -76,7 +77,4 @@ Sim! Você pode fazer o rastreio de encomendas pelo aplicativo SuperFrete, além
 
 ### Changelog #####
 
-Adicionado Suporte ao SuperFrete
-
-
-_ Tags: frete, fretes, cotação, cotações, correios, envio, calculadora, delivery
+Adicionado Suporte ao SuperFrete.
