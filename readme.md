@@ -42,7 +42,7 @@ A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume
 - Emissão, cancelamento e impressão de etiquetas direto pelo WooCommerce.
 
 ### Instalação do módulo SuperFrete ###
-= Requerimentos - Requirements =
+** Requerimentos **
 
 - Plugin [Brazilian Market on WooCommerce](https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil)
 - Estar cadastrado na plataforma [SuperFrete]
@@ -50,23 +50,23 @@ A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume
 
 ### Instalação do plugin: ###
 
-1 - Acesse a aba “Plugins > Adicionar novo” no painel administrativo WooCommerce e busque pelo plugin “SuperFrete”.
-2 - Na página do plugin SuperFrete, instale e ative o plugin clicando em “Instalar e ativar”.
-3 - Instaleo plugin Brazilian Market for Woocommerce para garantir o funcionamento do plugin SuperFfrete
+1. Acesse a aba “Plugins > Adicionar novo” no painel administrativo WooCommerce e busque pelo plugin “SuperFrete”.
+2. Na página do plugin SuperFrete, instale e ative o plugin clicando em “Instalar e ativar”.
+3. Instaleo plugin Brazilian Market for Woocommerce para garantir o funcionamento do plugin SuperFfrete
 <a href"https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/" target="_blank">Brazilian Market on WooCommerce</a>.
-4 - Acesse a página “Tokens” no painel administrativo WooCommerce, localizado na opção “SuperFrete” do menu, e soliciter um novo token com nossa equipe na opção “Solicitar token”.
-5 - Insira o token gerado e clique em “Salvar”.
-6 - Na tela “SuperFrete -> Configurações”, confira se o endereço da loja está de acordo com o endereço que você irá despachar as encomendas do seu e-commerce. 
-7 - Após a seleção correta do endereço, clique em “Salvar”.
-8- Vá para “WooCommerce > Configurações > Entrega”, escolha a opção “SuperFrete” e preencha as configurações adequadas para as regiões que você deseja que nosso plugin atue. Importante: adicione as opções (PAC, Mini Envios e Sedex) em “Adicionar novo método de entrega” para cada região selecionada.
-9 -  Pronto! O módulo já poderá ser utilizado pelos seus clientes para garantir até 60% de desconto no frete dos Correios.
+4. Acesse a página “Tokens” no painel administrativo WooCommerce, localizado na opção “SuperFrete” do menu, e soliciter um novo token com nossa equipe na opção “Solicitar token”.
+5. Insira o token gerado e clique em “Salvar”.
+6. Na tela “SuperFrete -> Configurações”, confira se o endereço da loja está de acordo com o endereço que você irá despachar as encomendas do seu e-commerce. 
+7. Após a seleção correta do endereço, clique em “Salvar”.
+8. Vá para “WooCommerce > Configurações > Entrega”, escolha a opção “SuperFrete” e preencha as configurações adequadas para as regiões que você deseja que nosso plugin atue. Importante: adicione as opções (PAC, Mini Envios e Sedex) em “Adicionar novo método de entrega” para cada região selecionada.
+9.  Pronto! O módulo já poderá ser utilizado pelos seus clientes para garantir até 60% de desconto no frete dos Correios.
 
-Para comprar uma etiqueta pelo módulo, basta seguir o passo a passo:
+** Para comprar uma etiqueta pelo módulo, basta seguir o passo a passo: **
 
-1 -  Vá até a opção “SuperFrete -> Meus pedidos”.
-2 - Procure o pedido que você deseja comprar a etiqueta e clique no carrinho para adicionar. Depois, o pedido aparecerá no app SuperFrete e no módulo. 
-3 - Caso necessário, você pode realizar a compra da etiqueta pelo aplicativo SuperFrete ou no próprio módulo utilizando saldo via Pix. Para fazer uma recarga Pix, você pode usar o aplicativo SuperFrete. Para cartão de crédito, a etiqueta só pode ser adquirida via aplicativo. 
-4 - Após a compra da etiqueta, basta clicar em “Imprimir etiqueta”, disponível no aplicativo e no módulo, para imprimir e despachar sua encomenda!
+1.  Vá até a opção “SuperFrete -> Meus pedidos”.
+2. Procure o pedido que você deseja comprar a etiqueta e clique no carrinho para adicionar. Depois, o pedido aparecerá no app SuperFrete e no módulo. 
+3. Caso necessário, você pode realizar a compra da etiqueta pelo aplicativo SuperFrete ou no próprio módulo utilizando saldo via Pix. Para fazer uma recarga Pix, você pode usar o aplicativo SuperFrete. Para cartão de crédito, a etiqueta só pode ser adquirida via aplicativo. 
+4. Após a compra da etiqueta, basta clicar em “Imprimir etiqueta”, disponível no aplicativo e no módulo, para imprimir e despachar sua encomenda!
 
 ## Perguntas frequentes ##
 
@@ -84,10 +84,10 @@ Não, a SuperFrete é uma plataforma 100% gratuita.
 ### Como faço para comprar uma etiqueta pelo módulo? ###
 Para comprar uma etiqueta pelo módulo, basta seguir o passo a passo abaixo:
 
-1 -  Vá até a opção “SuperFrete -> Meus pedidos”.
-2 - Procure o pedido que você deseja comprar a etiqueta e clique no carrinho para adicionar. Depois, o pedido aparecerá no app SuperFrete e no módulo. 
-3 - Caso necessário, você pode realizar a compra da etiqueta pelo aplicativo SuperFrete ou no próprio módulo utilizando saldo via Pix. Para fazer uma recarga Pix, você pode usar o aplicativo SuperFrete. Para cartão de crédito, a etiqueta só pode ser adquirida via aplicativo. 
-4 - Após a compra da etiqueta, basta clicar em “Imprimir etiqueta”, disponível no aplicativo e no módulo, para imprimir e despachar sua encomenda!
+1. Vá até a opção “SuperFrete -> Meus pedidos”.
+2. Procure o pedido que você deseja comprar a etiqueta e clique no carrinho para adicionar. Depois, o pedido aparecerá no app SuperFrete e no módulo. 
+3. Caso necessário, você pode realizar a compra da etiqueta pelo aplicativo SuperFrete ou no próprio módulo utilizando saldo via Pix. Para fazer uma recarga Pix, você pode usar o aplicativo SuperFrete. Para cartão de crédito, a etiqueta só pode ser adquirida via aplicativo. 
+4. Após a compra da etiqueta, basta clicar em “Imprimir etiqueta”, disponível no aplicativo e no módulo, para imprimir e despachar sua encomenda!
 
 ### Consigo fazer o rastreamento de encomendas pelo aplicativo SuperFrete? ###
 Sim! Você pode fazer o rastreio de encomendas pelo aplicativo SuperFrete, além de receber notificações automáticas sempre que houver atualização de status do seu pedido.
