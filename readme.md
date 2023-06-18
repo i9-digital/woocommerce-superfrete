@@ -1,23 +1,5 @@
 # SuperFrete para WooCommerce #
 
-Tags: frete, fretes, cotação, cotações, correios, envio, calculadora, delivery
-
-Requires at least: 4.7
-
-Tested up to: 6.0
-
-Stable tag: 2.11.35
-
-Requires PHP: 7.2+
-
-Requires Wordpress 4.0+ 
-
-Requires WooCommerce 4.0+
-
-License: GPLv2 or later
-
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-
 ## Integração SuperFrete e WooCommerce ##
 
 ### Descrição ###
@@ -42,13 +24,6 @@ A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume
 - Emissão, cancelamento e impressão de etiquetas direto pelo WooCommerce.
 
 ### Instalação do módulo SuperFrete ###
-** Requerimentos **
-
-- Plugin [Brazilian Market on WooCommerce](https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil)
-- Estar cadastrado na plataforma [SuperFrete]
-- WooCommerce 4.0 ou posterior
-
-### Instalação do plugin: ###
 
 1. Acesse a aba “Plugins > Adicionar novo” no painel administrativo WooCommerce e busque pelo plugin “SuperFrete”.
 2. Na página do plugin SuperFrete, instale e ative o plugin clicando em “Instalar e ativar”.
@@ -61,7 +36,7 @@ A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume
 8. Vá para “WooCommerce > Configurações > Entrega”, escolha a opção “SuperFrete” e preencha as configurações adequadas para as regiões que você deseja que nosso plugin atue. Importante: adicione as opções (PAC, Mini Envios e Sedex) em “Adicionar novo método de entrega” para cada região selecionada.
 9.  Pronto! O módulo já poderá ser utilizado pelos seus clientes para garantir até 60% de desconto no frete dos Correios.
 
-** Para comprar uma etiqueta pelo módulo, basta seguir o passo a passo: **
+**Para comprar uma etiqueta pelo módulo, basta seguir o passo a passo:**
 
 1.  Vá até a opção “SuperFrete -> Meus pedidos”.
 2. Procure o pedido que você deseja comprar a etiqueta e clique no carrinho para adicionar. Depois, o pedido aparecerá no app SuperFrete e no módulo. 
@@ -70,13 +45,15 @@ A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume
 
 ## Perguntas frequentes ##
 
-## Qual é a licença do plugin? ##
-Este plugin está licenciado como GNU General Public License v2.0.
+### Qual é a licença do plugin? ###
+Este plugin está licenciado como GNU General Public License v2.0 (https://www.gnu.org/licenses/gpl-2.0.html).
 
 ### O que eu preciso para utilizar o plugin SuperFrete? ###
 * Plugin [Brazilian Market on WooCommerce](https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil).
 * Estar cadastrado na plataforma [SuperFrete]
-* WooCommerce 3.0 ou posterior.
+* Wordpress 4.0 ou posterior 
+* WooCommerce 4.0 ou posterior.
+* PHP: 7.2 ou posterior
 
 ### Tenho que pagar alguma mensalidade para usar a SuperFrete? ###
 Não, a SuperFrete é uma plataforma 100% gratuita.
@@ -100,3 +77,6 @@ Sim! Você pode fazer o rastreio de encomendas pelo aplicativo SuperFrete, além
 ### Changelog #####
 
 Adicionado Suporte ao SuperFrete
+
+
+_ Tags: frete, fretes, cotação, cotações, correios, envio, calculadora, delivery
