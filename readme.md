@@ -28,9 +28,9 @@ A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume
 
 1. Acesse a aba “Plugins > Adicionar novo” no painel administrativo WooCommerce e busque pelo plugin “SuperFrete”.
 2. Na página do plugin SuperFrete, instale e ative o plugin clicando em “Instalar e ativar”.
-3. Instaleo plugin Brazilian Market for Woocommerce para garantir o funcionamento do plugin SuperFfrete
+3. Instale o plugin Brazilian Market for Woocommerce para garantir o funcionamento do plugin SuperFfrete
 <a href"https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/" target="_blank">Brazilian Market on WooCommerce</a>.
-4. Acesse a página “Tokens” no painel administrativo WooCommerce, localizado na opção “SuperFrete” do menu, e soliciter um novo token com nossa equipe na opção “Solicitar token”.
+4. Acesse a página “Tokens” no painel administrativo WooCommerce, localizado na opção “SuperFrete” do menu, e solicitar um novo token com nossa equipe na opção “Solicitar token”.
 5. Insira o token gerado e clique em “Salvar”.
 6. Na tela “SuperFrete -> Configurações”, confira se o endereço da loja está de acordo com o endereço que você irá despachar as encomendas do seu e-commerce. 
 7. Após a seleção correta do endereço, clique em “Salvar”.
