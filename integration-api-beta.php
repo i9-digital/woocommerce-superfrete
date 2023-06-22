@@ -4,14 +4,14 @@ require __DIR__ . '/vendor/autoload.php';
 
 /*
 Plugin Name: SuperFrete
-Plugin URI: https://web.superfrete.com
-Description: Plugin para cotação e compra de fretes utilizando a API da SuperFrete.
-Version: 2.11.29
+Plugin URI: https://superfrete.com
+Description: Plugin para cotação e compra de fretes utilizando a API da Melhor Envio.
+Version: 2.11.35
 Author: SuperFrete
-Author URI: https://web.superfrete.com
+Author URI: superfrete.com
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: baseplugin
+Text Domain: superfrete
 Tested up to: 6.0
 Requires PHP: 7.2
 WC requires at least: 4.0
@@ -20,7 +20,7 @@ Domain Path: /languages
 */
 
 /**
- * Copyright (c) YEAR Your Name (email: Email). All rights reserved.
+ * Copyright (c) 2023 SuperFrete. All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php

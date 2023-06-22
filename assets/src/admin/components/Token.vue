@@ -40,7 +40,7 @@ label.switch:hover { cursor: pointer; }
 
 #wpcontent { 
   font-family: 'Poppins', sans-serif;
-  background:#fff url(@images/background_720.jpg) no-repeat top right; 
+  background:#fff url(@images/plugin-bg.png) no-repeat top right; 
 }
 .logo-super-frete {
   width: 130px;
@@ -143,10 +143,6 @@ label.switch:hover { cursor: pointer; }
   font-size: 16px;
 }
 @media (max-width: 1024px) {
-  #wpcontent {
-    background: #fff url(@images/background_720.jpg) no-repeat 135% -23px;
-    background-size: contain !important;
-  }
   .obj-robot {
     position: absolute;
     top: 100px;
@@ -159,24 +155,12 @@ label.switch:hover { cursor: pointer; }
   }
 }
 @media (min-width: 1024px) and (max-width: 1280px) {
-  #wpcontent {
-    background: #fff url(@images/background_720.jpg) no-repeat 125% -40px;
-    background-size: 400px;
-  }
   .obj-robot { max-width:24%; }
 }
 @media (min-width: 1280px) and (max-width: 1500px) {
-  #wpcontent {
-    background: #fff url(@images/background_720.jpg) no-repeat 124% -40px;
-    background-size:460px;
-  }
   .obj-robot { max-width:22%; }
 }
 @media (min-width: 1500px) {
-  #wpcontent {
-    background: #fff url(@images/background_720.jpg) no-repeat 113% -30px;
-    background-size:450px;
-  }
   .obj-robot { max-width:20%; }
 }
 </style>
@@ -191,7 +175,7 @@ label.switch:hover { cursor: pointer; }
         Após cadastro clique no botão abaixo para solicitar o token a nossa<br />
         central de atendimento
       </p>
-      <a href="mailto:suporte@superfrete.com" target="_blank" rel="noopener noreferrer" class="bt-solicitar-token">Solicitar token</a>
+      <a href="https://bit.ly/superfrete-token" target="_blank" rel="noopener noreferrer" class="bt-solicitar-token">Solicitar token</a>
     </div>
 
     <div class="box-token">
@@ -228,7 +212,7 @@ label.switch:hover { cursor: pointer; }
     <div class="app-precisa-ajuda break-line">
       <h3 class="lb-subtitulo-super">Precisa de ajuda?</h3>
       <p>
-        <a href="mailto:suporte@superfrete.com" target="_blank" rel="noopener noreferrer" class="lb-link-super">Clique aqui</a> e fale conosco
+        <a href="https://bit.ly/superfrete-ajuda" target="_blank" rel="noopener noreferrer" class="lb-link-super">Clique aqui</a> e fale conosco
       </p>
     </div>
 

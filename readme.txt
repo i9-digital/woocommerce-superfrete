@@ -1,8 +1,18 @@
-# SuperFrete para WooCommerce #
+=== SuperFrete ===
+Contributors: superfrete
+Tags: frete, fretes, cotação, cotações, correios, envio, calculadora, delivery
+Requires at least: 4.7
+Tested up to: 6.2
+Stable tag: 1.0.0
+Requires PHP: 7.2
+Requires Wordpress 4.0+
+Requires WooCommerce 4.0+
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-## Integração SuperFrete e WooCommerce ##
+Integração SuperFrete e WooCommerce
 
-### Descrição ###
+== Description ==
 A SuperFrete é uma integradora logística que oferece um conjunto de soluções para calcular, rastrear e emitir frete dos Correios com até 60% de desconto.
 
 ### Ajudamos o seu e-commerce a se tornar mais competitivo no mercado e a alavancar suas vendas online. ###
@@ -23,8 +33,7 @@ A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume
 - Rastreio de encomendas e o status dos pedidos em tempo real direto pelo aplicativo SuperFrete!
 - Emissão, cancelamento e impressão de etiquetas direto pelo WooCommerce.
 
-### Instalação do módulo SuperFrete ###
-
+== Installation ==
 1. Acesse a aba “Plugins > Adicionar novo” no painel administrativo WooCommerce e busque pelo plugin “SuperFrete”.
 2. Na página do plugin SuperFrete, instale e ative o plugin clicando em “Instalar e ativar”.
 3. Instale o plugin Brazilian Market for Woocommerce para garantir o funcionamento do plugin SuperFfrete
@@ -43,7 +52,7 @@ A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume
 3. Caso necessário, você pode realizar a compra da etiqueta pelo aplicativo SuperFrete ou no próprio módulo utilizando saldo via Pix. Para fazer uma recarga Pix, você pode usar o aplicativo SuperFrete. Para cartão de crédito, a etiqueta só pode ser adquirida via aplicativo. 
 4. Após a compra da etiqueta, basta clicar em “Imprimir etiqueta”, disponível no aplicativo e no módulo, para imprimir e despachar sua encomenda!
 
-## Perguntas frequentes ##
+== Frequently Asked Questions ==
 
 ### Qual é a licença do plugin? ###
 Este plugin está licenciado como GNU General Public License v2.0 (https://www.gnu.org/licenses/gpl-2.0.html).
@@ -69,11 +78,11 @@ Para comprar uma etiqueta pelo módulo, basta seguir o passo a passo abaixo:
 ### Consigo fazer o rastreamento de encomendas pelo aplicativo SuperFrete? ###
 Sim! Você pode fazer o rastreio de encomendas pelo aplicativo SuperFrete, além de receber notificações automáticas sempre que houver atualização de status do seu pedido.
 
-### Screenshots ###
+== Screenshots ==
 1. Nosso Método de Entrega
 2. Medidas do Produto
 
-### Changelog #####
+== Changelog ==
 
 = v1.0.0 =
 
