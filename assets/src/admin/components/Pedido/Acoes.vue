@@ -294,6 +294,7 @@ export default {
       "initLoader",
       "stopLoader",
       "setMessageModal",
+      "setMessageModalError",
       "removeCart",
       "cancelOrder",
       "payTicket",
@@ -316,7 +317,7 @@ export default {
         msg.push(
           `Por favor, necessário marcar declaração de conteúdo e/ou preencher número da nota fiscal, antes de adicionar ao carrinho.`
         );  
-        this.setMessageModal(msg);
+        this.setMessageModalError(msg);
         this.stopLoader();
       
       } else {
@@ -331,7 +332,7 @@ export default {
             this.setMessageModal(msg);
           })
           .catch((error) => {
-            this.setMessageModal(error.response.data.errors);
+            this.setMessageModalError(error.response.data.errors);
           })
           .finally(() => {
             this.stopLoader();
@@ -355,7 +356,7 @@ export default {
           }
         })
         .catch((error) => {
-          this.setMessageModal(error.response.data.errors);
+          this.setMessageModalError(error.response.data.errors);
         })
         .finally(() => {
           this.stopLoader();

@@ -1,14 +1,13 @@
-=== SuperFrete ===
+=== Superfrete ===
 Contributors: superfrete
 Tags: frete, fretes, cotação, cotações, correios, envio, calculadora, delivery
+Donate link: https://superfrete.com/
 Requires at least: 4.7
 Tested up to: 6.2
-Stable tag: 1.0.0
 Requires PHP: 7.2
-Requires Wordpress 4.0+
-Requires WooCommerce 4.0+
+Stable tag: 1.0.0
 License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Integração SuperFrete e WooCommerce
 
@@ -37,7 +36,7 @@ A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume
 1. Acesse a aba “Plugins > Adicionar novo” no painel administrativo WooCommerce e busque pelo plugin “SuperFrete”.
 2. Na página do plugin SuperFrete, instale e ative o plugin clicando em “Instalar e ativar”.
 3. Instale o plugin Brazilian Market for Woocommerce para garantir o funcionamento do plugin SuperFfrete
-<a href"https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/" target="_blank">Brazilian Market on WooCommerce</a>.
+Brazilian Market on WooCommerce.
 4. Acesse a página “Tokens” no painel administrativo WooCommerce, localizado na opção “SuperFrete” do menu, e solicitar um novo token com nossa equipe na opção “Solicitar token”.
 5. Insira o token gerado e clique em “Salvar”.
 6. Na tela “SuperFrete -> Configurações”, confira se o endereço da loja está de acordo com o endereço que você irá despachar as encomendas do seu e-commerce. 
@@ -53,7 +52,6 @@ A SuperFrete é parceira oficial dos Correios e, por concentrar um grande volume
 4. Após a compra da etiqueta, basta clicar em “Imprimir etiqueta”, disponível no aplicativo e no módulo, para imprimir e despachar sua encomenda!
 
 == Frequently Asked Questions ==
-
 ### Qual é a licença do plugin? ###
 Este plugin está licenciado como GNU General Public License v2.0 (https://www.gnu.org/licenses/gpl-2.0.html).
 
@@ -83,7 +81,10 @@ Sim! Você pode fazer o rastreio de encomendas pelo aplicativo SuperFrete, além
 2. Medidas do Produto
 
 == Changelog ==
+= 1.0.0 =
+* Initial release.
 
-= v1.0.0 =
+== Upgrade Notice ==
+= 1.0.0 =
 
-* Initial release
+* Initial Version.

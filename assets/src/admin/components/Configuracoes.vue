@@ -118,6 +118,12 @@ input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, inp
     background-color: transparent !important;
     color: #0FAE79 !important;
 }
+
+.me-modal {
+  text-align: center !important;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+}
 </style>
 
 <template>
@@ -477,12 +483,13 @@ input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, inp
     <transition name="fade">
       <div class="me-modal" v-show="show_modal">
         <div>
-          <p class="title">Sucesso!</p>
+          <img src="@images/icon-modal-success.png" alt="" />
+          <p class="title">SuperFrete</p>
           <div class="content">
-            <p class="txt">dados atualizados com sucesso!</p>
+            <p class="txt">Dados atualizados com sucesso!</p>
           </div>
           <div class="buttons -center">
-            <button type="button" @click="close" class="btn-border -full-blue">
+            <button type="button" @click="close" class="btn-border">
               Fechar
             </button>
           </div>
@@ -575,6 +582,7 @@ export default {
       agency_azul: null,
       agency_latam: null,
       show_modal: false,
+      show_modal_error: false,
       custom_calculator: false,
       show_calculator: false,
       show_all_agencies_jadlog: false,
@@ -790,6 +798,7 @@ export default {
     },
     close() {
       this.show_modal = false;
+      this.show_modal_error = false;
     },
     clearSession() {
       return new Promise((resolve, _reject) => {

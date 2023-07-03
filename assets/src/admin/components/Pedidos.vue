@@ -44,6 +44,11 @@
   z-index: 1 !important;
 }
 
+.me-modal .title {
+  padding:0px 15px !important;
+  margin:0 !important;
+}
+
 .me-modal-2 {
   z-index: 1 !important;
 }
@@ -55,6 +60,22 @@
 
 .sf-style a {
     color: #0fae79 !important;
+}
+
+.btn-border {
+    background: #0FAE79 !important;
+    border-color: #0FAE79 !important;
+    color: #fff !important;
+}
+.btn-border:hover {
+    background-color: transparent !important;
+    color: #0FAE79 !important;
+}
+
+.me-modal {
+  text-align: center !important;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
 }
 </style>
 
@@ -243,9 +264,34 @@
     </button>
 
     <transition name="fade">
+      <!-- show_modal error -->
+      <div class="me-modal me-modal-2" v-show="show_modal_error || show_modal2">
+        <div>
+          <img src="@images/icon-modal-error.png" alt="" />
+          <p class="title">SuperFrete</p>
+          <div class="content">
+            <p v-for="msg in msg_modal_error" class="txt">{{ msg }}</p>
+            <p v-for="msg in msg_modal2" class="txt">{{ msg }}</p>
+          </div>
+          <div class="buttons -center">
+            <button
+              v-if="btnCloseError"
+              type="button"
+              @click="close"
+              class="btn-border"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      </div>
+      </transition>
+      
+      <transition name="fade">
       <!-- show_modal -->
       <div class="me-modal me-modal-2" v-show="show_modal || show_modal2">
         <div>
+          <img src="@images/icon-modal-success.png" alt="" />
           <p class="title">SuperFrete</p>
           <div class="content">
             <p v-for="msg in msg_modal" class="txt">{{ msg }}</p>
@@ -256,7 +302,7 @@
               v-if="btnClose"
               type="button"
               @click="close"
-              class="btn-border -full-blue"
+              class="btn-border"
             >
               Fechar
             </button>
@@ -362,6 +408,7 @@ export default {
       show_modal2: false,
       msg_modal2: [],
       btnClose: true,
+      btnCloseError: true,
     };
   },
   components: {
@@ -378,7 +425,9 @@ export default {
       orders: "getOrders",
       show_loader: "toggleLoader",
       msg_modal: "setMsgModal",
+      msg_modal_error: "setMsgModalError",
       show_modal: "showModal",
+      show_modal_error: "showModalError",
       show_more: "showMore",
       statusWooCommerce: "statusWooCommerce",
     }),
@@ -484,6 +533,7 @@ export default {
     async beforeBuyOrders() {
       this.show_modal2 = true;
       this.btnClose = false;
+      this.btnCloseError = false;
       const orderSelected = this.getSelectedOrders();
 
       if (orderSelected.length == 0) {
@@ -496,6 +546,7 @@ export default {
         await this.dispatchCart(orderSelected[idx]);
       }
       this.btnClose = true;
+      this.btnCloseError = true;
     },
     countOrdersEnabledToBuy: function () {
       let total = 0;
@@ -530,10 +581,12 @@ export default {
                 "OPS!, ocorreu um erro ao enviar o pedido ID" + order.id
               );
               this.btnClose = true;
+              this.btnCloseError = true;
               error.errors.filter((item) => {
                 this.msg_modal2.push("ID:" + order.id + ": " + item);
               });
               this.btnClose = true;
+              this.btnCloseError = true;
               resolve();
             });
         }, 100);

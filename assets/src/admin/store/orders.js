@@ -9,8 +9,10 @@ const orders = {
         status_woocommerce: [],
         show_loader: true,
         show_modal: false,
+        show_modal_error: false,
         show_more: true,
         msg_modal: '',
+        msg_modal_error: '',
         filters: {
             limit: 5,
             skip: 5,
@@ -171,11 +173,20 @@ const orders = {
             }
             state.show_modal = data;
         },
+        toggleModalError: (state, data) => {
+            if (data == false) {
+                state.msg_modal_error = null;
+            }
+            state.show_modal_error = data;
+        },
         toggleMore: (state, data) => {
             state.show_more = data;
         },
         setMsgModal: (state, data) => {
             state.msg_modal = data;
+        },
+        setMsgModalError: (state, data) => {
+            state.msg_modal_error = data;
         },
         updateInvoice: (state, data) => {
             let order
@@ -194,15 +205,17 @@ const orders = {
         getOrders: state => state.orders,
         toggleLoader: state => state.show_loader,
         setMsgModal: state => state.msg_modal,
+        setMsgModalError: state => state.msg_modal_error,
         showModal: state => state.show_modal,
+        showModalError: state => state.show_modal_error,
         showMore: state => state.show_more,
         statusWooCommerce: state => state.status_woocommerce
 
     },
     actions: {
         showErrorAlert: ({ commit }, data) => {
-            commit('setMsgModal', data)
-            commit('toggleModal', true)
+            commit('setMsgModalError', data)
+            commit('toggleModalError', true)
         },
         retrieveMany: ({ commit }, data) => {
             commit('toggleLoader', true)
@@ -224,9 +237,9 @@ const orders = {
                     commit('toggleLoader', false)
                 }
             }).catch(error => {
-                commit('setMsgModal', error.message)
+                commit('setMsgModalError', error.message)
                 commit('toggleLoader', false)
-                commit('toggleModal', true)
+                commit('toggleModalError', true)
                 commit('toggleMore', true)
                 return false
             })
@@ -245,9 +258,9 @@ const orders = {
                 window.open(response.data.url, '_blank');
 
             }).catch(error => {
-                commit('setMsgModal', error.message)
+                commit('setMsgModalError', error.message)
                 commit('toggleLoader', false)
-                commit('toggleModal', true)
+                commit('toggleModalError', true)
                 commit('toggleMore', true)
                 return false
             })
@@ -295,9 +308,9 @@ const orders = {
                 commit('toggleModal', true)
                 return true
             }).catch(error => {
-                commit('setMsgModal', error.message)
+                commit('setMsgModalError', error.message)
                 commit('toggleLoader', false)
-                commit('toggleModal', true)
+                commit('toggleModalError', true)
                 return false
             })
         },
@@ -310,6 +323,10 @@ const orders = {
         setMessageModal: ({ commit }, msg) => {
             commit('setMsgModal', msg)
             commit('toggleModal', true)
+        },
+        setMessageModalError: ({ commit }, msg) => {
+            commit('setMsgModalError', msg)
+            commit('toggleModalError', true)
         },
         addCartSimple: ({ commit }, data) => {
             return new Promise((resolve, reject) => {
@@ -369,9 +386,9 @@ const orders = {
                 context.commit('toggleModal', true)
                 context.commit('refreshCotation', response.data)
             }).catch(error => {
-                context.commit('setMsgModal', error.message)
+                context.commit('setMsgModalError', error.message)
                 context.commit('toggleLoader', false)
-                context.commit('toggleModal', true)
+                context.commit('toggleModalError', true)
                 return false
             })
 
@@ -397,9 +414,9 @@ const orders = {
                 context.commit('toggleLoader', false)
 
             }).catch(error => {
-                context.commit('setMsgModal', error.message)
+                context.commit('setMsgModalError', error.message)
                 context.commit('toggleLoader', false)
-                context.commit('toggleModal', true)
+                context.commit('toggleModalError', true)
                 return false
             })
         },
@@ -415,9 +432,9 @@ const orders = {
                 context.dispatch('balance/setBalance', null, { root: true })
                 context.commit('toggleLoader', false)
             }).catch(error => {
-                context.commit('setMsgModal', 'Etiqueta não pode ser cancelada.')
+                context.commit('setMsgModalError', 'Etiqueta não pode ser cancelada.')
                 context.commit('toggleLoader', false)
-                context.commit('toggleModal', true)
+                context.commit('toggleModalError', true)
             })
         },
         payTicket: (context, data) => {
@@ -436,9 +453,9 @@ const orders = {
                 context.commit('toggleModal', true)
                 context.commit('toggleLoader', false)
             }).catch(error => {
-                context.commit('setMsgModal', error.message)
+                context.commit('setMsgModalError', error.message)
                 context.commit('toggleLoader', false)
-                context.commit('toggleModal', true)
+                context.commit('toggleModalError', true)
                 return false
             })
         },
@@ -455,9 +472,9 @@ const orders = {
                 commit('toggleLoader', false)
                 window.open(response.data.data.url, '_blank');
             }).catch(error => {
-                commit('setMsgModal', error.message[0])
+                commit('setMsgModalError', error.message[0])
                 commit('toggleLoader', false)
-                commit('toggleModal', true)
+                commit('toggleModalError', true)
                 return false
             });
         },
@@ -468,6 +485,7 @@ const orders = {
         },
         closeModal: ({ commit }) => {
             commit('toggleModal', false)
+            commit('toggleModalError', false)
         }
     }
 }
