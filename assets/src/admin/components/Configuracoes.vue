@@ -489,7 +489,7 @@ input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, inp
             <p class="txt">Dados atualizados com sucesso!</p>
           </div>
           <div class="buttons -center">
-            <button type="button" @click="close" class="btn-border">
+            <button type="button" @click="close" class="btn-border btn-modal">
               Fechar
             </button>
           </div>

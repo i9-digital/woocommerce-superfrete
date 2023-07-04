@@ -45,8 +45,26 @@
 }
 
 .me-modal .title {
-  padding:0px 15px !important;
+  padding:0px 0px 15px 0px !important;
   margin:0 !important;
+}
+.me-modal .content .txt {
+    font-size: 16px !important;
+    line-height: 1.2em !important;
+    margin-bottom: 15px !important;
+    font-weight: 400 !important;
+    font-family: Poppins,sans-serif !important;
+    margin:0 !important;
+}
+
+.btn-modal {
+    font-family: Poppins,sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 30px !important;
+    padding: 12px 40px !important;
+    width: 245px !important;
+    height: 56px !important;  
 }
 
 .me-modal-2 {
@@ -266,7 +284,7 @@
     <transition name="fade">
       <!-- show_modal error -->
       <div class="me-modal me-modal-2" v-show="show_modal_error || show_modal2">
-        <div>
+        <div style="padding:15px !important">
           <img src="@images/icon-modal-error.png" alt="" />
           <p class="title">SuperFrete</p>
           <div class="content">
@@ -278,7 +296,7 @@
               v-if="btnCloseError"
               type="button"
               @click="close"
-              class="btn-border"
+              class="btn-border btn-modal"
             >
               Fechar
             </button>
@@ -290,7 +308,7 @@
       <transition name="fade">
       <!-- show_modal -->
       <div class="me-modal me-modal-2" v-show="show_modal || show_modal2">
-        <div>
+        <div style="padding:15px !important">
           <img src="@images/icon-modal-success.png" alt="" />
           <p class="title">SuperFrete</p>
           <div class="content">
@@ -302,7 +320,7 @@
               v-if="btnClose"
               type="button"
               @click="close"
-              class="btn-border"
+              class="btn-border btn-modal"
             >
               Fechar
             </button>
