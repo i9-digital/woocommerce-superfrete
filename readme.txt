@@ -62,6 +62,8 @@ Este plugin está licenciado como GNU General Public License v2.0 (https://www.g
 * WooCommerce 4.0 ou posterior.
 * PHP: 7.2 ou posterior
 
+Observação: Cada usuário pode fazer na API: até 250 requisições por minuto. 
+
 ### Tenho que pagar alguma mensalidade para usar a SuperFrete? ###
 Não, a SuperFrete é uma plataforma 100% gratuita.
 
