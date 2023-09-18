@@ -1,12 +1,12 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\Address;
-use IntegrationAPI\Models\Agency;
-use IntegrationAPI\Models\Option;
-use IntegrationAPI\Models\CalculatorShow;
-use IntegrationAPI\Models\ShippingCompany;
+use Superfrete\Models\Address;
+use Superfrete\Models\Agency;
+use Superfrete\Models\Option;
+use Superfrete\Models\CalculatorShow;
+use Superfrete\Models\ShippingCompany;
 
 class ConfigurationsService {
 
@@ -155,9 +155,9 @@ class ConfigurationsService {
 				ShippingCompany::LATAM_CARGO
 			),*/
 			'calculator'          => ( new CalculatorShow() )->get(),
-			'where_calculator'    => ( ! get_option( 'integration_api_option_where_show_calculator' ) )
+			'where_calculator'    => ( ! get_option( 'superfrete_option_where_show_calculator' ) )
 				? 'woocommerce_before_add_to_cart_button'
-				: get_option( 'integration_api_option_where_show_calculator' ),
+				: get_option( 'superfrete_option_where_show_calculator' ),
 			'path_plugins'        => $this->getPathPluginsArray(),
 			'options_calculator'  => $this->getOptionsCalculator(),
 			'token_environment'   => $token['token_environment'],
@@ -211,8 +211,8 @@ class ConfigurationsService {
 	 * @return void
 	 */
 	public function setWhereCalculator( $option ) {
-		delete_option( 'integration_api_option_where_show_calculator' );
-		add_option( 'integration_api_option_where_show_calculator', $option );
+		delete_option( 'superfrete_option_where_show_calculator' );
+		add_option( 'superfrete_option_where_show_calculator', $option );
 
 		return array(
 			'success' => true,
@@ -225,8 +225,8 @@ class ConfigurationsService {
 	 * @return array
 	 */
 	public function setLabel( $label ) {
-		delete_option( 'integration_api_option_label' );
-		add_option( 'integration_api_option_label', $label );
+		delete_option( 'superfrete_option_label' );
+		add_option( 'superfrete_option_label', $label );
 
 		return array(
 			'success' => true,
@@ -239,8 +239,8 @@ class ConfigurationsService {
 	 * @return array
 	 */
 	public function setDimensionDefault( $dimension ) {
-		delete_option( 'integration_api_option_dimension_default' );
-		add_option( 'integration_api_option_dimension_default', $dimension );
+		delete_option( 'superfrete_option_dimension_default' );
+		add_option( 'superfrete_option_dimension_default', $dimension );
 
 		return array(
 			'success' => true,
@@ -276,10 +276,10 @@ class ConfigurationsService {
 	 * @return string
 	 */
 	public function savePathPlugins( $path ) {
-		delete_option( 'integration_api_path_plugins' );
-		add_option( 'integration_api_path_plugins', $path );
+		delete_option( 'superfrete_path_plugins' );
+		add_option( 'superfrete_path_plugins', $path );
 
-		return get_option( 'integration_api_path_plugins' );
+		return get_option( 'superfrete_path_plugins' );
 	}
 
 	/**
@@ -301,7 +301,7 @@ class ConfigurationsService {
 	 * @return string
 	 */
 	public function getPathPluginsArray() {
-		$path = get_option( 'integration_api_path_plugins' );
+		$path = get_option( 'superfrete_path_plugins' );
 
 		if ( ! $path ) {
 			$path = WP_PLUGIN_DIR;
@@ -321,7 +321,7 @@ class ConfigurationsService {
 
 		$stores = ( new StoreService() )->getStores();
 
-		$sellerData = ( new SellerService() )->getDataApiIntegrationAPI();
+		$sellerData = ( new SellerService() )->getDataApiSuperfrete();
 
 		$response = array();
 
@@ -429,7 +429,7 @@ class ConfigurationsService {
 	 * @return array
 	 */
 	public function getDimensionDefault() {
-		$dimension = get_option( 'integration_api_option_dimension_default' );
+		$dimension = get_option( 'superfrete_option_dimension_default' );
 		if ( empty( $dimension ) ) {
 			return array(
 				'width'  => self::WIDTH_DEFAULT,
@@ -446,7 +446,7 @@ class ConfigurationsService {
 	 * @return array
 	 */
 	public function getLabel( $origin = null ) {
-		$labelOption = get_option( 'integration_api_option_label' );
+		$labelOption = get_option( 'superfrete_option_label' );
 
 		if ( ! empty( $labelOption ) ) {
 			return $this->normalizeDataSeller( $labelOption );

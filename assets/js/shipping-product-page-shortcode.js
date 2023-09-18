@@ -23,7 +23,7 @@
             return row;
           });
 
-          $("#integration-api-shortcode .resultado-frete table tbody").append(
+          $("#superfrete-shortcode .resultado-frete table tbody").append(
             row
           );
           esconderLoader();
@@ -49,7 +49,7 @@
           url: url,
           type: "POST",
           data: {
-            action: "cotation_sf_product_page",
+            action: "cotation_superfrete_product_page",
             data: {
               id_produto: id,
               cep_origem: cep,
@@ -87,7 +87,7 @@
               row =
                 '<tr><td colspan="3">Desculpe, o cálculo de frete para este produto só está disponível no Carrinho, por favor, prossiga com a compra normalmente.</td></tr>';
             }
-            $("#integration-api-shortcode .resultado-frete table tbody").append(
+            $("#superfrete-shortcode .resultado-frete table tbody").append(
               row
             );
             esconderLoader();
@@ -99,34 +99,34 @@
     });
 
     function exibirLoader() {
-      $("#integration-api-shortcode #calcular-frete").css("display", "none");
-      $("#integration-api-shortcode #calcular-frete-loader").css(
+      $("#superfrete-shortcode #calcular-frete").css("display", "none");
+      $("#superfrete-shortcode #calcular-frete-loader").css(
         "display",
         "inline-block"
       );
     }
 
     function esconderLoader() {
-      $("#integration-api-shortcode #calcular-frete").css(
+      $("#superfrete-shortcode #calcular-frete").css(
         "display",
         "inline-block"
       );
-      $("#integration-api-shortcode #calcular-frete-loader").css(
+      $("#superfrete-shortcode #calcular-frete-loader").css(
         "display",
         "none"
       );
     }
 
     function exibirTabela() {
-      $("#integration-api-shortcode .resultado-frete").show();
+      $("#superfrete-shortcode .resultado-frete").show();
     }
 
     function esconderTabela() {
-      $("#integration-api-shortcode .resultado-frete").hide();
+      $("#superfrete-shortcode .resultado-frete").hide();
     }
 
     function resetarTabela() {
-      $("#integration-api-shortcode .resultado-frete table tbody").html("");
+      $("#superfrete-shortcode .resultado-frete table tbody").html("");
     }
   });
 })(jQuery);

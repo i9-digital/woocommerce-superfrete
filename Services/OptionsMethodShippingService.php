@@ -1,9 +1,9 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\Method;
-use IntegrationAPI\Models\Session;
+use Superfrete\Models\Method;
+use Superfrete\Models\Session;
 
 /**
  * Class responsible for managing the shipping method options service
@@ -14,7 +14,7 @@ class OptionsMethodShippingService {
 	/**
 	 * Registry key of the send method options saved in the database
 	 */
-	const KEY_OPTIONS_METHOD_DATABASE = 'integration_api_option_method_shipment_';
+	const KEY_OPTIONS_METHOD_DATABASE = 'superfrete_option_method_shipment_';
 
 	/**
 	 * Function to return the options
@@ -28,12 +28,12 @@ class OptionsMethodShippingService {
 
 		$options = $this->getOptionsShipments();
 
-		$enableds = ( new Method() )->getArrayShippingMethodsEnabledByZoneIntegrationAPI();
+		$enableds = ( new Method() )->getArrayShippingMethodsEnabledByZoneSuperfrete();
 
 		$shippingMethods = \WC()->shipping->get_shipping_methods();
 
 		foreach ( $shippingMethods as $method ) {
-			if ( ! $this->isMethodIntegrationAPI( $method ) ) {
+			if ( ! $this->isMethodSuperfrete( $method ) ) {
 				continue;
 			}
 
@@ -92,7 +92,7 @@ class OptionsMethodShippingService {
 
 		$codeStore = hash( 'sha512', get_option( 'home' ) );
 
-		$_SESSION[ Session::ME_KEY ][ $codeStore ]['integrationapi_options'] = $options;
+		$_SESSION[ Session::ME_KEY ][ $codeStore ]['superfrete_options'] = $options;
 
 		return $options;
 	}
@@ -103,7 +103,7 @@ class OptionsMethodShippingService {
 	 * @param object $method
 	 * @return boolean
 	 */
-	public function isMethodIntegrationAPI( $method ) {
-		return ( is_numeric( strpos( $method->id, 'integrationapi_' ) ) );
+	public function isMethodSuperfrete( $method ) {
+		return ( is_numeric( strpos( $method->id, 'superfrete_' ) ) );
 	}
 }

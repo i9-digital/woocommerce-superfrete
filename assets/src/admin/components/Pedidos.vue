@@ -1,5 +1,5 @@
 <style>
-.lb-titulo-sf {
+.lb-titulo-superfrete {
   font-size: 32px !important;
   font-weight: 600 !important;
   line-height: 24px !important;
@@ -76,7 +76,7 @@
   height: 50px;
 }
 
-.sf-style a {
+.superfrete-style a {
     color: #0fae79 !important;
 }
 
@@ -98,7 +98,7 @@
 </style>
 
 <template>
-  <div class="app-pedidos sf-style">
+  <div class="app-pedidos superfrete-style">
     <div class="boxBanner">
       <img src="@images/banner-admin.jpeg" />
     </div>
@@ -106,7 +106,7 @@
       <div>
         <div class="grid">
           <div class="col-12-12">
-            <h1 class="lb-titulo-sf">Meus pedidos</h1>
+            <h1 class="lb-titulo-superfrete">Meus pedidos</h1>
           </div>
           <hr />
           <div class="col-12-12" v-show="true">
@@ -613,7 +613,7 @@ export default {
     getMe() {
       this.$http
         .get(
-          `${ajaxurl}?action=sf_me&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_users}`
+          `${ajaxurl}?action=superfrete_me&_wpnonce=${wpApiSettingsSuperfrete.nonce_users}`
         )
         .then((response) => {
           if (response.data.id) {

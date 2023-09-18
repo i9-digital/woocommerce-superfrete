@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Helpers\DimensionsHelper;
+use Superfrete\Helpers\DimensionsHelper;
 
  /**
   * Aqui é verificado se o produto é da classe do plugin Composite Product,

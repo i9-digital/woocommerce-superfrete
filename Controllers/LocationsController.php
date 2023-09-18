@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Services\LocationService;
+use Superfrete\Services\LocationService;
 
 class LocationsController {
 

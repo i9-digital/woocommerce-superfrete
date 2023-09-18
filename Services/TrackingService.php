@@ -1,14 +1,14 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Helpers\EscapeAllowedTags;
+use Superfrete\Helpers\EscapeAllowedTags;
 
 class TrackingService {
 
 
 
-	const TRACKING_INTEGRATION_API = 'integrationapi_tracking';
+	const TRACKING_SUPERFRETE = 'superfrete_tracking';
 
 	/**
 	 * Save tracking order
@@ -18,7 +18,7 @@ class TrackingService {
 	 * @return void
 	 */
 	public function addTrackingOrder( $orderId, $tracking ) {
-		add_post_meta( $orderId, self::TRACKING_INTEGRATION_API, $tracking, true );
+		add_post_meta( $orderId, self::TRACKING_SUPERFRETE, $tracking, true );
 	}
 
 	/**
@@ -28,7 +28,7 @@ class TrackingService {
 	 * @return string $tracking
 	 */
 	public function getTrackingOrder( $orderId ) {
-		$data = get_post_meta( $orderId, self::TRACKING_INTEGRATION_API, true );
+		$data = get_post_meta( $orderId, self::TRACKING_SUPERFRETE, true );
 
 		if ( ! empty( $data ) ) {
 			return $data;
@@ -94,7 +94,7 @@ class TrackingService {
 	 */
 	private function addTrackingToOrderClients() {
 		add_action(
-			'woocommerce_sf_my_account_my_orders_column_tracking',
+			'woocommerce_superfrete_my_account_my_orders_column_tracking',
 			function ( $order ) {
 
 				$text = 'Não disponível';

@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Services\NoticeFormService;
+use Superfrete\Services\NoticeFormService;
 
 class NoticeFormController {
 

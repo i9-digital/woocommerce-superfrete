@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-class ShippingIntegrationAPIService {
+class ShippingSuperfreteService {
 
 	/**
 	 * function to get service codes enableds on WooCommerce.
@@ -52,12 +52,12 @@ class ShippingIntegrationAPIService {
 	 *
 	 * @return array
 	 */
-	public function getMethodsActivedsIntegrationAPI() {
+	public function getMethodsActivedsSuperfrete() {
 		$methods        = array();
 		$delivery_zones = \WC_Shipping_Zones::get_zones();
 		foreach ( $delivery_zones as $zone ) {
 			foreach ( $zone['shipping_methods'] as $method ) {
-				if ( ! $this->isIntegrationAPIMethod( $method ) && 'yes' != $method->enabled ) {
+				if ( ! $this->isSuperfreteMethod( $method ) && 'yes' != $method->enabled ) {
 					continue;
 				}
 				$methods[] = $method;
@@ -72,7 +72,7 @@ class ShippingIntegrationAPIService {
 	 * @param object $method
 	 * @return boolean
 	 */
-	public function isIntegrationAPIMethod( $method ) {
-		return ( is_numeric( strpos( $method->id, 'integrationapi_' ) ) );
+	public function isSuperfreteMethod( $method ) {
+		return ( is_numeric( strpos( $method->id, 'superfrete_' ) ) );
 	}
 }

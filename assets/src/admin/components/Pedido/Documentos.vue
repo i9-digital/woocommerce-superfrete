@@ -71,13 +71,13 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-import statusIntegrationAPI from "../../utils/status";
+import statusSuperfrete from "../../utils/status";
 import shippingServices from "../../utils/shipping-services";
 export default {
   data: () => {
     return {
       services: shippingServices,
-      status: statusIntegrationAPI,
+      status: statusSuperfrete,
     };
   },
   props: {

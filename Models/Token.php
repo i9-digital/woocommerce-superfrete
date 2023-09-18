@@ -1,14 +1,14 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
 class Token {
 
-	const OPTION_TOKEN = 'wpintegrationapi_token';
+	const OPTION_TOKEN = 'wpsuperfrete_token';
 
-	const OPTION_TOKEN_SANDBOX = 'wpintegrationapi_token_sandbox';
+	const OPTION_TOKEN_SANDBOX = 'wpsuperfrete_token_sandbox';
 
-	const OPTION_TOKEN_ENVIRONMENT = 'wpintegrationapi_token_environment';
+	const OPTION_TOKEN_ENVIRONMENT = 'wpsuperfrete_token_environment';
 
 	const PRODUCTION = 'production';
 

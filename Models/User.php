@@ -1,15 +1,15 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
-use IntegrationAPI\Services\RequestService;
-use IntegrationAPI\Models\Session;
+use Superfrete\Services\RequestService;
+use Superfrete\Models\Session;
 
 class User {
 
-	const OPTION_USER_INFO = 'integrationapi_user_info';
+	const OPTION_USER_INFO = 'superfrete_user_info';
 
-	const SESSION_USER_INFO = 'integrationapi_user_info';
+	const SESSION_USER_INFO = 'superfrete_user_info';
 
 	/**
 	 * Return an array contain info about user
@@ -21,7 +21,7 @@ class User {
 		$codeStore = hash( 'sha512', get_option( 'home' ) );
 
 		///$response = ( new RequestService() )->request( '', 'GET', array(), false );
-		$response = ( new RequestService() )->request( CONFIG_ROUTE_INTEGRATION_API_USER_INFO, 'GET', array(), false );
+		$response = ( new RequestService() )->request( SUPERFRETE_CONFIG_ROUTE_USER_INFO, 'GET', array(), false );
 
 		if ( is_null( $response ) ) {
 			return array(

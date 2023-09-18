@@ -1,9 +1,9 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\Address;
-use IntegrationAPI\Models\Seller;
+use Superfrete\Models\Address;
+use Superfrete\Models\Seller;
 
 /**
  * Class responsible for the service of managing the store salesperson
@@ -39,7 +39,7 @@ class SellerService {
 			return $data;
 		}
 
-		$data = $this->getDataApiIntegrationAPI();
+		$data = $this->getDataApiSuperfrete();
 
 		$address = ( new Address() )->getAddressFrom();
 
@@ -103,9 +103,8 @@ class SellerService {
 	 *
 	 * @return object $data
 	 */
-	public function getDataApiIntegrationAPI() {
-		///$data = ( new RequestService() )->request( '', 'GET', array(), false );
-		$data = ( new RequestService() )->request( CONFIG_ROUTE_INTEGRATION_API_USER_INFO, 'GET', array(), false );
+	public function getDataApiSuperfrete() {
+		$data = ( new RequestService() )->request( SUPERFRETE_CONFIG_ROUTE_USER_INFO, 'GET', array(), false );
 
 		if ( ! isset( $data->id ) ) {
 			return array(

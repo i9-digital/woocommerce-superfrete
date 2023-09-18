@@ -1,6 +1,6 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
 class ShippingService {
 
@@ -38,7 +38,7 @@ class ShippingService {
 
 	const SERVICES_BUSLOG = array( self::BUSLOG_RODOVIARIO );
 
-	const OPTIONS_SHIPPING_SERVICES = 'shipping_services_integration_api';
+	const OPTIONS_SHIPPING_SERVICES = 'shipping_services_superfrete';
 
 	/**
 	 * Function to return avalaible services.
@@ -57,34 +57,34 @@ class ShippingService {
 	}
 
 	/**
-	 * Function to converter method_id to code Integration API.
+	 * Function to converter method_id to code.
 	 *
 	 * @param $methodId
 	 * @return int
 	 */
 	public static function getCodeByMethodId( $methodId ) {
 		switch ( $methodId ) {
-			case 'integrationapi_correios_pac':
+			case 'superfrete_correios_pac':
 				return self::CORREIOS_PAC;
-			case 'integrationapi_correios_sedex':
+			case 'superfrete_correios_sedex':
 				return self::CORREIOS_SEDEX;
-			case 'integrationapi_jadlog_package':
+			case 'superfrete_jadlog_package':
 				return self::JADLOG_PACKAGE;
-			case 'integrationapi_jadlog_com':
+			case 'superfrete_jadlog_com':
 				return self::JADLOG_COM;
-			case 'integrationapi_via_brasil_aereo':
+			case 'superfrete_via_brasil_aereo':
 				return self::VIA_BRASIL_AEREO;
-			case 'integrationapi_via_brasil_rodoviario':
+			case 'superfrete_via_brasil_rodoviario':
 				return self::VIA_BRASIL_RODOVIARIO;
-			case 'integrationapi_azul_amanha':
+			case 'superfrete_azul_amanha':
 				return self::AZUL_AMANHA;
-			case 'integrationapi_azul_ecommerce':
+			case 'superfrete_azul_ecommerce':
 				return self::AZUL_ECOMMERCE;
-			case 'integrationapi_correios_mini':
+			case 'superfrete_correios_mini':
 				return self::CORREIOS_MINI;
-			case 'integrationapi_latam_juntos':
+			case 'superfrete_latam_juntos':
 				return self::LATAM_JUNTOS;
-			case 'integrationapi_buslog_rodoviario':
+			case 'superfrete_buslog_rodoviario':
 				return self::BUSLOG_RODOVIARIO;
 			default:
 				return null;

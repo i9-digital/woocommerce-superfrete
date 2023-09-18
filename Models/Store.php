@@ -1,6 +1,6 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
 class Store {
 

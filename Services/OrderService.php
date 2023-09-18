@@ -1,25 +1,25 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\Order;
-use IntegrationAPI\Models\Method;
-use IntegrationAPI\Models\ShippingService;
+use Superfrete\Models\Order;
+use Superfrete\Models\Method;
+use Superfrete\Models\ShippingService;
 
 class OrderService {
 
-	const REASON_CANCELED_USER = CONFIG_REASON_CANCELED_USER;
+	const REASON_CANCELED_USER = SUPERFRETE_CONFIG_REASON_CANCELED_USER;
 
-	const ROUTE_INTEGRATION_API_CANCEL = CONFIG_ROUTE_INTEGRATION_API_CANCEL;
-	const ROUTE_INTEGRATION_API_CANCELLABLE = CONFIG_ROUTE_INTEGRATION_API_CANCELLABLE;
-	const ROUTE_INTEGRATION_API_TRACKING = CONFIG_ROUTE_INTEGRATION_API_TRACKING;
-	const ROUTE_INTEGRATION_API_CART = CONFIG_ROUTE_INTEGRATION_API_CART;
-	const ROUTE_INTEGRATION_API_CHECKOUT = CONFIG_ROUTE_INTEGRATION_API_CHECKOUT;
-	const ROUTE_INTEGRATION_API_CREATE_LABEL = CONFIG_ROUTE_INTEGRATION_API_CREATE_LABEL;
-	const ROUTE_INTEGRATION_API_PRINT_LABEL = CONFIG_ROUTE_INTEGRATION_API_PRINT_LABEL;
-	const ROUTE_INTEGRATION_API_SEARCH = CONFIG_ROUTE_INTEGRATION_API_SEARCH;
+	const SUPERFRETE_ROUTE_CANCEL = SUPERFRETE_CONFIG_ROUTE_CANCEL;
+	const SUPERFRETE_ROUTE_CANCELLABLE = SUPERFRETE_CONFIG_ROUTE_CANCELLABLE;
+	const SUPERFRETE_ROUTE_TRACKING = SUPERFRETE_CONFIG_ROUTE_TRACKING;
+	const SUPERFRETE_ROUTE_CART = SUPERFRETE_CONFIG_ROUTE_CART;
+	const SUPERFRETE_ROUTE_CHECKOUT = SUPERFRETE_CONFIG_ROUTE_CHECKOUT;
+	const SUPERFRETE_ROUTE_CREATE_LABEL = SUPERFRETE_CONFIG_ROUTE_CREATE_LABEL;
+	const SUPERFRETE_ROUTE_PRINT_LABEL = SUPERFRETE_CONFIG_ROUTE_PRINT_LABEL;
+	const SUPERFRETE_ROUTE_SEARCH = SUPERFRETE_CONFIG_ROUTE_SEARCH;
 
-	const DEFAULT_METHOD_ID = CONFIG_DEFAULT_METHOD_ID;
+	const DEFAULT_METHOD_ID = SUPERFRETE_CONFIG_DEFAULT_METHOD_ID;
 
 	/**
 	 * Function to cancel order on api SuperFrete.
@@ -46,7 +46,7 @@ class OrderService {
 		( new OrderQuotationService() )->removeDataQuotation( $postId );
 
 		return ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_CANCEL,
+			self::SUPERFRETE_ROUTE_CANCEL,
 			'POST',
 			json_encode( $body ),
 			false
@@ -70,7 +70,7 @@ class OrderService {
 		}
 
 		return ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_CART . '/' . $data['order_id'],
+			self::SUPERFRETE_ROUTE_CART . '/' . $data['order_id'],
 			'GET',
 			array(),
 			false
@@ -106,7 +106,7 @@ class OrderService {
 		}
 
 		return ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_TRACKING,
+			self::SUPERFRETE_ROUTE_TRACKING,
 			'POST',
 			$body,
 			true
@@ -160,7 +160,7 @@ class OrderService {
 		);
 
 		$result = ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_CHECKOUT,
+			self::SUPERFRETE_ROUTE_CHECKOUT,
 			'POST',
 			$body,
 			true
@@ -209,7 +209,7 @@ class OrderService {
 		);
 
 		$result = ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_CHECKOUT,
+			self::SUPERFRETE_ROUTE_CHECKOUT,
 			'POST',
 			$body,
 			true
@@ -243,7 +243,7 @@ class OrderService {
 		return $response;
 	}
 	/**
-	 * Function to create a label printble on integration api.
+	 * Function to create a label printble.
 	 *
 	 * @param int $postId
 	 * @return void
@@ -263,7 +263,7 @@ class OrderService {
 		}
 
 		$result = ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_CREATE_LABEL,
+			self::SUPERFRETE_ROUTE_CREATE_LABEL,
 			'POST',
 			$body,
 			true
@@ -304,7 +304,7 @@ class OrderService {
 		}
 
 		$result = ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_PRINT_LABEL,
+			self::SUPERFRETE_ROUTE_PRINT_LABEL,
 			'POST',
 			$body,
 			true
@@ -345,7 +345,7 @@ class OrderService {
 	 */
 	public function infoOrderCart( $orderId ) {
 		return ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_SEARCH . '/' . $orderId,
+			self::SUPERFRETE_ROUTE_SEARCH . '/' . $orderId,
 			'GET',
 			array(),
 			false
@@ -360,7 +360,7 @@ class OrderService {
 	 */
 	public function getInfoOrder( $orderId ) {
 		return ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_SEARCH . $orderId,
+			self::SUPERFRETE_ROUTE_SEARCH . $orderId,
 			'GET',
 			array(),
 			false
@@ -384,7 +384,7 @@ class OrderService {
 	}
 
 	/**
-	 * Function to merge status with stauts integration api.
+	 * Function to merge status with stauts.
 	 *
 	 * @param array $posts
 	 * @return array $response
@@ -510,7 +510,7 @@ class OrderService {
 			);
 
 			$result = ( new RequestService() )->request(
-				self::ROUTE_INTEGRATION_API_PRINT_LABEL,
+				self::SUPERFRETE_ROUTE_PRINT_LABEL,
 				'POST',
 				$body,
 				true

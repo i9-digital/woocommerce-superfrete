@@ -31,19 +31,19 @@ const balance = {
     },
     actions: {
         setLimits: ({commit}, data) => {        
-            Axios.get(`${ajaxurl}?action=sf_me&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_users}`, data).then(response => {
+            Axios.get(`${ajaxurl}?action=superfrete_me&_wpnonce=${wpApiSettingsSuperfrete.nonce_users}`, data).then(response => {
                 commit('setLimits', response.data.limits)
             })
             
         },
         setBalance: ({commit}, data) => {        
-            Axios.get(`${ajaxurl}?action=get_sf_balance&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_users}`, data).then(response => {
+            Axios.get(`${ajaxurl}?action=get_superfrete_balance&_wpnonce=${wpApiSettingsSuperfrete.nonce_users}`, data).then(response => {
                 commit('setBalance', response.data.balance)
             })
             
         },
         setUser: ({commit}, data) => {        
-            Axios.get(`${ajaxurl}?action=user_sf_info`).then(response => {
+            Axios.get(`${ajaxurl}?action=user_superfrete_info`).then(response => {
                 commit('setUser', response.data.user)
             })
             

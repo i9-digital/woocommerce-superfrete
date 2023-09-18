@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
-use IntegrationAPI\Models\Address;
+use Superfrete\Models\Address;
 
 class CalculatorShow {
 
@@ -10,7 +10,7 @@ class CalculatorShow {
 	 * @return bool
 	 */
 	public function get() {
-		$show = get_option( 'integrationapi_hide_calculator_product' );
+		$show = get_option( 'superfrete_hide_calculator_product' );
 
 		if ( ! $show ) {
 			return true;
@@ -29,10 +29,10 @@ class CalculatorShow {
 	 */
 	public function set( $value ) {
 		if ( $value == 'true' ) {
-			delete_option( 'integrationapi_hide_calculator_product' );
+			delete_option( 'superfrete_hide_calculator_product' );
 			return true;
 		} else {
-			add_option( 'integrationapi_hide_calculator_product', 1 );
+			add_option( 'superfrete_hide_calculator_product', 1 );
 			return false;
 		}
 	}

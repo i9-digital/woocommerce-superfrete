@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
-use IntegrationAPI\Helpers\DimensionsHelper;
+use Superfrete\Helpers\DimensionsHelper;
 
 class Cart {
 

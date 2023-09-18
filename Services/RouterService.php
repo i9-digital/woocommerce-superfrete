@@ -1,22 +1,22 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Controllers\AgenciesController;
-use IntegrationAPI\Controllers\ConfigurationController;
-use IntegrationAPI\Controllers\LocationsController;
-use IntegrationAPI\Controllers\OrdersController;
-use IntegrationAPI\Controllers\QuotationController;
-use IntegrationAPI\Controllers\SessionsController;
-use IntegrationAPI\Controllers\StatusController;
-use IntegrationAPI\Controllers\TokenController;
-use IntegrationAPI\Controllers\UsersController;
-use IntegrationAPI\Controllers\PathController;
-use IntegrationAPI\Controllers\PayloadsController;
-use IntegrationAPI\Controllers\CartController;
-use IntegrationAPI\Controllers\NoticeFormController;
-use IntegrationAPI\Helpers\SanitizeHelper;
-use IntegrationAPI\Models\Version;
+use Superfrete\Controllers\AgenciesController;
+use Superfrete\Controllers\ConfigurationController;
+use Superfrete\Controllers\LocationsController;
+use Superfrete\Controllers\OrdersController;
+use Superfrete\Controllers\QuotationController;
+use Superfrete\Controllers\SessionsController;
+use Superfrete\Controllers\StatusController;
+use Superfrete\Controllers\TokenController;
+use Superfrete\Controllers\UsersController;
+use Superfrete\Controllers\PathController;
+use Superfrete\Controllers\PayloadsController;
+use Superfrete\Controllers\CartController;
+use Superfrete\Controllers\NoticeFormController;
+use Superfrete\Helpers\SanitizeHelper;
+use Superfrete\Models\Version;
 
 /**
  * Class responsible for managing the routes of the plugin
@@ -54,8 +54,8 @@ class RouterService {
 	private function loadRoutesUsers() {
 		$usersController = new UsersController();
 
-		add_action( 'wp_ajax_sf_me', array( $usersController, 'getMe' ) );
-		add_action( 'wp_ajax_get_sf_balance', array( $usersController, 'getBalance' ) );
+		add_action( 'wp_ajax_superfrete_me', array( $usersController, 'getMe' ) );
+		add_action( 'wp_ajax_get_superfrete_balance', array( $usersController, 'getBalance' ) );
 	}
 
 	/**
@@ -67,21 +67,21 @@ class RouterService {
 		$ordersController = new OrdersController();
 
 		add_action(
-			'wp_ajax_get_sf_quotation',
+			'wp_ajax_get_superfrete_quotation',
 			function () use ( $ordersController ) {
 				$ordersController->getOrderQuotationByOrderId( $_GET['id'] );
 			}
 		);
-		add_action( 'wp_ajax_get_sf_orders', array( $ordersController, 'getOrders' ) );
-		add_action( 'wp_ajax_add_sf_cart', array( $ordersController, 'addCart' ) );
-		add_action( 'wp_ajax_add_sf_order', array( $ordersController, 'sendOrder' ) );
-		add_action( 'wp_ajax_buy_sf_click', array( $ordersController, 'buyOnClick' ) );
-		add_action( 'wp_ajax_remove_sf_order', array( $ordersController, 'removeOrder' ) );
-		add_action( 'wp_ajax_cancel_sf_order', array( $ordersController, 'cancelOrder' ) );
-		add_action( 'wp_ajax_pay_sf_ticket', array( $ordersController, 'payTicket' ) );
-		add_action( 'wp_ajax_create_sf_ticket', array( $ordersController, 'createTicket' ) );
-		add_action( 'wp_ajax_print_sf_ticket', array( $ordersController, 'printTicket' ) );
-		add_action( 'wp_ajax_insert_sf_invoice_order', array( $ordersController, 'insertInvoiceOrder' ) );
+		add_action( 'wp_ajax_get_superfrete_orders', array( $ordersController, 'getOrders' ) );
+		add_action( 'wp_ajax_add_superfrete_cart', array( $ordersController, 'addCart' ) );
+		add_action( 'wp_ajax_add_superfrete_order', array( $ordersController, 'sendOrder' ) );
+		add_action( 'wp_ajax_buy_superfrete_click', array( $ordersController, 'buyOnClick' ) );
+		add_action( 'wp_ajax_remove_superfrete_order', array( $ordersController, 'removeOrder' ) );
+		add_action( 'wp_ajax_cancel_superfrete_order', array( $ordersController, 'cancelOrder' ) );
+		add_action( 'wp_ajax_pay_superfrete_ticket', array( $ordersController, 'payTicket' ) );
+		add_action( 'wp_ajax_create_superfrete_ticket', array( $ordersController, 'createTicket' ) );
+		add_action( 'wp_ajax_print_superfrete_ticket', array( $ordersController, 'printTicket' ) );
+		add_action( 'wp_ajax_insert_superfrete_invoice_order', array( $ordersController, 'insertInvoiceOrder' ) );
 	}
 
 	/**
@@ -92,9 +92,9 @@ class RouterService {
 	private function loadRoutesQuotations() {
 		$quotationsController = new QuotationController();
 
-		add_action( 'wp_ajax_nopriv_cotation_sf_product_page', array( $quotationsController, 'cotationProductPage' ) );
-		add_action( 'wp_ajax_cotation_sf_product_page', array( $quotationsController, 'cotationProductPage' ) );
-		add_action( 'wp_ajax_update_sf_order', array( $quotationsController, 'refreshCotation' ) );
+		add_action( 'wp_ajax_nopriv_cotation_superfrete_product_page', array( $quotationsController, 'cotationProductPage' ) );
+		add_action( 'wp_ajax_cotation_superfrete_product_page', array( $quotationsController, 'cotationProductPage' ) );
+		add_action( 'wp_ajax_update_superfrete_order', array( $quotationsController, 'refreshCotation' ) );
 	}
 
 	/**
@@ -104,9 +104,9 @@ class RouterService {
 	 */
 	private function loadRoutesConfigurations() {
 		$configurationsController = new ConfigurationController();
-		add_action( 'wp_ajax_get_sf_configuracoes', array( $configurationsController, 'getConfigurations' ) );
-		add_action( 'wp_ajax_get_sf_metodos', array( $configurationsController, 'getMethodsEnables' ) );
-		add_action( 'wp_ajax_save_sf_configuracoes', array( $configurationsController, 'saveAll' ) );
+		add_action( 'wp_ajax_get_superfrete_configuracoes', array( $configurationsController, 'getConfigurations' ) );
+		add_action( 'wp_ajax_get_superfrete_metodos', array( $configurationsController, 'getMethodsEnables' ) );
+		add_action( 'wp_ajax_save_superfrete_configuracoes', array( $configurationsController, 'saveAll' ) );
 	}
 
 	/**
@@ -117,7 +117,7 @@ class RouterService {
 	private function loadRoutesStatus() {
 		$statusController = new StatusController();
 
-		add_action( 'wp_ajax_get_sf_status_woocommerce', array( $statusController, 'getStatus' ) );
+		add_action( 'wp_ajax_get_superfrete_status_woocommerce', array( $statusController, 'getStatus' ) );
 	}
 
 	/**
@@ -128,9 +128,9 @@ class RouterService {
 	private function loadRoutesTokens() {
 		$tokensController = new TokenController();
 
-		add_action( 'wp_ajax_get_sf_token', array( $tokensController, 'get' ) );
-		add_action( 'wp_ajax_save_sf_token', array( $tokensController, 'save' ) );
-		add_action( 'wp_ajax_verify_sf_token', array( $tokensController, 'verifyToken' ) );
+		add_action( 'wp_ajax_get_superfrete_token', array( $tokensController, 'get' ) );
+		add_action( 'wp_ajax_save_superfrete_token', array( $tokensController, 'save' ) );
+		add_action( 'wp_ajax_verify_superfrete_token', array( $tokensController, 'verifyToken' ) );
 	}
 
 	/**
@@ -142,14 +142,14 @@ class RouterService {
 		$version = Version::VERSION;
 
 		add_action(
-			'wp_ajax_nopriv_sf_environment',
+			'wp_ajax_nopriv_superfrete_environment',
 			function () use ( $version ) {
 				( new TestService( $version ) )->run();
 			}
 		);
 
 		add_action(
-			'wp_ajax_sf_environment',
+			'wp_ajax_superfrete_environment',
 			function () use ( $version ) {
 				( new TestService( $version ) )->run();
 			}
@@ -164,8 +164,8 @@ class RouterService {
 	private function loadRoutesSession() {
 		$sessionsController = new SessionsController();
 
-		add_action( 'wp_ajax_delete_integration_api_session', array( $sessionsController, 'deleteSession' ) );
-		add_action( 'wp_ajax_get_integration_api_session', array( $sessionsController, 'getSession' ) );
+		add_action( 'wp_ajax_delete_superfrete_session', array( $sessionsController, 'deleteSession' ) );
+		add_action( 'wp_ajax_get_superfrete_session', array( $sessionsController, 'getSession' ) );
 	}
 
 	/**
@@ -176,7 +176,7 @@ class RouterService {
 	private function loadRoutesLocation() {
 		$locationController = new LocationsController();
 
-		foreach ( array( 'wp_ajax_get_sf_address', 'wp_ajax_nopriv_get_sf_address' ) as $action ) {
+		foreach ( array( 'wp_ajax_get_superfrete_address', 'wp_ajax_nopriv_get_superfrete_address' ) as $action ) {
 			add_action(
 				$action,
 				function () use ( $locationController ) {
@@ -203,7 +203,7 @@ class RouterService {
 	private function loadRoutesPath() {
 		$pathController = new PathController();
 
-		add_action( 'wp_ajax_check_sf_path', array( $pathController, 'getPathPlugin' ) );
+		add_action( 'wp_ajax_check_superfrete_path', array( $pathController, 'getPathPlugin' ) );
 	}
 
 	/**
@@ -221,7 +221,7 @@ class RouterService {
 		$postId = SanitizeHelper::apply( $_GET['post_id'] );
 
 		add_action(
-			'wp_ajax_nopriv_get_sf_payload',
+			'wp_ajax_nopriv_get_superfrete_payload',
 			function () use ( $payloadsController, $postId ) {
 				if ( empty( $_GET['post_id'] ) ) {
 					return wp_send_json(
@@ -237,7 +237,7 @@ class RouterService {
 		);
 
 		add_action(
-			'wp_ajax_get_sf_payload',
+			'wp_ajax_get_superfrete_payload',
 			function () use ( $payloadsController, $postId ) {
 				if ( empty( $_GET['post_id'] ) ) {
 					return wp_send_json(
@@ -253,7 +253,7 @@ class RouterService {
 		);
 
 		add_action(
-			'wp_ajax_destroy_sf_payload',
+			'wp_ajax_destroy_superfrete_payload',
 			function () use ( $payloadsController, $postId ) {
 				if ( empty( $_GET['post_id'] ) ) {
 					return wp_send_json(
@@ -269,7 +269,7 @@ class RouterService {
 		);
 
 		add_action(
-			'wp_ajax_get_sf_payload_cart',
+			'wp_ajax_get_superfrete_payload_cart',
 			function () use ( $payloadsController ) {
 				if ( empty( $_GET['post_id'] ) ) {
 					return wp_send_json(
@@ -306,14 +306,14 @@ class RouterService {
 	 */
 	public function loadRoutesNotices() {
 		add_action(
-			'wp_ajax_get_sf_notices',
+			'wp_ajax_get_superfrete_notices',
 			function () {
 				( new SessionNoticeService() )->get();
 			}
 		);
 
 		add_action(
-			'wp_ajax_remove_sf_notices',
+			'wp_ajax_remove_superfrete_notices',
 			function () {
 				( new SessionNoticeService() )->remove( SanitizeHelper::apply( $_GET['id'] ) );
 			}
@@ -324,7 +324,7 @@ class RouterService {
 		$locationService = new LocationService();
 
 		add_action(
-			'wp_ajax_test_sf_user_woocommerce_data',
+			'wp_ajax_test_superfrete_user_woocommerce_data',
 			function () use ( $locationService ) {
 
 				if ( empty( $_GET['postcode'] ) ) {
@@ -353,7 +353,7 @@ class RouterService {
 		$usersController = new UsersController();
 
 		add_action(
-			'wp_ajax_user_sf_woocommerce_data',
+			'wp_ajax_user_superfrete_woocommerce_data',
 			function () use ( $usersController ) {
 				return wp_send_json(
 					array(
@@ -368,7 +368,7 @@ class RouterService {
 		$cartController = new CartController();
 
 		add_action(
-			'wp_ajax_show_sf_cart',
+			'wp_ajax_show_superfrete_cart',
 			function () use ( $cartController ) {
 				return wp_send_json(
 					array(
@@ -388,21 +388,21 @@ class RouterService {
 		$formController = new NoticeFormController();
 
 		add_action(
-			'wp_ajax_open_form_integration_api',
+			'wp_ajax_open_form_superfrete',
 			function () use ( $formController ) {
 				return wp_send_json( $formController->openForm() );
 			}
 		);
 
 		add_action(
-			'wp_ajax_show_form_integration_api',
+			'wp_ajax_show_form_superfrete',
 			function () use ( $formController ) {
 				return wp_send_json( $formController->showForm() );
 			}
 		);
 
 		add_action(
-			'wp_ajax_hide_form_integration_api',
+			'wp_ajax_hide_form_superfrete',
 			function () use ( $formController ) {
 				return wp_send_json( $formController->hideForm() );
 			}
@@ -417,7 +417,7 @@ class RouterService {
 	public function loadRoutesAgencies() {
 		$agenciesController = new AgenciesController();
 		add_action(
-			'wp_ajax_get_sf_agencies',
+			'wp_ajax_get_superfrete_agencies',
 			function () use ( $agenciesController ) {
 				return $agenciesController->get();
 			}

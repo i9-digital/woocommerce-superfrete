@@ -1,11 +1,11 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Services\ClearDataStored;
-use IntegrationAPI\Helpers\SessionHelper;
-use IntegrationAPI\Helpers\WpNonceValidatorHelper;
-use IntegrationAPI\Models\Session;
+use Superfrete\Services\ClearDataStored;
+use Superfrete\Helpers\SessionHelper;
+use Superfrete\Helpers\WpNonceValidatorHelper;
+use Superfrete\Models\Session;
 
 class SessionsController {
 
@@ -26,7 +26,7 @@ class SessionsController {
 	 * @return json
 	 */
 	public function deleteSession() {
-		WpNonceValidatorHelper::check( $_GET['_wpnonce'], 'save_sf_configurations' );
+		WpNonceValidatorHelper::check( $_GET['_wpnonce'], 'save_superfrete_configurations' );
 		( new ClearDataStored() )->clear();
 	}
 }

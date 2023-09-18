@@ -280,7 +280,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import statusIntegrationAPI from "../../utils/status";
+import statusSuperfrete from "../../utils/status";
 export default {
   props: {
     item: {
@@ -309,9 +309,11 @@ export default {
       ///console.log('sendCartSimple');
       ///console.log(data);
       
-      if(!data.non_commercial && 
+      console.log('DATA 123');
+      console.log(data);
+      if(data.non_commercial == false && 
         (data.invoice_number === null || data.invoice_number === 'null' || (data.invoice_number).trim() == '')) {
-
+        console.log('NON COMMERCIAL: ' + data.non_commercial);
         this.initLoader();        
         const msg = [];
         msg.push(
@@ -321,6 +323,8 @@ export default {
         this.stopLoader();
       
       } else {
+
+        console.log('line 327');
 
         this.initLoader();
         this.addCartSimple(data)
@@ -374,11 +378,11 @@ export default {
         return false;
       }
       if (
-        item.status == statusIntegrationAPI.STATUS_PENDING ||
-        item.status == statusIntegrationAPI.STATUS_RELEASED ||
-        item.status == statusIntegrationAPI.STATUS_POSTED ||
-        item.status == statusIntegrationAPI.STATUS_CANCELED ||
-        item.status == statusIntegrationAPI.STATUS_DELIVERED
+        item.status == statusSuperfrete.STATUS_PENDING ||
+        item.status == statusSuperfrete.STATUS_RELEASED ||
+        item.status == statusSuperfrete.STATUS_POSTED ||
+        item.status == statusSuperfrete.STATUS_CANCELED ||
+        item.status == statusSuperfrete.STATUS_DELIVERED
       ) {
         return false;
       }
@@ -395,10 +399,10 @@ export default {
 
       if (
         !(
-          item.status == statusIntegrationAPI.STATUS_POSTED ||
-          item.status == statusIntegrationAPI.STATUS_RELEASED ||
-          item.status == statusIntegrationAPI.STATUS_CANCELED ||
-          item.status == statusIntegrationAPI.STATUS_DELIVERED
+          item.status == statusSuperfrete.STATUS_POSTED ||
+          item.status == statusSuperfrete.STATUS_RELEASED ||
+          item.status == statusSuperfrete.STATUS_CANCELED ||
+          item.status == statusSuperfrete.STATUS_DELIVERED
         )
       ) {
         return true;
@@ -408,9 +412,9 @@ export default {
     },
     buttonCancel(item) {
       if (
-        item.status == statusIntegrationAPI.STATUS_POSTED ||
-        item.status == statusIntegrationAPI.STATUS_GENERATED ||
-        item.status == statusIntegrationAPI.STATUS_RELEASED
+        item.status == statusSuperfrete.STATUS_POSTED ||
+        item.status == statusSuperfrete.STATUS_GENERATED ||
+        item.status == statusSuperfrete.STATUS_RELEASED
       ) {
         return true;
       }

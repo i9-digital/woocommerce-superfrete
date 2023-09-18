@@ -1,13 +1,13 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
 class Seller {
 
 	/**
 	 * Identification key for the seller option in WordPress.
 	 */
-	const OPTION_META_SELLER = 'wp_integration_api_seller';
+	const OPTION_META_SELLER = 'wp_superfrete_seller';
 
 	/**
 	 * Function to select the seller data in WordPress options.

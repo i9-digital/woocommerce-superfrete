@@ -295,7 +295,7 @@ export default {
     getToken() {
       this.$http
         .get(
-          `${ajaxurl}?action=get_sf_token&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_tokens}`
+          `${ajaxurl}?action=get_superfrete_token&_wpnonce=${wpApiSettingsSuperfrete.nonce_tokens}`
         )
         .then((response) => {
           this.token = response.data.token;
@@ -313,13 +313,13 @@ export default {
       bodyFormData.append("token", this.token);
       bodyFormData.append("token_sandbox", this.token_sandbox);
       bodyFormData.append("environment", this.environment);
-      bodyFormData.append("_wpnonce", wpApiSettingsIntegrationAPI.nonce_tokens);
+      bodyFormData.append("_wpnonce", wpApiSettingsSuperfrete.nonce_tokens);
       if (
         (this.token && this.token.length > 0) ||
         (this.token_sandbox && this.token_sandbox.length > 0)
       ) {
         axios({
-          url: `${ajaxurl}?action=save_sf_token`,
+          url: `${ajaxurl}?action=save_superfrete_token`,
           data: bodyFormData,
           method: "POST",
         })

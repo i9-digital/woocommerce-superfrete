@@ -26,3 +26,6 @@ package-lock.json
 yarn.lock
 
 .idea/
+
+#envs
+vendor/*.env*

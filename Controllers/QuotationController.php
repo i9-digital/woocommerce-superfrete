@@ -1,12 +1,12 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Helpers\SanitizeHelper;
-use IntegrationAPI\Services\PayloadService;
-use IntegrationAPI\Services\QuotationService;
-use IntegrationAPI\Services\QuotationProductPageService;
-use IntegrationAPI\Models\Session;
+use Superfrete\Helpers\SanitizeHelper;
+use Superfrete\Services\PayloadService;
+use Superfrete\Services\QuotationService;
+use Superfrete\Services\QuotationProductPageService;
+use Superfrete\Models\Session;
 
 /**
  * Class responsible for the quotation controller

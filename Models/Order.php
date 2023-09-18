@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
-use IntegrationAPI\Services\OrderQuotationService;
+use Superfrete\Services\OrderQuotationService;
 
 class Order {
 

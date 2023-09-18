@@ -1,10 +1,10 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
 class OrderInvoicesService {
 
-	const POST_META_INVOICE = 'integrationapi_invoice_v2';
+	const POST_META_INVOICE = 'superfrete_invoice_v2';
 
 	/**
 	 * Function to save invoice by order.

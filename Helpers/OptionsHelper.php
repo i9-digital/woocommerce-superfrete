@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Helpers;
+namespace Superfrete\Helpers;
 
-use IntegrationAPI\Models\Option;
+use Superfrete\Models\Option;
 
 class OptionsHelper {
 
@@ -19,7 +19,7 @@ class OptionsHelper {
 
 		global $wpdb;
 
-		$sql = sprintf( "select * from %soptions where option_name = 'integration_api_option_method_shipment_%s'", $wpdb->prefix, (string) $id );
+		$sql = sprintf( "select * from %soptions where option_name = 'superfrete_option_method_shipment_%s'", $wpdb->prefix, (string) $id );
 
 		$results = $wpdb->get_results( $sql );
 

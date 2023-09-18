@@ -1,11 +1,11 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\ShippingService;
-use IntegrationAPI\Helpers\TranslateStatusHelper;
-use IntegrationAPI\Helpers\ProductVirtualHelper;
-use IntegrationAPI\Models\User;
+use Superfrete\Models\ShippingService;
+use Superfrete\Helpers\TranslateStatusHelper;
+use Superfrete\Helpers\ProductVirtualHelper;
+use Superfrete\Models\User;
 
 class ListOrderService {
 
@@ -47,7 +47,7 @@ class ListOrderService {
 	private function getData( $posts ) {
 		$orders = array();
 
-		$statusIntegrationAPI = ( new OrderService() )->mergeStatus( $posts );
+		$statusSuperfrete = ( new OrderService() )->mergeStatus( $posts );
 
 		$quotationService = new QuotationService();
 
@@ -76,27 +76,27 @@ class ListOrderService {
 
 			$products = ProductVirtualHelper::removeVirtuals( $products );
 
-			/* ESCONDE METODOS DIFERENTES DO SUPORTADO PELO SF */
+			/* ESCONDE METODOS DIFERENTES DO SUPORTADO PELO SUPERFRETE */
 			//$testMethodId = ( new OrderService() )->getMethodIdSelected( $postId );
 			//if(is_null($testMethodId)) continue;
 			/**/
 
 			$orders[] = array(
 				'id'             => $postId,
-				'tracking'       => $statusIntegrationAPI[ $postId ]['tracking'],
-				'link_tracking'  => ( ! is_null( $statusIntegrationAPI[ $postId ]['tracking'] ) )
-					? sprintf( 'https://rastreio.superfrete.com/#/tracking/%s', md5($userDataUID . $statusIntegrationAPI[ $postId ]['tracking']) )
+				'tracking'       => $statusSuperfrete[ $postId ]['tracking'],
+				'link_tracking'  => ( ! is_null( $statusSuperfrete[ $postId ]['tracking'] ) )
+					? sprintf( 'https://rastreio.superfrete.com/#/tracking/%s', md5($userDataUID . $statusSuperfrete[ $postId ]['tracking']) )
 					: null,
 				'to'             => $buyerService->getDataBuyerByOrderId( $postId ),
-				'status'         => $statusIntegrationAPI[ $postId ]['status'],
+				'status'         => $statusSuperfrete[ $postId ]['status'],
 				'status_texto'   => $translateHelper->translateNameStatus(
-					$statusIntegrationAPI[ $postId ]['status']
+					$statusSuperfrete[ $postId ]['status']
 				),
-				'order_id'       => $statusIntegrationAPI[ $postId ]['order_id'],
-				'service_id'     => ( ! empty( $statusIntegrationAPI[ $postId ]['service_id'] ) )
-					? $statusIntegrationAPI[ $postId ]['service_id']
+				'order_id'       => $statusSuperfrete[ $postId ]['order_id'],
+				'service_id'     => ( ! empty( $statusSuperfrete[ $postId ]['service_id'] ) )
+					? $statusSuperfrete[ $postId ]['service_id']
 					: ShippingService::CORREIOS_SEDEX,
-				'protocol'       => $statusIntegrationAPI[ $postId ]['protocol'],
+				'protocol'       => $statusSuperfrete[ $postId ]['protocol'],
 				'non_commercial' => !$invoice['number'] || !$invoice['key'],
 				'invoice'        => $invoice,
 				'products'       => $products,
@@ -135,7 +135,7 @@ class ListOrderService {
 		if ( isset( $status ) && $status != 'all' ) {
 			$args['meta_query'] = array(
 				array(
-					'key'     => 'integrationapi_status_v2',
+					'key'     => 'superfrete_status_v2',
 					'value'   => sprintf( ':"%s";', $status ),
 					'compare' => 'LIKE',
 				),

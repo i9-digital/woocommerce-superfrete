@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
-use IntegrationAPI\Services\OptionsMethodShippingService;
+use Superfrete\Services\OptionsMethodShippingService;
 
 class Method {
 
@@ -33,13 +33,13 @@ class Method {
 
 		$result = end( $result );
 
-		return $this->getCodeIntegrationAPIShippingMethod( $result->method );
+		return $this->getCodeSuperfreteShippingMethod( $result->method );
 	}
 
 	/**
 	 * @return void
 	 */
-	public function getCodeIntegrationAPIShippingMethod( $method_id ) {
+	public function getCodeSuperfreteShippingMethod( $method_id ) {
 		$shipping_methods = \WC()->shipping->get_shipping_methods();
 
 		foreach ( $shipping_methods as $method ) {
@@ -56,7 +56,7 @@ class Method {
 		return null;
 	}
 
-	public function getArrayShippingMethodsEnabledByZoneIntegrationAPI() {
+	public function getArrayShippingMethodsEnabledByZoneSuperfrete() {
 		global $wpdb;
 		$enableds = array();
 		$sql      = sprintf( 'select * from %swoocommerce_shipping_zone_methods where is_enabled = 1', $wpdb->prefix );

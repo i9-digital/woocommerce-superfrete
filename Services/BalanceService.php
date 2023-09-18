@@ -1,6 +1,6 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
 class BalanceService {
 
@@ -11,7 +11,7 @@ class BalanceService {
 	 */
 	public function get() {
 		$response = ( new RequestService() )->request(
-			CONFIG_ROUTE_INTEGRATION_API_USER_BALANCE,
+			SUPERFRETE_CONFIG_ROUTE_USER_BALANCE,
 			'GET',
 			array(),
 			false

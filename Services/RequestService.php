@@ -1,20 +1,20 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Services\ManageRequestService;
-use IntegrationAPI\Services\ClearDataStored;
-use IntegrationAPI\Models\Version;
-use IntegrationAPI\Models\ResponseStatus;
-use IntegrationAPI\Services\SessionNoticeService;
+use Superfrete\Services\ManageRequestService;
+use Superfrete\Services\ClearDataStored;
+use Superfrete\Models\Version;
+use Superfrete\Models\ResponseStatus;
+use Superfrete\Services\SessionNoticeService;
 
 class RequestService {
 
-	const URL = CONFIG_URL;
+	const URL = SUPERFRETE_CONFIG_URL;
 
-	const SANDBOX_URL = CONFIG_SANDBOX_URL;
+	const SANDBOX_URL = SUPERFRETE_CONFIG_SANDBOX_URL;
 
-	const TIMEOUT = CONFIG_TIMEOUT;
+	const TIMEOUT = SUPERFRETE_CONFIG_TIMEOUT;
 
 	const WP_ERROR = 'WP_Error';
 
@@ -48,7 +48,7 @@ class RequestService {
 			'Content-Type'      => 'application/json',
 			'Accept'            => 'application/json',
 			'Authorization'     => 'Bearer ' . $this->token,
-			'platform'					=> CONFIG_PLATFORM,
+			'platform'					=> SUPERFRETE_CONFIG_PLATFORM,
 		);
 	}
 
@@ -122,7 +122,7 @@ class RequestService {
 							'body'     => '',
 							'timeout ' => self::TIMEOUT,
 						);
-						$routeOrderGetInfo = CONFIG_ROUTE_INTEGRATION_API_SEARCH . $paramsArr['orders'][0]; 
+						$routeOrderGetInfo = SUPERFRETE_CONFIG_ROUTE_SEARCH . $paramsArr['orders'][0]; 
 						$responseRemote = wp_remote_post( $this->url . $routeOrderGetInfo, $myParams );
 						$response = json_decode(wp_remote_retrieve_body( $responseRemote ));
 

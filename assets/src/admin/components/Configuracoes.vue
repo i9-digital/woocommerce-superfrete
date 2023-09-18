@@ -1,5 +1,5 @@
 <style lang="css">
-.lb-titulo-sf {
+.lb-titulo-superfrete {
   font-size: 32px !important;
   font-weight: 600 !important;
   line-height: 24px !important;
@@ -7,7 +7,7 @@
   margin-top: 0 !important;
 }
 
-.bt-sf {
+.bt-superfrete {
   border: 1px solid #0FAE79;
   border-radius: 12px;
   -moz-border-radius: 12px;
@@ -20,7 +20,7 @@
   text-decoration: none;
   font-size: 18px;
 }
-.bt-sf:hover {
+.bt-superfrete:hover {
   background:#008558;
   cursor:pointer;
 }
@@ -95,7 +95,7 @@
   font-weight: 600;
 }
 
-.input-sf-origem::before {
+.input-superfrete-origem::before {
   background-color:#0FAE79 !important;
 }
 input[type=checkbox]:checked::before {
@@ -138,7 +138,7 @@ input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, inp
       <div>
         <div class="grid">
           <div class="col-12-12">
-            <h1 class="lb-titulo-sf">Configurações gerais</h1>
+            <h1 class="lb-titulo-superfrete">Configurações gerais</h1>
           </div>
           <hr />
           <div class="col-12-12" v-show="error_message">
@@ -165,7 +165,7 @@ input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, inp
                     :id="option.id"
                     name="input_address"
                     :value="option.address.id"
-                    class="input-sf-origem"
+                    class="input-superfrete-origem"
                     v-model="origin"
                     data-cy="address-input"
                     @click="
@@ -336,7 +336,7 @@ input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, inp
               type="checkbox"
               value="Personalizar"
               data-cy="receipt"
-              class="input-sf-opcoes-cotacao"
+              class="input-superfrete-opcoes-cotacao"
               v-model="options_calculator && options_calculator.receipt"
             />
             Aviso de recebimento
@@ -346,7 +346,7 @@ input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, inp
               type="checkbox"
               value="Personalizar"
               data-cy="own_hand"
-              class="input-sf-opcoes-cotacao"
+              class="input-superfrete-opcoes-cotacao"
               v-model="options_calculator && options_calculator.own_hand"
             />
             Mão própria
@@ -356,7 +356,7 @@ input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, inp
               type="checkbox"
               value="Personalizar"
               data-cy="insurance_value"
-              class="input-sf-opcoes-cotacao"
+              class="input-superfrete-opcoes-cotacao"
               v-model="options_calculator && options_calculator.insurance_value"
             />
             Assegurar sempre
@@ -434,7 +434,7 @@ input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, inp
       <h2></h2>
       <h3>Shortcode para exibir a calculadora</h3>
       <p>
-        <b>[calculadora_integration_api product_id="product_id"]</b>
+        <b>[calculadora_superfrete product_id="product_id"]</b>
       </p>
       <p>
         É necessário informar o ID do produto para o shortcode funcionar de
@@ -478,7 +478,7 @@ input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, inp
     </div>
     <hr />
 
-    <button class="bt-sf" @click="updateConfig">Salvar</button>
+    <button class="bt-superfrete" @click="updateConfig">Salvar</button>
 
     <transition name="fade">
       <div class="me-modal" v-show="show_modal">
@@ -715,7 +715,7 @@ export default {
     },
     createAjaxUrl(agencyId, data) {
       const { city, state } = data;
-      return `${ajaxurl}?action=get_sf_agencies&company=${agencyId}&city=${city}&state=${state}&_wpnonce=${wpApiSettingsIntegrationAPI.nonce_configs}`;
+      return `${ajaxurl}?action=get_superfrete_agencies&company=${agencyId}&city=${city}&state=${state}&_wpnonce=${wpApiSettingsSuperfrete.nonce_configs}`;
     },
     showJadlogAgencies(data) {
       this.setLoader(true);

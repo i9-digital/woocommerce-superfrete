@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\Token;
+use Superfrete\Models\Token;
 
 class TokenService {
 

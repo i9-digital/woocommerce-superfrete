@@ -1,16 +1,16 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Helpers\SanitizeHelper;
-use IntegrationAPI\Helpers\WpNonceValidatorHelper;
-use IntegrationAPI\Models\Address;
-use IntegrationAPI\Models\Agency;
-use IntegrationAPI\Models\Store;
-use IntegrationAPI\Models\Method;
-use IntegrationAPI\Models\Option;
-use IntegrationAPI\Services\ConfigurationsService;
-use IntegrationAPI\Services\OptionsMethodShippingService;
+use Superfrete\Helpers\SanitizeHelper;
+use Superfrete\Helpers\WpNonceValidatorHelper;
+use Superfrete\Models\Address;
+use Superfrete\Models\Agency;
+use Superfrete\Models\Store;
+use Superfrete\Models\Method;
+use Superfrete\Models\Option;
+use Superfrete\Services\ConfigurationsService;
+use Superfrete\Services\OptionsMethodShippingService;
 
 /**
  * Class responsible for the configuration controller
@@ -24,7 +24,7 @@ class ConfigurationController {
 	 */
 	public function getConfigurations() {
 
-		WpNonceValidatorHelper::check( $_GET['_wpnonce'], 'save_sf_configurations' );
+		WpNonceValidatorHelper::check( $_GET['_wpnonce'], 'save_superfrete_configurations' );
 
 		return wp_send_json(
 			( new ConfigurationsService() )->getConfigurations(),
@@ -39,7 +39,7 @@ class ConfigurationController {
 	 * @return string
 	 */
 	public function getWhereCalculatorValue() {
-		$option = get_option( 'integration_api_option_where_show_calculator' );
+		$option = get_option( 'superfrete_option_where_show_calculator' );
 		if ( ! $option ) {
 			return 'woocommerce_before_add_to_cart_button';
 		}
@@ -54,7 +54,7 @@ class ConfigurationController {
 	 */
 	public function saveAll() {
 
-		WpNonceValidatorHelper::check( $_POST['_wpnonce'], 'save_sf_configurations' );
+		WpNonceValidatorHelper::check( $_POST['_wpnonce'], 'save_superfrete_configurations' );
 
 		$response = ( new ConfigurationsService() )->saveConfigurations( SanitizeHelper::apply( $_POST ) );
 		return wp_send_json( $response, 200 );

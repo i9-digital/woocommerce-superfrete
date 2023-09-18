@@ -1,10 +1,10 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Helpers\DimensionsHelper;
-use IntegrationAPI\Services\WooCommerceBundleProductsService;
-use IntegrationAPI\Services\ProductsService;
+use Superfrete\Helpers\DimensionsHelper;
+use Superfrete\Services\WooCommerceBundleProductsService;
+use Superfrete\Services\ProductsService;
 
 class OrdersProductsService {
 

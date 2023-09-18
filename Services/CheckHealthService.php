@@ -1,6 +1,6 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
 /**
  * Health service class
@@ -8,7 +8,7 @@ namespace IntegrationAPI\Services;
 class CheckHealthService {
 
 	public function init() {
-		$this->hasShippingMethodsIntegrationAPI();
+		$this->hasShippingMethodsSuperfrete();
 	}
 
 	/**
@@ -17,12 +17,12 @@ class CheckHealthService {
 	 *
 	 * @return void
 	 */
-	public function hasShippingMethodsIntegrationAPI() {
+	public function hasShippingMethodsSuperfrete() {
 		add_action(
-			'woocommerce_sf_init',
+			'woocommerce_superfrete_init',
 			function () {
-				$methods = ( new ShippingIntegrationAPIService() )
-				->getMethodsActivedsIntegrationAPI();
+				$methods = ( new ShippingSuperfreteService() )
+				->getMethodsActivedsSuperfrete();
 
 				if ( count( $methods ) == 0 ) {
 					$message = sprintf(

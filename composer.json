@@ -1,5 +1,5 @@
 {
-    "name": "integrationapi/integrationapi-cotation",
+    "name": "superfrete/superfrete-cotation",
     "description": "Plugin de cotações para WooCommerce",
     "homepage": "https://superfrete.com",
     "license": "GPLv3",
@@ -14,12 +14,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "IntegrationAPI\\Controllers\\": "Controllers/",
-            "IntegrationAPI\\Models\\": "Models/",
-            "IntegrationAPI\\Interfaces\\": "core/interfaces/",
-            "IntegrationAPI\\Services\\": "Services/",
-            "IntegrationAPI\\Bases\\": "core/bases/",
-            "IntegrationAPI\\Helpers\\": "Helpers/"
+            "Superfrete\\Controllers\\": "Controllers/",
+            "Superfrete\\Models\\": "Models/",
+            "Superfrete\\Interfaces\\": "core/interfaces/",
+            "Superfrete\\Services\\": "Services/",
+            "Superfrete\\Bases\\": "core/bases/",
+            "Superfrete\\Helpers\\": "Helpers/"
         }
     }
 }

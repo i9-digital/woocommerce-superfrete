@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Helpers;
+namespace Superfrete\Helpers;
 
-use IntegrationAPI\Services\OptionsMethodShippingService;
+use Superfrete\Services\OptionsMethodShippingService;
 
 class TimeHelper {
 

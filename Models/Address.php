@@ -1,25 +1,25 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
-use IntegrationAPI\Models\Agency;
-use IntegrationAPI\Models\Session;
-use IntegrationAPI\Controllers\TokenController;
-use IntegrationAPI\Services\RequestService;
+use Superfrete\Models\Agency;
+use Superfrete\Models\Session;
+use Superfrete\Controllers\TokenController;
+use Superfrete\Services\RequestService;
 
 class Address {
 
-	const URL = CONFIG_URL;
+	const URL = SUPERFRETE_CONFIG_URL;
 
-	const OPTION_ADDRESS = 'integrationapi_address';
+	const OPTION_ADDRESS = 'superfrete_address';
 
-	const OPTION_ADDRESSES = 'integrationapi_addresses';
+	const OPTION_ADDRESSES = 'superfrete_addresses';
 
-	const OPTION_ADDRESS_SELECTED = 'integrationapi_address_selected_v2';
+	const OPTION_ADDRESS_SELECTED = 'superfrete_address_selected_v2';
 
-	const SESSION_ADDRESS_SELECTED = 'integrationapi_address_selected_v2';
+	const SESSION_ADDRESS_SELECTED = 'superfrete_address_selected_v2';
 
-	const ROUTE_INTEGRATION_API_ADDRESS = CONFIG_ROUTE_INTEGRATION_API_ADDRESS;
+	const SUPERFRETE_ROUTE_ADDRESS = SUPERFRETE_CONFIG_ROUTE_ADDRESS;
 
 	/**
 	 *
@@ -27,7 +27,7 @@ class Address {
 	 */
 	public function getAddressesShopping() {
 		$response = ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_ADDRESS,
+			self::SUPERFRETE_ROUTE_ADDRESS,
 			'GET',
 			array(),
 			false

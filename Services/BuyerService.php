@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Helpers\FormaterHelper;
+use Superfrete\Helpers\FormaterHelper;
 
 class BuyerService {
 

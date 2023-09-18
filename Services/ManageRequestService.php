@@ -1,6 +1,6 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
 /**
  * Service responsible for managing request logs
@@ -10,7 +10,7 @@ class ManageRequestService {
 	/**
 	 * Constant for wp_options where request logs will be stored
 	 */
-	const WP_OPTIONS_REQUEST_LOGS = 'integrationapi_requests_logs';
+	const WP_OPTIONS_REQUEST_LOGS = 'superfrete_requests_logs';
 
 	/**
 	 * Function to store the log of a request

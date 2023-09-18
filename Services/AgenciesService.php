@@ -1,10 +1,10 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
 class AgenciesService {
 
-	const ROUTE_GET_AGENCIES = CONFIG_ROUTE_GET_AGENCIES;
+	const SUPERFRETE_ROUTE_GET_AGENCIES = SUPERFRETE_CONFIG_ROUTE_GET_AGENCIES;
 
 	protected $state = null;
 
@@ -64,7 +64,7 @@ class AgenciesService {
 
 		$query = http_build_query( $data );
 
-		return self::ROUTE_GET_AGENCIES . '?' . $query;
+		return self::SUPERFRETE_ROUTE_GET_AGENCIES . '?' . $query;
 	}
 
 	/**

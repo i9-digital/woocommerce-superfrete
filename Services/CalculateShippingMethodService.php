@@ -1,12 +1,12 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Helpers\MoneyHelper;
-use IntegrationAPI\Helpers\TimeHelper;
-use IntegrationAPI\Models\ShippingService;
-use IntegrationAPI\Helpers\PostalCodeHelper;
-use IntegrationAPI\Services\WooCommerceBundleProductsService;
+use Superfrete\Helpers\MoneyHelper;
+use Superfrete\Helpers\TimeHelper;
+use Superfrete\Models\ShippingService;
+use Superfrete\Helpers\PostalCodeHelper;
+use Superfrete\Services\WooCommerceBundleProductsService;
 
 class CalculateShippingMethodService {
 

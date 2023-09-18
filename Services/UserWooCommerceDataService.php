@@ -1,6 +1,6 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
 /**
  * Class UserWooCommerceDataService

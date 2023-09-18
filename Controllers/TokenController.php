@@ -1,10 +1,10 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Helpers\SanitizeHelper;
-use IntegrationAPI\Helpers\WpNonceValidatorHelper;
-use IntegrationAPI\Services\TokenService;
+use Superfrete\Helpers\SanitizeHelper;
+use Superfrete\Helpers\WpNonceValidatorHelper;
+use Superfrete\Services\TokenService;
 
 class TokenController {
 
@@ -89,7 +89,7 @@ class TokenController {
 
 		WpNonceValidatorHelper::check( $_GET[ self::WP_NONCE ], 'tokens' );
 
-		if ( ! get_option( 'wpintegrationapi_token' ) ) {
+		if ( ! get_option( 'wpsuperfrete_token' ) ) {
 			return wp_send_json(
 				array(
 					'exists_token' => false,

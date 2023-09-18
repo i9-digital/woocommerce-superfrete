@@ -2,12 +2,12 @@
 
 namespace App;
 
-use IntegrationAPI\Helpers\EscapeAllowedTags;
+use Superfrete\Helpers\EscapeAllowedTags;
 
 /**
  * Admin Pages Handler
  */
-class Admin_SF
+class Admin_SUPERFRETE
 {
 
 
@@ -26,7 +26,7 @@ class Admin_SF
 		global $submenu;
 
 		$capability = 'manage_woocommerce';
-		$slug       = 'integration-api';
+		$slug       = 'superfrete';
 
 		$hook = add_menu_page(
 			__('SuperFrete', 'textdomain'),
@@ -63,9 +63,9 @@ class Admin_SF
 	 */
 	public function enqueue_scripts()
 	{
-		wp_enqueue_style('baseplugin-style');
-		wp_enqueue_style('baseplugin-admin');
-		wp_enqueue_script('baseplugin-admin');
+		wp_enqueue_style('superfrete-style');
+		wp_enqueue_style('superfrete-admin');
+		wp_enqueue_script('superfrete-admin');
 	}
 
 	/**

@@ -1,10 +1,10 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Helpers\SanitizeHelper;
-use IntegrationAPI\Helpers\WpNonceValidatorHelper;
-use IntegrationAPI\Services\AgenciesService;
+use Superfrete\Helpers\SanitizeHelper;
+use Superfrete\Helpers\WpNonceValidatorHelper;
+use Superfrete\Services\AgenciesService;
 
 class AgenciesController {
 
@@ -16,7 +16,7 @@ class AgenciesController {
 	public function get() {
 		try {
 
-			WpNonceValidatorHelper::check( $_GET['_wpnonce'], 'save_sf_configurations' );
+			WpNonceValidatorHelper::check( $_GET['_wpnonce'], 'save_superfrete_configurations' );
 
 			if ( empty( $_GET['state'] ) ) {
 				return wp_send_json(

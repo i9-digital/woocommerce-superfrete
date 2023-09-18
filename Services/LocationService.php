@@ -1,6 +1,6 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
 /**
  * Location service class
@@ -10,7 +10,7 @@ class LocationService {
 	/**
 	 * SuperFrete location api URL
 	 */
-	const URL = 'https://location.integrationapi.com.br/';
+	const URL = 'https://location.superfrete.com.br/';
 
 	/**
 	 * Via CEP location api URL
@@ -30,7 +30,7 @@ class LocationService {
 			return null;
 		}
 
-		$address = $this->getAddressByPostalCodeLocationIntegrationAPI( $postalCode );
+		$address = $this->getAddressByPostalCodeLocationSuperfrete( $postalCode );
 
 		if ( ! $address ) {
 			$address = $this->getAddressByPostalCodeLocationViaCep( $postalCode );
@@ -49,7 +49,7 @@ class LocationService {
 	 * @param float $postalCode
 	 * @return object
 	 */
-	public function getAddressByPostalCodeLocationIntegrationAPI( $postalCode ) {
+	public function getAddressByPostalCodeLocationSuperfrete( $postalCode ) {
 		$url = self::URL . $postalCode;
 
 		$result = json_decode(

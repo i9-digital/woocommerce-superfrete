@@ -1,11 +1,11 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Helpers\DimensionsHelper;
-use IntegrationAPI\Helpers\SanitizeHelper;
-use IntegrationAPI\Models\Option;
-use IntegrationAPI\Models\ResponseStatus;
+use Superfrete\Helpers\DimensionsHelper;
+use Superfrete\Helpers\SanitizeHelper;
+use Superfrete\Models\Option;
+use Superfrete\Models\ResponseStatus;
 
 class TestService {
 
@@ -173,8 +173,8 @@ class TestService {
 	 * @return array
 	 */
 	private function getShippingMethods() {
-		$shippingMethods = ( new ShippingIntegrationAPIService() )
-			->getMethodsActivedsIntegrationAPI();
+		$shippingMethods = ( new ShippingSuperfreteService() )
+			->getMethodsActivedsSuperfrete();
 
 		$response = array();
 

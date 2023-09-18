@@ -42,7 +42,7 @@
                     url: url,
                     type: "POST",
                     data: {
-                        'action': 'cotation_sf_product_page',
+                        'action': 'cotation_superfrete_product_page',
                         'data': {
                             'cep_origem': cep,
                             'id_produto': id_produto,

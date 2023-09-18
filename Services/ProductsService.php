@@ -1,10 +1,10 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Helpers\DimensionsHelper;
-use IntegrationAPI\Services\WooCommerceBundleProductsService;
-use IntegrationAPI\Services\SessionNoticeService;
+use Superfrete\Helpers\DimensionsHelper;
+use Superfrete\Services\WooCommerceBundleProductsService;
+use Superfrete\Services\SessionNoticeService;
 
 class ProductsService {
 

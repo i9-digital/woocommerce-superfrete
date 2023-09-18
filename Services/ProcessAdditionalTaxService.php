@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Helpers\SanitizeHelper;
+use Superfrete\Helpers\SanitizeHelper;
 
 /**
  * Class ProcessAdditionalTaxService
@@ -16,8 +16,8 @@ class ProcessAdditionalTaxService {
 		if ( ! empty( $shipping_classes ) ) {
 			$shipping_classes = end( $shipping_classes );
 			if ( $shipping_classes->total > 0 ) {
-				add_action( 'woocommerce_sf_add_to_cart', array( $this, 'addCart' ) );
-				add_action( 'woocommerce_sf_remove_cart_item', array( $this, 'removeCart' ), 10, 2 );
+				add_action( 'woocommerce_superfrete_add_to_cart', array( $this, 'addCart' ) );
+				add_action( 'woocommerce_superfrete_remove_cart_item', array( $this, 'removeCart' ), 10, 2 );
 			}
 		}
 	}

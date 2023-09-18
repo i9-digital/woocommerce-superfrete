@@ -1,6 +1,6 @@
 <?php
 
-namespace IntegrationAPI\Helpers;
+namespace Superfrete\Helpers;
 
 class PostalCodeHelper {
 

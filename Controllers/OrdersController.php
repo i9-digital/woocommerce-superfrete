@@ -1,16 +1,16 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Helpers\SanitizeHelper;
-use IntegrationAPI\Helpers\WpNonceValidatorHelper;
-use IntegrationAPI\Services\OrdersProductsService;
-use IntegrationAPI\Services\BuyerService;
-use IntegrationAPI\Services\CartService;
-use IntegrationAPI\Services\OrderService;
-use IntegrationAPI\Services\OrderQuotationService;
-use IntegrationAPI\Services\ListOrderService;
-use IntegrationAPI\Services\OrderInvoicesService;
+use Superfrete\Helpers\SanitizeHelper;
+use Superfrete\Helpers\WpNonceValidatorHelper;
+use Superfrete\Services\OrdersProductsService;
+use Superfrete\Services\BuyerService;
+use Superfrete\Services\CartService;
+use Superfrete\Services\OrderService;
+use Superfrete\Services\OrderQuotationService;
+use Superfrete\Services\ListOrderService;
+use Superfrete\Services\OrderInvoicesService;
 
 class OrdersController {
 
@@ -59,6 +59,11 @@ class OrdersController {
 
 		$service = SanitizeHelper::apply( $_GET['service'] );
 
+		$nonCommercial = SanitizeHelper::apply( $_GET['non_commercial'] );
+
+		$nonCommercial = ($nonCommercial == 'false') ? false : $nonCommercial;
+		$nonCommercial = ($nonCommercial == 'true') ? true : $nonCommercial;
+		
 		$products = ( new OrdersProductsService() )->getProductsOrder( $postId );
 
 		$buyer = ( new BuyerService() )->getDataBuyerByOrderId( $postId );
@@ -67,7 +72,8 @@ class OrdersController {
 			$postId,
 			$products,
 			$buyer,
-			$service
+			$service,
+			$nonCommercial
 		);
 
 		if ( empty( $result['success'] ) && isset( $result['errors'] ) && $result['errors'] == 'validation.nfe' ) {
@@ -124,6 +130,8 @@ class OrdersController {
 
 		$serviceId = SanitizeHelper::apply( $_GET['service_id'] );
 
+		$nonCommercial = SanitizeHelper::apply( $_GET['non_commercial'] );
+
 		$status = null;
 
 		$orderQuotationService = new OrderQuotationService();
@@ -147,7 +155,8 @@ class OrdersController {
 				$postId,
 				$products,
 				$buyer,
-				$serviceId
+				$serviceId,
+				$nonCommercial
 			);
 
 			if ( empty( $cartResult['order_id'] ) ) {

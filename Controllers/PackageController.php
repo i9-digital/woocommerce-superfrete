@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Helpers\DimensionsHelper;
+use Superfrete\Helpers\DimensionsHelper;
 
 class PackageController {
 

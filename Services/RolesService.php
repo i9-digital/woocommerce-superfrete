@@ -1,6 +1,6 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
 class RolesService {
 
@@ -14,7 +14,7 @@ class RolesService {
 			'init',
 			function () {
 				add_role(
-					'integration-api-equipe-suporte',
+					'superfrete-equipe-suporte',
 					'Suporte SuperFrete (limitado)',
 					array(
 						'read'                    => true,

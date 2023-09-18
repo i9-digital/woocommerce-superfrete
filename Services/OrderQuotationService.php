@@ -1,18 +1,18 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\Method;
-use IntegrationAPI\Models\ShippingService;
-use IntegrationAPI\Services\QuotationService;
+use Superfrete\Models\Method;
+use Superfrete\Models\ShippingService;
+use Superfrete\Services\QuotationService;
 
 class OrderQuotationService {
 
-	const POST_META_ORDER_QUOTATION = 'integrationapi_quotation_v2';
+	const POST_META_ORDER_QUOTATION = 'superfrete_quotation_v2';
 
-	const POST_META_ORDER_DATA = 'integrationapi_status_v2';
+	const POST_META_ORDER_DATA = 'superfrete_status_v2';
 
-	const OPTION_TOKEN_ENVIRONMENT = 'wpintegrationapi_token_environment';
+	const OPTION_TOKEN_ENVIRONMENT = 'wpsuperfrete_token_environment';
 
 	const DEFAULT_STRUCTURE_DATE = 'Y-m-d H:i:d';
 
@@ -143,7 +143,7 @@ class OrderQuotationService {
 	 * Function to update data quotation by order.
 	 *
 	 * @param int    $orderId
-	 * @param string $orderIntegrationAPIId
+	 * @param string $orderSuperfreteId
 	 * @param string $protocol
 	 * @param string $status
 	 * @param int    $chooseMethod
@@ -151,7 +151,7 @@ class OrderQuotationService {
 	 */
 	public function addDataQuotation(
 		$orderId,
-		$orderIntegrationAPIId,
+		$orderSuperfreteId,
 		$protocol,
 		$status,
 		$chooseMethod,
@@ -160,7 +160,7 @@ class OrderQuotationService {
 	) {
 		$data = array(
 			'choose_method' => $chooseMethod,
-			'order_id'      => $orderIntegrationAPIId,
+			'order_id'      => $orderSuperfreteId,
 			'protocol'      => $protocol,
 			'purchase_id'   => $purcahseId,
 			'status'        => $status,
@@ -181,7 +181,7 @@ class OrderQuotationService {
 	 * Function to update data quotation by order.
 	 *
 	 * @param int    $orderId
-	 * @param string $order_integration_api_id
+	 * @param string $order_superfrete_id
 	 * @param string $protocol
 	 * @param string $status
 	 * @param int    $choose_method
@@ -189,7 +189,7 @@ class OrderQuotationService {
 	 */
 	public function updateDataQuotation(
 		$orderId,
-		$orderIntegrationAPIId,
+		$orderSuperfreteId,
 		$protocol,
 		$status,
 		$chooseMethod,
@@ -198,7 +198,7 @@ class OrderQuotationService {
 	) {
 		$data = array(
 			'choose_method' => $chooseMethod,
-			'order_id'      => $orderIntegrationAPIId,
+			'order_id'      => $orderSuperfreteId,
 			'protocol'      => $protocol,
 			'purchase_id'   => $purcahseId,
 			'status'        => $status,
@@ -208,7 +208,7 @@ class OrderQuotationService {
 
 		//@INJECT LOG
 		if (function_exists( 'write_log' ) ) {
-			write_log('- - -  updateDataQuotation - - - orderAPIID -> ' . $orderIntegrationAPIId);
+			write_log('- - -  updateDataQuotation - - - orderAPIID -> ' . $orderSuperfreteId);
 			write_log(print_r($data, true));
 			write_log('- - - END - - -');
 		}

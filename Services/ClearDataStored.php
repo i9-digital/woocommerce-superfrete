@@ -1,11 +1,11 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\Seller;
-use IntegrationAPI\Models\Session;
-use IntegrationAPI\Models\ShippingService;
-use IntegrationAPI\Helpers\SessionHelper;
+use Superfrete\Models\Seller;
+use Superfrete\Models\Session;
+use Superfrete\Models\ShippingService;
+use Superfrete\Helpers\SessionHelper;
 
 class ClearDataStored {
 
@@ -18,6 +18,9 @@ class ClearDataStored {
 	 * @return void
 	 */
 	public function clear() {
+        @$session = $_SESSION;
+        unset($session['quotation-superfrete']);
+
 		( new Seller() )->destroy();
 		( new ShippingService() )->destroy();
 
@@ -27,7 +30,7 @@ class ClearDataStored {
 
         foreach ( $_SESSION[ Session::ME_KEY ] as $hash => $item) {
 
-            if ( $hash != 'notices_integration_api' ) {
+            if ( $hash != 'notices_superfrete' ) {
                 
                 if (!$this->hasDataOnSession($hash)) {
                     continue;

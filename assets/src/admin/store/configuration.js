@@ -144,8 +144,8 @@ const configuration = {
     actions: {
         getConfigs: ({ commit }, data) => {
             let content = {
-                action: 'get_sf_configuracoes',
-                _wpnonce: wpApiSettingsIntegrationAPI.nonce_configs
+                action: 'get_superfrete_configuracoes',
+                _wpnonce: wpApiSettingsSuperfrete.nonce_configs
             }
             return new Promise((resolve, reject) => {
                 Axios.get(`${ajaxurl}`, {
@@ -203,7 +203,7 @@ const configuration = {
         },
         getAgencies: ({ commit }, data) => {
             commit('toggleLoader', true);
-            Axios.post(`${ajaxurl}?action=get_sf_agency_jadlog&city=${data.city}&state=${data.state}`).then(function (response) {
+            Axios.post(`${ajaxurl}?action=get_superfrete_agency_jadlog&city=${data.city}&state=${data.state}`).then(function (response) {
                 commit('toggleLoader', false);
                 if (response && response.status === 200) {
                     commit('setAgency', response.data.agencies);
@@ -212,7 +212,7 @@ const configuration = {
         },
         getAgenciesAzul: ({ commit }, data) => {
             commit('toggleLoader', true);
-            Axios.post(`${ajaxurl}?action=get_sf_agency_azul&city=${data.city}&state=${data.state}`).then(function (response) {
+            Axios.post(`${ajaxurl}?action=get_superfrete_agency_azul&city=${data.city}&state=${data.state}`).then(function (response) {
                 commit('toggleLoader', false);
                 if (response && response.status === 200) {
                     commit('setAgencyAzul', response.data.agencies);
@@ -221,7 +221,7 @@ const configuration = {
         },
         getAgenciesLatam: ({ commit }, data) => {
             commit('toggleLoader', true);
-            Axios.post(`${ajaxurl}?action=get_sf_agency_latam&city=${data.city}&state=${data.state}`).then(function (response) {
+            Axios.post(`${ajaxurl}?action=get_superfrete_agency_latam&city=${data.city}&state=${data.state}`).then(function (response) {
                 commit('toggleLoader', false);
                 if (response && response.status === 200) {
                     commit('setAgencyLatam', response.data.agencies);
@@ -230,7 +230,7 @@ const configuration = {
         },
         getAllAgencies: ({ commit }, data) => {
             commit('toggleLoader', true);
-            Axios.post(`${ajaxurl}?action=get_sf_agency_jadlog&state=${data.state}`).then(function (response) {
+            Axios.post(`${ajaxurl}?action=get_superfrete_agency_jadlog&state=${data.state}`).then(function (response) {
                 commit('toggleLoader', false);
                 if (response && response.status === 200) {
                     commit('setAllAgencies', response.data.agencies);
@@ -242,7 +242,7 @@ const configuration = {
             return new Promise((resolve, reject) => {
                 const form = new FormData();
 
-                form.append('_wpnonce', wpApiSettingsIntegrationAPI.nonce_configs);   
+                form.append('_wpnonce', wpApiSettingsSuperfrete.nonce_configs);   
 
                 if (data.origin) {
                     form.append('origin', data.origin)
@@ -293,7 +293,7 @@ const configuration = {
                 form.append('options_calculator[own_hand]', data.options_calculator.own_hand);
                 form.append('options_calculator[insurance_value]', data.options_calculator.insurance_value);
 
-                Axios.post(`${ajaxurl}?action=save_sf_configuracoes`, form).then(function (response) {
+                Axios.post(`${ajaxurl}?action=save_superfrete_configuracoes`, form).then(function (response) {
                     if (response && response.status === 200) {
                         resolve(true)
                     }

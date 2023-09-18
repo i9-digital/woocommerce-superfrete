@@ -1,14 +1,14 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Helpers\WpNonceValidatorHelper;
-use IntegrationAPI\Models\Address;
-use IntegrationAPI\Models\Store;
-use IntegrationAPI\Models\User;
-use IntegrationAPI\Services\BalanceService;
-use IntegrationAPI\Services\OrderQuotationService;
-use IntegrationAPI\Services\StoreService;
+use Superfrete\Helpers\WpNonceValidatorHelper;
+use Superfrete\Models\Address;
+use Superfrete\Models\Store;
+use Superfrete\Models\User;
+use Superfrete\Services\BalanceService;
+use Superfrete\Services\OrderQuotationService;
+use Superfrete\Services\StoreService;
 
 class UsersController {
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Models\Payload;
-use IntegrationAPI\Services\PayloadService;
+use Superfrete\Models\Payload;
+use Superfrete\Services\PayloadService;
 
 class PayloadsController {
 

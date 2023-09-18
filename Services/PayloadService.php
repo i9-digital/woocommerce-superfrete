@@ -1,12 +1,12 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\Method;
-use IntegrationAPI\Models\Option;
-use IntegrationAPI\Models\Payload;
-use IntegrationAPI\Models\ShippingService;
-use IntegrationAPI\Helpers\PostalCodeHelper;
+use Superfrete\Models\Method;
+use Superfrete\Models\Option;
+use Superfrete\Models\Payload;
+use Superfrete\Models\ShippingService;
+use Superfrete\Helpers\PostalCodeHelper;
 
 class PayloadService {
 

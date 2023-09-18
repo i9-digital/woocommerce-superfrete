@@ -1,10 +1,10 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Helpers\SessionHelper;
-use IntegrationAPI\Helpers\EscapeAllowedTags;
-use IntegrationAPI\Models\Session;
+use Superfrete\Helpers\SessionHelper;
+use Superfrete\Helpers\EscapeAllowedTags;
+use Superfrete\Models\Session;
 
 /**
  * Service responsible for managing the data stored in the session
@@ -13,7 +13,7 @@ class SessionNoticeService {
 
 
 
-	const ID_NOTICES_OPTIONS = 'wp_option_notices_integration_api';
+	const ID_NOTICES_OPTIONS = 'wp_option_notices_superfrete';
 
 	const TYPE_NOTICE_DEFAULT = 'notice-error';
 
@@ -69,7 +69,7 @@ class SessionNoticeService {
             </div>',
 			$type,
 			$text,
-			get_admin_url() . 'admin-ajax.php?action=remove_sf_notices&id=' . hash( 'sha512', $text )
+			get_admin_url() . 'admin-ajax.php?action=remove_superfrete_notices&id=' . hash( 'sha512', $text )
 		);
 	}
 
@@ -80,7 +80,7 @@ class SessionNoticeService {
 		 $notices = $this->get();
 		foreach ( $notices as $hash => $notice ) {
 			add_action(
-				'admin_sf_notices',
+				'admin_superfrete_notices',
 				function () use ( $notice ) {
 					echo wp_kses( $notice, EscapeAllowedTags::allow_tags( array( 'div', 'p', 'a' ) ) );
 				}

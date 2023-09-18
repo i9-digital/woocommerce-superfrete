@@ -1,20 +1,20 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
 class Option {
 
-	const OPTION_RECEIPT = 'integrationapi_ar';
+	const OPTION_RECEIPT = 'superfrete_ar';
 
-	const OPTION_OWN_HAND = 'integrationapi_mp';
+	const OPTION_OWN_HAND = 'superfrete_mp';
 
-	const OPTION_INSURANCE_VALUE = 'integrationapi_vs';
+	const OPTION_INSURANCE_VALUE = 'superfrete_vs';
 
 	/**
 	 * @return void
 	 */
 	public function get() {
-		$options = get_option( 'integrationapi_options' );
+		$options = get_option( 'superfrete_options' );
 
 		if ( ! $options ) {
 			return array(
@@ -53,8 +53,8 @@ class Option {
 			'time' => intval( $options['time'] ),
 		);
 
-		delete_option( 'integrationapi_options' );
-		add_option( 'integrationapi_options', $data );
+		delete_option( 'superfrete_options' );
+		add_option( 'superfrete_options', $data );
 
 		return array(
 			'success' => true,

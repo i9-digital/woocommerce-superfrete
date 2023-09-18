@@ -1,22 +1,22 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\Order;
-use IntegrationAPI\Models\Option;
-use IntegrationAPI\Models\Payload;
-use IntegrationAPI\Models\Session;
-use IntegrationAPI\Models\ShippingCompany;
-use IntegrationAPI\Helpers\SessionHelper;
-use IntegrationAPI\Helpers\PostalCodeHelper;
-use IntegrationAPI\Helpers\CpfHelper;
-use IntegrationAPI\Helpers\ProductVirtualHelper;
+use Superfrete\Models\Order;
+use Superfrete\Models\Option;
+use Superfrete\Models\Payload;
+use Superfrete\Models\Session;
+use Superfrete\Models\ShippingCompany;
+use Superfrete\Helpers\SessionHelper;
+use Superfrete\Helpers\PostalCodeHelper;
+use Superfrete\Helpers\CpfHelper;
+use Superfrete\Helpers\ProductVirtualHelper;
 
 class CartService {
 
-	const PLATFORM = CONFIG_PLATFORM;
+	const PLATFORM = SUPERFRETE_CONFIG_PLATFORM;
 
-	const ROUTE_INTEGRATION_API_ADD_CART = CONFIG_ROUTE_INTEGRATION_API_CART;
+	const SUPERFRETE_ROUTE_ADD_CART = SUPERFRETE_CONFIG_ROUTE_CART;
 
 	/**
 	 * Function to add item on Cart SuperFrete
@@ -25,11 +25,17 @@ class CartService {
 	 * @param array $products
 	 * @param array $dataBuyer
 	 * @param int   $shippingMethodId
+	 * @param boolean $nonCommercial
 	 * @return array
 	 */
-	public function add( $orderId, $products, $dataBuyer, $shippingMethodId ) {
+	public function add( $orderId, $products, $dataBuyer, $shippingMethodId, $nonCommercial) {
 
-		$body = $this->createPayloadToCart( $orderId, $products, $dataBuyer, $shippingMethodId );
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - - Field NonCommercial Add - - - ');
+			write_log(print_r($nonCommercial, true));
+		}		
+
+		$body = $this->createPayloadToCart( $orderId, $products, $dataBuyer, $shippingMethodId, $nonCommercial);
 
 		if (function_exists( 'write_log' ) ) {
 			write_log('- - -  REQUEST DATA CartService - ORDER_ID - - - ');
@@ -55,7 +61,7 @@ class CartService {
 		}
 
 		$result = ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_ADD_CART,
+			self::SUPERFRETE_ROUTE_ADD_CART,
 			'POST',
 			$body,
 			true
@@ -106,9 +112,10 @@ class CartService {
 	 * @param array $products
 	 * @param array $dataBuyer
 	 * @param int   $shippingMethodId
+	 * @param boolean   $nonCommercial
 	 * @return array
 	 */
-	public function createPayloadToCart( $orderId, $products, $dataBuyer, $shippingMethodId ) {
+	public function createPayloadToCart( $orderId, $products, $dataBuyer, $shippingMethodId, $nonCommercial) {
 		$products = ProductVirtualHelper::removeVirtuals( $products );
 
 		$dataFrom = ( new SellerService() )->getData();
@@ -129,6 +136,17 @@ class CartService {
 			? ( new ProductsService() )->getInsuranceValue( $products )
 			: 0;
 
+		if (function_exists( 'write_log' ) ) {
+			write_log('- - - Field NonCommercial Finalize - - - ');
+			if($nonCommercial == 'false' || $nonCommercial == 'true'){
+				write_log('- - - Field NonCommercial Is String - - - ');
+				write_log(print_r($nonCommercial, true));
+			} else {
+				write_log('- - - Field NonCommercial Is Boolean - - - ');
+				write_log(print_r($nonCommercial, true));
+			}
+		}			
+
 		$payload = array(
 			'from'     => $dataFrom,
 			'to'       => $dataBuyer,
@@ -142,7 +160,7 @@ class CartService {
 				'own_hand'        => $options->own_hand,
 				'collect'         => false,
 				'reverse'         => false,
-				'non_commercial'  => $orderInvoiceService->isNonCommercial( $orderId ),
+				'non_commercial'  => $nonCommercial,
 				'invoice'         => $orderInvoiceService->getInvoiceOrder( $orderId ),
 				'platform'        => self::PLATFORM,
 				'reminder'        => null,
@@ -179,7 +197,7 @@ class CartService {
 		( new OrderQuotationService() )->removeDataQuotation( $postId );
 
 		( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_ADD_CART . '/' . $orderId,
+			self::SUPERFRETE_ROUTE_ADD_CART . '/' . $orderId,
 			'DELETE',
 			array()
 		);
@@ -438,8 +456,8 @@ class CartService {
 							'price' => $item->get_price(),
 						);
 
-						if ( ! empty( $_SESSION[ Session::ME_KEY ]['integrationapi_additional'] ) ) {
-							foreach ( $_SESSION[ Session::ME_KEY ]['integrationapi_additional'] as $dataSession ) {
+						if ( ! empty( $_SESSION[ Session::ME_KEY ]['superfrete_additional'] ) ) {
+							foreach ( $_SESSION[ Session::ME_KEY ]['superfrete_additional'] as $dataSession ) {
 								foreach ( $dataSession as $keyProduct => $product ) {
 									$data['products'][ $productId ]['taxas_extras'] = $product;
 								}
@@ -450,8 +468,8 @@ class CartService {
 			}
 		}
 
-		if ( ! empty( $_SESSION[ Session::ME_KEY ]['integrationapi_additional'] ) ) {
-			$data['adicionais_extras'] = $_SESSION[ Session::ME_KEY ]['integrationapi_additional'];
+		if ( ! empty( $_SESSION[ Session::ME_KEY ]['superfrete_additional'] ) ) {
+			$data['adicionais_extras'] = $_SESSION[ Session::ME_KEY ]['superfrete_additional'];
 		}
 
 		return $data;

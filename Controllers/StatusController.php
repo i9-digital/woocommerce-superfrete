@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Helpers\WpNonceValidatorHelper;
+use Superfrete\Helpers\WpNonceValidatorHelper;
 
 class StatusController {
 

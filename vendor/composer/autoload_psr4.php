@@ -6,10 +6,10 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'IntegrationAPI\\Services\\' => array($baseDir . '/Services'),
-    'IntegrationAPI\\Models\\' => array($baseDir . '/Models'),
-    'IntegrationAPI\\Interfaces\\' => array($baseDir . '/core/interfaces'),
-    'IntegrationAPI\\Helpers\\' => array($baseDir . '/Helpers'),
-    'IntegrationAPI\\Controllers\\' => array($baseDir . '/Controllers'),
-    'IntegrationAPI\\Bases\\' => array($baseDir . '/core/bases'),
+    'Superfrete\\Services\\' => array($baseDir . '/Services'),
+    'Superfrete\\Models\\' => array($baseDir . '/Models'),
+    'Superfrete\\Interfaces\\' => array($baseDir . '/core/interfaces'),
+    'Superfrete\\Helpers\\' => array($baseDir . '/Helpers'),
+    'Superfrete\\Controllers\\' => array($baseDir . '/Controllers'),
+    'Superfrete\\Bases\\' => array($baseDir . '/core/bases'),
 );

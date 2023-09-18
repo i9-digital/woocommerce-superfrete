@@ -1,22 +1,22 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\Option;
-use IntegrationAPI\Models\Payload;
-use IntegrationAPI\Helpers\TimeHelper;
-use IntegrationAPI\Helpers\SessionHelper;
-use IntegrationAPI\Services\PayloadService;
-use IntegrationAPI\Services\WooCommerceBundleProductsService;
+use Superfrete\Models\Option;
+use Superfrete\Models\Payload;
+use Superfrete\Helpers\TimeHelper;
+use Superfrete\Helpers\SessionHelper;
+use Superfrete\Services\PayloadService;
+use Superfrete\Services\WooCommerceBundleProductsService;
 
 /**
  * Class responsible for the quotation service with the SuperFrete api.
  */
 class QuotationService {
 
-	const ROUTE_INTEGRATION_API_CALCULATE = CONFIG_ROUTE_INTEGRATION_API_CALCULATE;
+	const SUPERFRETE_ROUTE_CALCULATE = SUPERFRETE_CONFIG_ROUTE_CALCULATE;
 
-	const TIME_DURATION_SESSION_QUOTATION_IN_SECONDS = CONFIG_TIME_DURATION_SESSION_QUOTATION_IN_SECONDS;
+	const SUPERFRETE_TIME_DURATION_SESSION_QUOTATION_IN_SECONDS = SUPERFRETE_CONFIG_TIME_DURATION_SESSION_QUOTATION_IN_SECONDS;
 
 	/**
 	 * function to calculate quotation.
@@ -39,7 +39,7 @@ class QuotationService {
 		$requestService = new RequestService();
 
 		$quotations = $requestService->request(
-			self::ROUTE_INTEGRATION_API_CALCULATE,
+			self::SUPERFRETE_ROUTE_CALCULATE,
 			'POST',
 			$payload,
 			true
@@ -52,7 +52,7 @@ class QuotationService {
 	
 			$payload           = ( new PayloadService() )->removeInsuranceValue( $payload );
 			$quotsWithoutValue = $requestService->request(
-				self::ROUTE_INTEGRATION_API_CALCULATE,
+				self::SUPERFRETE_ROUTE_CALCULATE,
 				'POST',
 				$payload,
 				true
@@ -260,7 +260,7 @@ class QuotationService {
 		$quotationSession[ $hash ]['quotations'] = $quotation;
 		$quotationSession[ $hash ]['created']    = date( 'Y-m-d H:i:s' );
 
-		$_SESSION['quotation-integration-api'][ $hash ] = array(
+		$_SESSION['quotation-superfrete'][ $hash ] = array(
 			'quotations' => $quotation,
 			'created'    => date( 'Y-m-d H:i:s' ),
 		);
@@ -278,17 +278,17 @@ class QuotationService {
 
 		@$session = $_SESSION;
 
-		if ( empty( $session['quotation-integration-api'][ $hash ] ) ) {
+		if ( empty( $session['quotation-superfrete'][ $hash ] ) ) {
 			return false;
 		}
 
-		$cachedQuotation = $session['quotation-integration-api'][ $hash ];
+		$cachedQuotation = $session['quotation-superfrete'][ $hash ];
 		$dateCreated     = $cachedQuotation['created'];
 		$cachedQuotation = $cachedQuotation['quotations'];
 
 		if ( ! empty( $dateCreated ) ) {
 			if ( $this->isOutdatedQuotation( $dateCreated ) ) {
-				unset( $session['quotation-integration-api'][ $hash ] );
+				unset( $session['quotation-superfrete'][ $hash ] );
 				$_SESSION = $session;
 			}
 		}
@@ -297,7 +297,7 @@ class QuotationService {
 	}
 
 	private function isOutdatedQuotation( $dateQuotation ) {
-		return TimeHelper::getDiffFromNowInSeconds( $dateQuotation ) > self::TIME_DURATION_SESSION_QUOTATION_IN_SECONDS;
+		return TimeHelper::getDiffFromNowInSeconds( $dateQuotation ) > self::SUPERFRETE_TIME_DURATION_SESSION_QUOTATION_IN_SECONDS;
 	}
 
 	/**

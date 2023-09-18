@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
-use IntegrationAPI\Helpers\EscapeAllowedTags;
+use Superfrete\Helpers\EscapeAllowedTags;
 
 /**
  * Controller to manage the product's paged calculator
@@ -25,8 +25,8 @@ class ShowCalculatorProductPage {
 		$this->whereShowCalculator = ( new ConfigurationController() )->getWhereCalculatorValue();
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueCssJsFrontend' ) );
-		add_action( 'wp_ajax_sf_escutar_solicitacoes_de_frete', array( $this, 'escutar_solicitacoes_de_frete' ) );
-		add_action( 'wp_ajax_nopriv_sf_escutar_solicitacoes_de_frete', array( $this, 'escutar_solicitacoes_de_frete' ) );
+		add_action( 'wp_ajax_superfrete_escutar_solicitacoes_de_frete', array( $this, 'escutar_solicitacoes_de_frete' ) );
+		add_action( 'wp_ajax_nopriv_superfrete_escutar_solicitacoes_de_frete', array( $this, 'escutar_solicitacoes_de_frete' ) );
 	}
 
 	/**
@@ -35,9 +35,9 @@ class ShowCalculatorProductPage {
 	 * @return void
 	 */
 	public function enqueueCssJsFrontend() {
-		wp_enqueue_script( 'produto', BASEPLUGIN_ASSETS . '/js/shipping-product-page.js', array( 'jquery' ) );
-		wp_enqueue_script( 'produto-variacao', BASEPLUGIN_ASSETS . '/js/shipping-product-page-variacao.js', array( 'jquery' ) );
-		wp_enqueue_script( 'calculator', BASEPLUGIN_ASSETS . '/js/calculator.js', array( 'jquery' ) );
+		wp_enqueue_script( 'produto', SUPERFRETE_ASSETS . '/js/shipping-product-page.js', array( 'jquery' ) );
+		wp_enqueue_script( 'produto-variacao', SUPERFRETE_ASSETS . '/js/shipping-product-page-variacao.js', array( 'jquery' ) );
+		wp_enqueue_script( 'calculator', SUPERFRETE_ASSETS . '/js/calculator.js', array( 'jquery' ) );
 	}
 
 	/**
@@ -83,8 +83,8 @@ class ShowCalculatorProductPage {
 	 * Adiciona o HTML do cálculo de frete na página do produto
 	 */
 	public function addCalculateShipping() {
-		wp_enqueue_style( 'calculator-style', BASEPLUGIN_ASSETS . '/css/calculator.css' );
-		wp_enqueue_script( 'calculator-script', BASEPLUGIN_ASSETS . '/js/calculator.js' );
+		wp_enqueue_style( 'calculator-style', SUPERFRETE_ASSETS . '/css/calculator.css' );
+		wp_enqueue_script( 'calculator-script', SUPERFRETE_ASSETS . '/js/calculator.js' );
 
         $allowedTags = EscapeAllowedTags::allow_tags(
             array( 'div', 'p', 'input', 'table', 'thead', 'tbody', 'small', 'img' )
@@ -100,6 +100,6 @@ class ShowCalculatorProductPage {
 	 * @return string
 	 */
 	private function getTemplateCalculator() {
-		return "<div id='woocommerce-correios-calculo-de-frete-na-pagina-do-produto' class='containerCalculator'> <?php wp_nonce_field('solicita_calculo_frete', 'solicita_calculo_frete'); ?> <input type='hidden' id='calculo_frete_endpoint_url' value='".admin_url( 'admin-ajax.php' )."'> <input type='hidden' id='calculo_frete_produto_altura' value='".$this->height."'> <input type='hidden' id='calculo_frete_produto_largura' value='".$this->width."'> <input type='hidden' id='calculo_frete_produto_comprimento' value='".$this->length."'> <input type='hidden' id='calculo_frete_produto_peso' value='".$this->weight."'> <input type='hidden' id='calculo_frete_produto_preco' value='".$this->price."'> <input type='hidden' id='id_produto' value='".$this->id."'> <div class='calculatorRow'> <div class='row'> <div class='col-75'> <p>Simulação de frete</p> <input type='text' maxlength='9' class='iptCep calculatorRow' id='inputCep' placeholder='Informe seu cep' onkeyup='usePostalCodeMask(event);'> </div> </div> <div id='calcular-frete-loader'> <img src='".BASEPLUGIN_ASSETS."/images/loader.gif' /> </div> <div class=resultado-frete tableResult> <table> <thead> </thead> <tbody> </tbody> </table> <small id='destiny-shipping-integ-api'></small></br> <small class='observation-shipping-free'></small> </div> </div> </div>";
+		return "<div id='woocommerce-correios-calculo-de-frete-na-pagina-do-produto' class='containerCalculator'> <?php wp_nonce_field('superfrete_solicita_calculo_frete', 'superfrete_solicita_calculo_frete'); ?> <input type='hidden' id='calculo_frete_endpoint_url' value='".admin_url( 'admin-ajax.php' )."'> <input type='hidden' id='calculo_frete_produto_altura' value='".$this->height."'> <input type='hidden' id='calculo_frete_produto_largura' value='".$this->width."'> <input type='hidden' id='calculo_frete_produto_comprimento' value='".$this->length."'> <input type='hidden' id='calculo_frete_produto_peso' value='".$this->weight."'> <input type='hidden' id='calculo_frete_produto_preco' value='".$this->price."'> <input type='hidden' id='id_produto' value='".$this->id."'> <div class='calculatorRow'> <div class='row'> <div class='col-75'> <p>Simulação de frete</p> <input type='text' maxlength='9' class='iptCep calculatorRow' id='inputCep' placeholder='Informe seu cep' onkeyup='usePostalCodeMask(event);'> </div> </div> <div id='calcular-frete-loader'> <img src='".SUPERFRETE_ASSETS."/images/loader.gif' /> </div> <div class=resultado-frete tableResult> <table> <thead> </thead> <tbody> </tbody> </table> <small id='destiny-shipping-integ-api'></small></br> <small class='observation-shipping-free'></small> </div> </div> </div>";
 	}
 }

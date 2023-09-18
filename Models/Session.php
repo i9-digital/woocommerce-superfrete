@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
 class Session {
 
-	const ME_KEY = 'integration_api_session';
+	const ME_KEY = 'superfrete_session';
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace IntegrationAPI\Models;
+namespace Superfrete\Models;
 
 class UseInsurance {
 
@@ -8,7 +8,7 @@ class UseInsurance {
 	 * @return bool
 	 */
 	public function get() {
-		$show = get_option( 'integrationapi_use_insurancce' );
+		$show = get_option( 'superfrete_use_insurancce' );
 
 		if ( ! $show ) {
 			return true;
@@ -27,10 +27,10 @@ class UseInsurance {
 	 */
 	public function set( $value ) {
 		if ( $value == 'true' ) {
-			delete_option( 'integrationapi_use_insurancce' );
+			delete_option( 'superfrete_use_insurancce' );
 			return true;
 		} else {
-			add_option( 'integrationapi_use_insurancce', 1 );
+			add_option( 'superfrete_use_insurancce', 1 );
 			return false;
 		}
 	}

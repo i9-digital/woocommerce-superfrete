@@ -2,13 +2,13 @@
 .letter-small {
   font-size: 10px;
 }
-.input-quotation-sf {
+.input-quotation-superfrete {
   font-size:12px !important;
 }
 </style>
 <template>
   <div>
-    <template v-if="item.quotation.integrationapi == false">
+    <template v-if="item.quotation.superfrete == false">
       <br />
       <small>Cliente não utilizou SuperFrete</small>
     </template>
@@ -61,7 +61,7 @@
                   data-cy="input-quotation"
                   v-if="!(item.status == 'paid' || item.status == 'printed' || item.status == 'generated')"
                   v-model="item.quotation.choose_method"
-                  class="input-quotation-sf"
+                  class="input-quotation-superfrete"
                 >
                   <option
                     v-if="option.id && option.price"

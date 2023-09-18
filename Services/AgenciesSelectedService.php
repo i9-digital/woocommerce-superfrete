@@ -1,8 +1,8 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Models\Agency;
+use Superfrete\Models\Agency;
 
 class AgenciesSelectedService {
 

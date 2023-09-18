@@ -5,11 +5,11 @@ require __DIR__ . '/vendor/autoload.php';
 /*
 Plugin Name: SuperFrete
 Plugin URI: https://superfrete.com
-Description: Plugin para cotação e compra de fretes utilizando a API da Melhor Envio.
-Version: 2.11.35
+Description: Plugin para cotação e compra de fretes.
+Version: 1.0.0
 Author: SuperFrete
 Author URI: superfrete.com
-License: GPL2
+License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: superfrete
 Tested up to: 6.0
@@ -50,19 +50,19 @@ if (!defined('ABSPATH')) {
     define('ABSPATH', dirname(__FILE__));
 }
 
-use IntegrationAPI\Controllers\ShowCalculatorProductPage;
-use IntegrationAPI\Models\CalculatorShow;
-use IntegrationAPI\Models\Version;
-use IntegrationAPI\Services\CheckHealthService;
-use IntegrationAPI\Services\ClearDataStored;
-use IntegrationAPI\Services\RolesService;
-use IntegrationAPI\Services\RouterService;
-use IntegrationAPI\Services\ShortCodeService;
-use IntegrationAPI\Services\TrackingService;
-use IntegrationAPI\Services\ListPluginsIncompatiblesService;
-use IntegrationAPI\Services\SessionNoticeService;
-use IntegrationAPI\Helpers\SessionHelper;
-use IntegrationAPI\Helpers\EscapeAllowedTags;
+use Superfrete\Controllers\ShowCalculatorProductPage;
+use Superfrete\Models\CalculatorShow;
+use Superfrete\Models\Version;
+use Superfrete\Services\CheckHealthService;
+use Superfrete\Services\ClearDataStored;
+use Superfrete\Services\RolesService;
+use Superfrete\Services\RouterService;
+use Superfrete\Services\ShortCodeService;
+use Superfrete\Services\TrackingService;
+use Superfrete\Services\ListPluginsIncompatiblesService;
+use Superfrete\Services\SessionNoticeService;
+use Superfrete\Helpers\SessionHelper;
+use Superfrete\Helpers\EscapeAllowedTags;
 
 if (!file_exists(plugin_dir_path(__FILE__) . '/vendor/autoload.php')) {
     $message = 'Erro ao ativar o plugin da SuperFrete, não localizada a vendor do plugin';
@@ -74,11 +74,11 @@ if (!file_exists(plugin_dir_path(__FILE__) . '/vendor/autoload.php')) {
 }
 
 /**
- * Base_Plugin class
+ * Superfrete_Plugin class
  *
- * @class Base_Plugin The class that holds the entire Base_Plugin plugin
+ * @class Superfrete_Plugin The class that holds the entire Superfrete_Plugin plugin
  */
-final class Base_Plugin
+final class Superfrete_Plugin
 {
     /**
      * Plugin version
@@ -95,7 +95,7 @@ final class Base_Plugin
     private $container = array();
 
     /**
-     * Constructor for the Base_Plugin class
+     * Constructor for the Superfrete_Plugin class
      *
      * Sets up all the appropriate hooks and actions
      * within our plugin.
@@ -112,9 +112,9 @@ final class Base_Plugin
     }
 
     /**
-     * Initializes the Base_Plugin() class
+     * Initializes the Superfrete_Plugin() class
      *
-     * Checks for an existing Base_Plugin() instance
+     * Checks for an existing Superfrete_Plugin() instance
      * and if it doesn't find one, creates it.
      */
     public static function init()
@@ -123,7 +123,7 @@ final class Base_Plugin
         static $instance = false;
 
         if (!$instance) {
-            $instance = new Base_Plugin();
+            $instance = new Superfrete_Plugin();
         }
 
         return $instance;
@@ -164,12 +164,12 @@ final class Base_Plugin
      */
     public function define_constants()
     {
-        define('BASEPLUGIN_VERSION', $this->version);
-        define('BASEPLUGIN_FILE', __FILE__);
-        define('BASEPLUGIN_PATH', dirname(BASEPLUGIN_FILE));
-        define('BASEPLUGIN_INCLUDES', BASEPLUGIN_PATH . '/includes');
-        define('BASEPLUGIN_URL', plugins_url('', BASEPLUGIN_FILE));
-        define('BASEPLUGIN_ASSETS', BASEPLUGIN_URL . '/assets');
+        define('SUPERFRETE_VERSION', $this->version);
+        define('SUPERFRETE_FILE', __FILE__);
+        define('SUPERFRETE_PATH', dirname(SUPERFRETE_FILE));
+        define('SUPERFRETE_INCLUDES', SUPERFRETE_PATH . '/includes');
+        define('SUPERFRETE_URL', plugins_url('', SUPERFRETE_FILE));
+        define('SUPERFRETE_ASSETS', SUPERFRETE_URL . '/assets');
     }
 
     /**
@@ -182,7 +182,7 @@ final class Base_Plugin
         $this->includes();
         $this->init_hooks();
 
-        $pathPlugins = get_option('integration_api_path_plugins');
+        $pathPlugins = get_option('superfrete_path_plugins');
         if (!$pathPlugins) {
             $pathPlugins =  WP_PLUGIN_DIR;
         }
@@ -204,13 +204,13 @@ final class Base_Plugin
      */
     public function activate()
     {
-        $installed = get_option('baseplugin_installed');
+        $installed = get_option('superfrete_installed');
 
         if (!$installed) {
-            update_option('baseplugin_installed', time());
+            update_option('superfrete_installed', time());
         }
 
-        update_option('baseplugin_version', BASEPLUGIN_VERSION);
+        update_option('superfrete_version', SUPERFRETE_VERSION);
 
         (new ClearDataStored())->clear();
     }
@@ -223,21 +223,21 @@ final class Base_Plugin
     public function includes()
     {
         try {
-            require_once BASEPLUGIN_INCLUDES . '/class-assets-sf.php';
+            require_once SUPERFRETE_INCLUDES . '/class-assets-superfrete.php';
 
             if ($this->is_request('admin')) {
-                require_once BASEPLUGIN_INCLUDES . '/class-admin-sf.php';
+                require_once SUPERFRETE_INCLUDES . '/class-admin-superfrete.php';
             }
 
             if ($this->is_request('frontend')) {
-                require_once BASEPLUGIN_INCLUDES . '/class-frontend-sf.php';
+                require_once SUPERFRETE_INCLUDES . '/class-frontend-superfrete.php';
             }
 
             if ($this->is_request('rest')) {
-                require_once BASEPLUGIN_INCLUDES . '/class-rest-api-sf.php';
+                require_once SUPERFRETE_INCLUDES . '/class-rest-api-superfrete.php';
             }
         } catch (\Exception $e) {
-            add_action('admin_sf_notices', function ($e) {
+            add_action('admin_superfrete_notices', function ($e) {
                 echo wp_kses(sprintf('<div class="error">
                     <p>%s</p>
                 </div>', $e->getMessage()), EscapeAllowedTags::allow_tags(["div", "p"]));
@@ -263,7 +263,7 @@ final class Base_Plugin
 
         (new RouterService())->handler();
 
-        require_once dirname(__FILE__) . '/services_methods/class-wc-integration-api-shipping.php';
+        require_once dirname(__FILE__) . '/services_methods/class-wc-superfrete-shipping.php';
         foreach (glob(plugin_dir_path(__FILE__) . 'services_methods/*.php') as $filename) {
             require_once $filename;
         }
@@ -280,21 +280,14 @@ final class Base_Plugin
         } );        
 
         add_filter('woocommerce_shipping_methods', function ($methods) {
-            $methods['integrationapi_correios_pac']  = 'WC_Integration_API_Shipping_Correios_Pac';
-            $methods['integrationapi_correios_sedex']  = 'WC_Integration_API_Shipping_Correios_Sedex';
-            ///$methods['integrationapi_jadlog_package']  = 'WC_Integration_API_Shipping_Jadlog_Package';
-            ///$methods['integrationapi_jadlog_com']  = 'WC_Integration_API_Shipping_Jadlog_Com';
-            ///$methods['integrationapi_via_brasil_rodoviario']  = 'WC_Integration_API_Shipping_Via_Brasil_Rodoviario';
-            ///$methods['integrationapi_latam_juntos']  = 'WC_Integration_API_Shipping_Latam_Juntos';
-            ///$methods['integrationapi_azul_amanha']  = 'WC_Integration_API_Shipping_Azul_Amanha';
-            ///$methods['integrationapi_azul_ecommerce']  = 'WC_Integration_API_Shipping_Azul_Ecommerce';
-            $methods['integrationapi_correios_mini']  = 'WC_Integration_API_Shipping_Correios_Mini';
-            ///$methods['integrationapi_buslog_rodoviario']  = 'WC_Integration_API_Shipping_Buslog_Rodoviario';
+            $methods['superfrete_correios_pac']  = 'WC_Superfrete_Shipping_Correios_Pac';
+            $methods['superfrete_correios_sedex']  = 'WC_Superfrete_Shipping_Correios_Sedex';
+            $methods['superfrete_correios_mini']  = 'WC_Superfrete_Shipping_Correios_Mini';
             return $methods;
         });
 
-        add_filter('woocommerce_package_rates', 'orderingQuotationsByPriceSF', 10, 2);
-        function orderingQuotationsByPriceSF($rates, $package)
+        add_filter('woocommerce_package_rates', 'orderingQuotationsByPriceSuperfrete', 10, 2);
+        function orderingQuotationsByPriceSuperfrete($rates, $package)
         {
             uasort($rates, function ($a, $b) {
                 if ($a == $b) return 0;
@@ -311,22 +304,22 @@ final class Base_Plugin
             (new ListPluginsIncompatiblesService())->init();
         }
 
-        function load_var_nonce_sf()
+        function load_var_nonce_superfrete()
         {
             $wpApiSettings = json_encode( array( 
-                'nonce_configs' => wp_create_nonce( 'save_sf_configurations' ),
+                'nonce_configs' => wp_create_nonce( 'save_superfrete_configurations' ),
                 'nonce_orders' => wp_create_nonce( 'orders' ),
                 'nonce_tokens' => wp_create_nonce( 'tokens' ),
                 'nonce_users' => wp_create_nonce( 'users' ),
             ) );
             
-            wp_register_script( 'wp-nonce-integration-apii-wp-api', '' );
-            wp_enqueue_script( 'wp-nonce-integration-apii-wp-api' );
-            wp_add_inline_script( 'wp-nonce-integration-apii-wp-api', "var wpApiSettingsIntegrationAPI = ${wpApiSettings};" );
+            wp_register_script( 'wp-nonce-superfretei-wp-api', '' );
+            wp_enqueue_script( 'wp-nonce-superfretei-wp-api' );
+            wp_add_inline_script( 'wp-nonce-superfretei-wp-api', "var wpApiSettingsSuperfrete = ${wpApiSettings};" );
         }
 
-        add_action( 'admin_enqueue_scripts', 'load_var_nonce_sf');
-        add_action( 'wp_enqueue_scripts', 'load_var_nonce_sf');
+        add_action( 'admin_enqueue_scripts', 'load_var_nonce_superfrete');
+        add_action( 'wp_enqueue_scripts', 'load_var_nonce_superfrete');
     }
 
     /**
@@ -338,14 +331,14 @@ final class Base_Plugin
     {
         try {
             if ($this->is_request('admin')) {
-                $this->container['admin'] = new App\Admin_SF();
+                $this->container['admin'] = new App\Admin_SUPERFRETE();
             }
 
             if ($this->is_request('rest')) {
-                $this->container['rest'] = new App\REST_API_SF();
+                $this->container['rest'] = new App\REST_API_SUPERFRETE();
             }
 
-            add_shortcode('calculadora_integration_api', function ($attr) {
+            add_shortcode('calculadora_superfrete', function ($attr) {
                 if (isset($attr['product_id'])) {
                     $product = wc_get_product($attr['product_id']);
                     if ($product) {
@@ -354,9 +347,9 @@ final class Base_Plugin
                 }
             });
 
-            $this->container['assets'] = new App\Assets_SF();
+            $this->container['assets'] = new App\Assets_SUPERFRETE();
         } catch (\Exception $e) {
-            add_action('admin_sf_notices', function () use ($e) {
+            add_action('admin_superfrete_notices', function () use ($e) {
                 echo wp_kses(
                     sprintf('<div class="error">
                     <p>%s</p>
@@ -376,7 +369,7 @@ final class Base_Plugin
      */
     public function localization_setup()
     {
-        load_plugin_textdomain('baseplugin', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+        load_plugin_textdomain('superfrete', false, dirname(plugin_basename(__FILE__)) . '/languages/');
     }
 
     /**
@@ -405,6 +398,6 @@ final class Base_Plugin
                 return (!is_admin() || defined('DOING_AJAX')) && !defined('DOING_CRON');
         }
     }
-} // Base_Plugin
+} // Superfrete_Plugin
 
-$baseplugin = Base_Plugin::init();
+$superfrete = Superfrete_Plugin::init();

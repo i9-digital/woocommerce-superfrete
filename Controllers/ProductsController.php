@@ -1,6 +1,6 @@
 <?php
 
-namespace IntegrationAPI\Controllers;
+namespace Superfrete\Controllers;
 
 class ProductsController {
 

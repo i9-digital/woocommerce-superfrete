@@ -1,23 +1,23 @@
 <?php
 
-namespace IntegrationAPI\Services;
+namespace Superfrete\Services;
 
-use IntegrationAPI\Helpers\SessionHelper;
-use IntegrationAPI\Models\Session;
+use Superfrete\Helpers\SessionHelper;
+use Superfrete\Models\Session;
 
 class StoreService {
 
-	const URL = CONFIG_URL;
+	const URL = SUPERFRETE_CONFIG_URL;
 
-	const OPTION_STORES = 'integrationapi_stores';
+	const OPTION_STORES = 'superfrete_stores';
 
-	const OPTION_STORE_SELECTED = 'integrationapi_store_v2';
+	const OPTION_STORE_SELECTED = 'superfrete_store_v2';
 
-	const SESSION_STORES = 'integrationapi_stores';
+	const SESSION_STORES = 'superfrete_stores';
 
-	const SESSION_STORE_SELECTED = 'integrationapi_store_v2';
+	const SESSION_STORE_SELECTED = 'superfrete_store_v2';
 
-	const ROUTE_INTEGRATION_API_COMPANIES = CONFIG_ROUTE_INTEGRATION_API_COMPANIES;
+	const SUPERFRETE_ROUTE_COMPANIES = SUPERFRETE_CONFIG_ROUTE_COMPANIES;
 
 	public $store = null;
 
@@ -67,7 +67,7 @@ class StoreService {
 		}
 
 		$response = ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_COMPANIES,
+			self::SUPERFRETE_ROUTE_COMPANIES,
 			'GET',
 			array(),
 			false
@@ -111,7 +111,7 @@ class StoreService {
 	 */
 	public function getAddressStore( $store ) {
 		$addresses = ( new RequestService() )->request(
-			self::ROUTE_INTEGRATION_API_COMPANIES . '/' . $store->id . '',
+			self::SUPERFRETE_ROUTE_COMPANIES . '/' . $store->id . '',
 			'GET',
 			array(),
 			false
